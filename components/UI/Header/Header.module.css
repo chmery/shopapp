@@ -1,0 +1,27 @@
+.logo {
+    color: var(--red);
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.header {
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em 0;
+    column-gap: 1em;
+}
+
+.header svg {
+    cursor: pointer;
+}
+
+.header ul {
+    display: flex;
+    column-gap: 0.6em;
+}
+
+.header li {
+    display: flex;
+}
