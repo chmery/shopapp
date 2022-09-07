@@ -27,7 +27,7 @@ const Header = () => {
 
     return (
         <header className={styles.header}>
-            <div>
+            <div className={styles["header-content"]}>
                 <Link href="/">ShopApp</Link>
                 <Navbar
                     onStartSearching={startSearchingHandler}

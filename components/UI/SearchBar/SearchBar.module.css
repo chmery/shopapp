@@ -1,6 +1,7 @@
 .search-bar {
     height: 2.8em;
     margin-top: 1em;
+    display: flex;
 }
 
 .search-bar input {
@@ -10,11 +11,19 @@
     border-radius: 9px 0 0 9px;
 }
 
+input.typing-input {
+    border-radius: 9px 0 0 0px;
+}
+
 .search-bar button {
     background: var(--red);
     height: 100%;
     min-width: 3.5em;
     border-radius: 0 9px 9px 0;
+}
+
+button.typing-btn {
+    border-radius: 0 9px 0 0;
 }
 
 .search-bar svg {

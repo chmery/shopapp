@@ -1,0 +1,12 @@
+.prompts {
+    position: absolute;
+    background: #fff;
+    border: 1px solid var(--light-grey);
+    width: 100%;
+    padding: 1em;
+    border-width: 0px 1px 1px 1px;
+    border-radius: 0 0 9px 9px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+}
