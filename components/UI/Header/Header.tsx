@@ -2,6 +2,7 @@ import Link from "next/link";
 import React, { useEffect, useState, useRef } from "react";
 import Navbar from "./Navbar";
 import SearchBar from "../SearchBar/SearchBar";
+import { useRouter } from "next/router";
 
 import styles from "./Header.module.css";
 
@@ -12,6 +13,8 @@ const Header = () => {
     const stopSearchingHandler = () => setIsSearching(false);
 
     const searchBarRef = useRef<HTMLDivElement>(null);
+
+    const router = useRouter();
 
     useEffect(() => {
         const clickHandler = (event: MouseEvent) => {
@@ -24,6 +27,11 @@ const Header = () => {
 
         return () => document.removeEventListener("click", clickHandler, true);
     }, [searchBarRef]);
+
+    useEffect(() => {
+        router.events.on("routeChangeStart", () => setIsSearching(false));
+        return () => router.events.off("routeChangeStart", () => setIsSearching(false));
+    }, []);
 
     return (
         <header className={styles.header}>
