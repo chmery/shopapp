@@ -6,11 +6,23 @@
 
 .header {
     background: #fff;
+    padding: 1em 0;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.header > div {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1em 0;
-    column-gap: 1em;
+}
+
+.header > div > a {
+    color: var(--red);
+    font-weight: 700;
+    font-size: 1.5rem;
 }
 
 .header svg {

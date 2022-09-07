@@ -1,45 +1,41 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { HeartIcon, SearchIcon, UserIcon, CartIcon } from "../Icons/Icons";
+import React, { useEffect, useState, useRef } from "react";
+import Navbar from "./Navbar";
+import SearchBar from "../SearchBar/SearchBar";
 
 import styles from "./Header.module.css";
 
 const Header = () => {
-    const router = useRouter();
+    const [isSearching, setIsSearching] = useState(false);
+
+    const startSearchingHandler = () => setIsSearching(true);
+    const stopSearchingHandler = () => setIsSearching(false);
+
+    const searchBarRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const clickHandler = (event: MouseEvent) => {
+            if (searchBarRef.current && !searchBarRef.current.contains(event.target as Node)) {
+                setIsSearching(false);
+            }
+        };
+
+        document.addEventListener("click", clickHandler, true);
+
+        return () => document.removeEventListener("click", clickHandler, true);
+    }, [searchBarRef]);
 
     return (
         <header className={styles.header}>
-            <p className={styles.logo}>
+            <div>
                 <Link href="/">ShopApp</Link>
-            </p>
-            <nav>
-                <ul>
-                    <li>
-                        <SearchIcon />
-                    </li>
-                    <li>
-                        <HeartIcon
-                            onClick={() => {
-                                router.push("/favourites");
-                            }}
-                        />
-                    </li>
-                    <li>
-                        <UserIcon
-                            onClick={() => {
-                                router.push("/account");
-                            }}
-                        />
-                    </li>
-                    <li>
-                        <CartIcon
-                            onClick={() => {
-                                router.push("/cart");
-                            }}
-                        />
-                    </li>
-                </ul>
-            </nav>
+                <Navbar
+                    onStartSearching={startSearchingHandler}
+                    onStopSearching={stopSearchingHandler}
+                    isSearching={isSearching}
+                />
+            </div>
+            {isSearching && <SearchBar ref={searchBarRef} />}
         </header>
     );
 };

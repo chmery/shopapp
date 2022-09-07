@@ -1,5 +1,6 @@
 .layout {
     max-width: 50rem;
+    min-width: 20rem;
     margin: 0 auto;
     padding: 0 1.5em;
 }

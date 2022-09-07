@@ -4,11 +4,11 @@ html,
 body {
     padding: 0;
     margin: 0;
-    font-family: "Montserrat", sans-serif;
 }
 
 * {
     box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
 }
 
 a {
@@ -28,7 +28,24 @@ li {
     padding: 0;
 }
 
+button {
+    padding: 0;
+    margin: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+input {
+    padding: 0;
+    margin: 0;
+    outline: none;
+    padding-left: 1em;
+    border: 1px solid var(--light-grey);
+}
+
 :root {
     --red: #e35757;
-    --gray: #828282;
+    --grey: #828282;
+    --light-grey: #bebebe;
 }
