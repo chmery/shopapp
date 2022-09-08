@@ -1,0 +1,33 @@
+.newsletter {
+    text-align: center;
+}
+
+.newsletter p {
+    margin-top: 0.3em;
+    color: var(--grey);
+}
+
+.newsletter input {
+    border-width: 1px 0px 1px 1px;
+    border-radius: 9px 0 0 9px;
+    width: 60%;
+}
+
+.input {
+    max-width: 30rem;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    margin-top: 1rem;
+}
+
+.newsletter button {
+    background: var(--red);
+    height: 2.8rem;
+    width: 7em;
+    padding: 0 1em;
+    border-radius: 0 9px 9px 0;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+}

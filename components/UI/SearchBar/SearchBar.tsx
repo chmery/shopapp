@@ -35,6 +35,7 @@ const SearchBar = React.forwardRef<HTMLDivElement, Props>((_, ref) => {
             <div className={styles["search-bar"]} ref={ref}>
                 <input
                     type="text"
+                    placeholder="Search by product name"
                     onChange={typingHandler}
                     onKeyDown={searchHandler}
                     ref={searchInput}
