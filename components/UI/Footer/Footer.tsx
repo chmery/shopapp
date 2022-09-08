@@ -13,9 +13,8 @@ const Footer = () => {
                     <Link href="/bestsellers">Bestsellers</Link>
                     <Link href="/electronics">Electronics</Link>
                     <Link href="/jewelery">Jewelery</Link>
-                    <Link href="/men">Men</Link>
-                    <Link href="/women">Women</Link>
-                    <Link href="/clothing">Clothing</Link>
+                    <Link href="/men's clothing">Men</Link>
+                    <Link href="/women's clothing">Women</Link>
                 </nav>
                 <nav>
                     <h3>Information</h3>
@@ -26,7 +25,7 @@ const Footer = () => {
             </div>
             <div className={styles.author}>
                 <p>
-                    Designed & built with <HeartIcon /> by{" "}
+                    Designed & built with <HeartIcon />
                     <a href="https://github.com/chmery">chmery</a>
                 </p>
                 <p>Based in Poland</p>
