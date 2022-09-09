@@ -1,18 +1,13 @@
 import { useRouter } from "next/router";
-
-type ProductData = {
-    title: string;
-    category: string;
-    price: number;
-    description: string;
-    image: string;
-};
+import ProductItem from "../../components/ProductItem/ProductItem";
+import styles from "./Category.module.css";
 
 type Props = {
     data: ProductData[];
 };
 
 const getProductsByCategory = (data: ProductData[], category: string | string[]) => {
+    if (category === "bestsellers") return data.slice(0, 4);
     const products = data.filter((product) => product.category === category);
     return products;
 };
@@ -26,10 +21,12 @@ const Category = ({ data }: Props) => {
 
     return (
         <>
-            <h1>Category Page for {category}</h1>
-            {products.map((product) => {
-                return <p>{product.title}</p>;
-            })}
+            <h3>{category}</h3>
+            <div className={styles.products}>
+                {products.map((product) => {
+                    return <ProductItem productData={product} />;
+                })}
+            </div>
         </>
     );
 };
@@ -37,6 +34,7 @@ const Category = ({ data }: Props) => {
 export const getStaticPaths = async () => {
     return {
         paths: [
+            { params: { category: "bestsellers" } },
             { params: { category: "electronics" } },
             { params: { category: "jewelery" } },
             { params: { category: "men's clothing" } },

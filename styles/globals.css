@@ -16,6 +16,10 @@ a {
     color: inherit;
 }
 
+main {
+    margin-top: 1rem;
+}
+
 p,
 h3 {
     padding: 0;
