@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
-import ProductItem from "../../components/ProductItem/ProductItem";
-import styles from "./Category.module.css";
+import ProductsList from "../../components/ProductsList/ProductsList";
 
 type Props = {
     data: ProductData[];
@@ -22,11 +21,7 @@ const Category = ({ data }: Props) => {
     return (
         <>
             <h3>{category}</h3>
-            <div className={styles.products}>
-                {products.map((product) => {
-                    return <ProductItem productData={product} />;
-                })}
-            </div>
+            <ProductsList products={products} />
         </>
     );
 };

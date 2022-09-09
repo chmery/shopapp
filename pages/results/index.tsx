@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import ProductItem from "../../components/ProductItem/ProductItem";
+import ProductsList from "../../components/ProductsList/ProductsList";
 import styles from "./Results.module.css";
 
 type Props = {
@@ -28,11 +28,7 @@ const Results = ({ data }: Props) => {
     return (
         <>
             <h3>Results for {keyword}</h3>
-            <div className={styles.products}>
-                {products.map((product) => (
-                    <ProductItem productData={product} />
-                ))}
-            </div>
+            <ProductsList products={products} />
         </>
     );
 };
