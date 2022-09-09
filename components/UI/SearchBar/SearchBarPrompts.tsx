@@ -1,12 +1,21 @@
 import styles from "./SearchBarPrompts.module.css";
 
-const SearchBarPropmts = () => {
+type Props = {
+    prompts: ProductData[];
+};
+
+const SearchBarPrompts = ({ prompts }: Props) => {
+    let promptsNum = 0;
+
     return (
         <div className={styles.prompts}>
-            <div>search item1</div>
-            <div>search item2</div>
+            {prompts.map((product) => {
+                promptsNum++;
+                if (promptsNum > 8) return;
+                return <div>{product.title}</div>;
+            })}
         </div>
     );
 };
 
-export default SearchBarPropmts;
+export default SearchBarPrompts;

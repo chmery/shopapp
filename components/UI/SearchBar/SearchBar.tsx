@@ -1,9 +1,10 @@
 import { SearchIcon } from "../Icons/Icons";
 import { useRouter } from "next/router";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { getProductsData } from "../../../helpers/getProductsData";
 
 import styles from "./SearchBar.module.css";
-import SearchBarPropmts from "./SearchBarPrompts";
+import SearchBarPrompts from "./SearchBarPrompts";
 
 type Props = {
     ref: React.MutableRefObject<HTMLDivElement>;
@@ -11,14 +12,44 @@ type Props = {
 
 const SearchBar = React.forwardRef<HTMLDivElement, Props>((_, ref) => {
     const [isTyping, setIsTyping] = useState(false);
+    const [products, setProducts] = useState<ProductData[]>([]);
+    const [prompts, setPrompts] = useState<ProductData[]>([]);
 
-    const router = useRouter();
+    useEffect(() => {
+        const setProductsData = async () => {
+            const data = await getProductsData();
+            setProducts(data);
+        };
+
+        setProductsData();
+    }, []);
+
+    const getMatchingProducts = (keyword: string) => {
+        const matchingProducts = products.filter((product) =>
+            product.title.toLowerCase().includes(keyword.trim().toLowerCase())
+        );
+
+        return matchingProducts;
+    };
 
     const searchInput = useRef<HTMLInputElement>(null);
 
     const typingHandler = () => {
-        searchInput.current?.value ? setIsTyping(true) : setIsTyping(false);
+        if (searchInput.current?.value) {
+            setIsTyping(true);
+            const matchingProducts = getMatchingProducts(searchInput.current.value);
+            if (matchingProducts.length === 0) {
+                setIsTyping(false);
+            }
+            setPrompts(matchingProducts);
+            return;
+        }
+
+        setIsTyping(false);
+        setPrompts([]);
     };
+
+    const router = useRouter();
 
     const searchHandler = (
         event: React.KeyboardEvent<HTMLInputElement> & React.MouseEvent<HTMLButtonElement>
@@ -45,7 +76,7 @@ const SearchBar = React.forwardRef<HTMLDivElement, Props>((_, ref) => {
                     <SearchIcon />
                 </button>
             </div>
-            {isTyping && <SearchBarPropmts />}
+            {isTyping && <SearchBarPrompts prompts={prompts} />}
         </>
     );
 });
