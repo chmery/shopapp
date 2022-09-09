@@ -10,10 +10,8 @@ const Results = ({ data }: Props) => {
     const router = useRouter();
     const { keyword } = router.query;
 
-    const keywordFormatted = `${keyword}`.toLowerCase();
-
     const products = data.filter((product) =>
-        product.title.toLowerCase().includes(keywordFormatted)
+        product.title.toLowerCase().includes(keyword!.toString().toLowerCase())
     );
 
     if (products.length === 0) {
@@ -27,7 +25,7 @@ const Results = ({ data }: Props) => {
 
     return (
         <>
-            <h3>Results for {keyword}</h3>
+            <h3>Results for: {keyword}</h3>
             <ProductsList products={products} />
         </>
     );
