@@ -1,7 +1,7 @@
 import { SearchIcon } from "../Icons/Icons";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
-import { getProductsData } from "../../../helpers/getProductsData";
+import { getProductsData } from "../../../helpers/helpers";
 import { getMatchingProducts } from "./SearchBarHelpers";
 
 import styles from "./SearchBar.module.css";
@@ -27,12 +27,11 @@ const SearchBar = React.forwardRef<HTMLDivElement, Props>((_, ref) => {
         setProductsData();
     }, []);
 
-    const searchInput = useRef<HTMLInputElement>(null);
-    const enteredText: null | string = searchInput.current!.value;
+    const searchInput = useRef<HTMLInputElement>(null!);
 
     const typingHandler = () => {
-        if (enteredText) {
-            const matchingProducts = getMatchingProducts(enteredText, products);
+        if (searchInput.current.value) {
+            const matchingProducts = getMatchingProducts(searchInput.current.value, products);
 
             if (matchingProducts.length === 0) {
                 setArePromptsVisible(false);
@@ -41,20 +40,18 @@ const SearchBar = React.forwardRef<HTMLDivElement, Props>((_, ref) => {
                 setArePromptsVisible(true);
                 setPrompts(matchingProducts);
             }
-
             return;
         }
-
         setArePromptsVisible(false);
     };
 
     const router = useRouter();
 
     const searchHandler = (event: SearchEvent) => {
-        if (enteredText === null) return;
+        if (!searchInput.current.value) return;
 
         if (event.key === "Enter" || event.type === "click") {
-            router.push(`/results?keyword=${enteredText}`);
+            router.push(`/results?keyword=${searchInput.current.value}`);
         }
     };
 

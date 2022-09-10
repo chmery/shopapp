@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import ProductsList from "../../components/ProductsList/ProductsList";
+import { capitalize } from "../../helpers/helpers";
 
 type Props = {
     data: ProductData[];
@@ -18,9 +19,7 @@ const Category = ({ data }: Props) => {
     if (!category) return;
     const products = getProductsByCategory(data, category as string);
 
-    const categoryCapitalized = `${(category as string).slice(0, 1).toUpperCase()}${(
-        category as string
-    ).slice(1)}`;
+    const categoryCapitalized = capitalize(category as string);
 
     return (
         <>
