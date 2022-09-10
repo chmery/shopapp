@@ -30,25 +30,13 @@ const Navbar = ({ onStartSearching, onStopSearching, isSearching }: Props) => {
         <nav>
             <ul>
                 {<NavbarSearchItem />}
-                <li
-                    onClick={() => {
-                        router.push("/favourites");
-                    }}
-                >
+                <li onClick={() => router.push("/favourites")}>
                     <HeartIcon />
                 </li>
-                <li
-                    onClick={() => {
-                        router.push("/account");
-                    }}
-                >
+                <li onClick={() => router.push("/account")}>
                     <UserIcon />
                 </li>
-                <li
-                    onClick={() => {
-                        router.push("/cart");
-                    }}
-                >
+                <li onClick={() => router.push("/cart")}>
                     <CartIcon />
                 </li>
             </ul>

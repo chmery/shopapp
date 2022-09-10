@@ -7,13 +7,9 @@ import { getMatchingProducts } from "./SearchBarHelpers";
 import styles from "./SearchBar.module.css";
 import SearchBarPrompts from "./SearchBarPrompts";
 
-type Props = {
-    ref: React.MutableRefObject<HTMLDivElement>;
-};
-
 type SearchEvent = React.KeyboardEvent<HTMLInputElement> & React.MouseEvent<HTMLButtonElement>;
 
-const SearchBar = React.forwardRef<HTMLDivElement, Props>((_, ref) => {
+const SearchBar = React.forwardRef<HTMLDivElement>((_, ref) => {
     const [arePromptsVisible, setArePromptsVisible] = useState(false);
     const [products, setProducts] = useState<ProductData[]>([]);
     const [prompts, setPrompts] = useState<ProductData[]>([]);
@@ -73,7 +69,7 @@ const SearchBar = React.forwardRef<HTMLDivElement, Props>((_, ref) => {
                     <SearchIcon />
                 </button>
             </div>
-            {arePromptsVisible && <SearchBarPrompts prompts={prompts} />}
+            {arePromptsVisible && <SearchBarPrompts prompts={prompts} ref={ref} />}
         </>
     );
 });
