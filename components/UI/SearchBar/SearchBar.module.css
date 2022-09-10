@@ -10,7 +10,7 @@
     border-radius: 9px 0 0 9px;
 }
 
-input.typing-input {
+input.prompts-input {
     border-radius: 9px 0 0 0px;
 }
 
@@ -21,7 +21,7 @@ input.typing-input {
     border-radius: 0 9px 9px 0;
 }
 
-button.typing-btn {
+button.prompts-btn {
     border-radius: 0 9px 0 0;
 }
 

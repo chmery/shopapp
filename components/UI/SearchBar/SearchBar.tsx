@@ -2,6 +2,7 @@ import { SearchIcon } from "../Icons/Icons";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import { getProductsData } from "../../../helpers/getProductsData";
+import { getMatchingProducts } from "./SearchBarHelpers";
 
 import styles from "./SearchBar.module.css";
 import SearchBarPrompts from "./SearchBarPrompts";
@@ -10,8 +11,10 @@ type Props = {
     ref: React.MutableRefObject<HTMLDivElement>;
 };
 
+type SearchEvent = React.KeyboardEvent<HTMLInputElement> & React.MouseEvent<HTMLButtonElement>;
+
 const SearchBar = React.forwardRef<HTMLDivElement, Props>((_, ref) => {
-    const [isTyping, setIsTyping] = useState(false);
+    const [arePromptsVisible, setArePromptsVisible] = useState(false);
     const [products, setProducts] = useState<ProductData[]>([]);
     const [prompts, setPrompts] = useState<ProductData[]>([]);
 
@@ -24,40 +27,34 @@ const SearchBar = React.forwardRef<HTMLDivElement, Props>((_, ref) => {
         setProductsData();
     }, []);
 
-    const getMatchingProducts = (keyword: string) => {
-        const matchingProducts = products.filter((product) =>
-            product.title.toLowerCase().includes(keyword.trim().toLowerCase())
-        );
-
-        return matchingProducts;
-    };
-
     const searchInput = useRef<HTMLInputElement>(null);
+    const enteredText: null | string = searchInput.current!.value;
 
     const typingHandler = () => {
-        if (searchInput.current?.value) {
-            setIsTyping(true);
-            const matchingProducts = getMatchingProducts(searchInput.current.value);
+        if (enteredText) {
+            const matchingProducts = getMatchingProducts(enteredText, products);
+
             if (matchingProducts.length === 0) {
-                setIsTyping(false);
+                setArePromptsVisible(false);
+                setPrompts([]);
+            } else {
+                setArePromptsVisible(true);
+                setPrompts(matchingProducts);
             }
-            setPrompts(matchingProducts);
+
             return;
         }
 
-        setIsTyping(false);
-        setPrompts([]);
+        setArePromptsVisible(false);
     };
 
     const router = useRouter();
 
-    const searchHandler = (
-        event: React.KeyboardEvent<HTMLInputElement> & React.MouseEvent<HTMLButtonElement>
-    ) => {
-        if (searchInput.current?.value === null) return;
+    const searchHandler = (event: SearchEvent) => {
+        if (enteredText === null) return;
 
         if (event.key === "Enter" || event.type === "click") {
-            router.push(`/results?keyword=${searchInput.current!.value}`);
+            router.push(`/results?keyword=${enteredText}`);
         }
     };
 
@@ -70,13 +67,16 @@ const SearchBar = React.forwardRef<HTMLDivElement, Props>((_, ref) => {
                     onChange={typingHandler}
                     onKeyDown={searchHandler}
                     ref={searchInput}
-                    className={isTyping ? styles["typing-input"] : ""}
+                    className={arePromptsVisible ? styles["prompts-input"] : ""}
                 />
-                <button className={isTyping ? styles["typing-btn"] : ""} onClick={searchHandler}>
+                <button
+                    className={arePromptsVisible ? styles["prompts-btn"] : ""}
+                    onClick={searchHandler}
+                >
                     <SearchIcon />
                 </button>
             </div>
-            {isTyping && <SearchBarPrompts prompts={prompts} />}
+            {arePromptsVisible && <SearchBarPrompts prompts={prompts} />}
         </>
     );
 });
