@@ -12,25 +12,27 @@ const SearchBarPrompts = React.forwardRef<HTMLDivElement, Props>(({ prompts }, r
     const router = useRouter();
 
     return (
-        <div className={styles.prompts} ref={ref}>
-            {prompts.map((product) => {
-                const title = `${product.title.slice(0, 50)}...`;
-                const category = capitalize(product.category);
+        <div className={styles.wrapper}>
+            <div className={styles.prompts} ref={ref}>
+                {prompts.map((product) => {
+                    const title = `${product.title.slice(0, 50)}...`;
+                    const category = capitalize(product.category);
 
-                promptsNum++;
-                if (promptsNum > 8) return;
+                    promptsNum++;
+                    if (promptsNum > 8) return;
 
-                return (
-                    <div
-                        className={styles.prompt}
-                        onClick={() => router.push(`/product?id=${product.id}`)}
-                        key={product.id}
-                    >
-                        <h3>{title}</h3>
-                        <span>{category}</span>
-                    </div>
-                );
-            })}
+                    return (
+                        <div
+                            className={styles.prompt}
+                            onClick={() => router.push(`/product?id=${product.id}`)}
+                            key={product.id}
+                        >
+                            <h3>{title}</h3>
+                            <span>{category}</span>
+                        </div>
+                    );
+                })}
+            </div>
         </div>
     );
 });

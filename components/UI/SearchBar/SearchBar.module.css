@@ -1,5 +1,9 @@
 .search-bar {
+    padding: 0 1.5em;
+    max-width: 50rem;
+    min-width: 20rem;
     height: 2.8em;
+    margin: 0 auto;
     margin-top: 1em;
     display: flex;
 }
