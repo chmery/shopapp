@@ -1,4 +1,5 @@
 import Image from "next/future/image";
+import { useRouter } from "next/router";
 import styles from "./ProductItem.module.css";
 
 type Props = {
@@ -9,8 +10,13 @@ const ProductItem = ({ productData }: Props) => {
     const title = `${productData.title.slice(0, 40)}...`;
     const price = `$${productData.price}`;
 
+    const router = useRouter();
+
     return (
-        <div className={styles.product}>
+        <div
+            className={styles.product}
+            onClick={() => router.push(`/product?id=${productData.id}`)}
+        >
             <div className={styles["product-image"]}>
                 <Image src={productData.image} alt={productData.title} fill />
             </div>
