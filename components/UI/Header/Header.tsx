@@ -3,7 +3,6 @@ import React, { useEffect, useState, useRef } from "react";
 import Navbar from "./Navbar";
 import SearchBar from "../SearchBar/SearchBar";
 import { useRouter } from "next/router";
-
 import styles from "./Header.module.css";
 
 const Header = () => {
