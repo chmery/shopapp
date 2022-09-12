@@ -1,7 +1,7 @@
 .product {
     display: flex;
     flex-direction: column;
-    max-width: 20rem;
+    max-width: 100%;
     min-width: 5rem;
     cursor: pointer;
 }
