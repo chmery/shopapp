@@ -1,4 +1,8 @@
-.category {
+.category-title {
     display: flex;
     justify-content: space-between;
+}
+
+.category {
+    margin: 5em 0;
 }

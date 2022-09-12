@@ -1,15 +1,10 @@
 import { useRouter } from "next/router";
 import ProductsList from "../../components/ProductsList/ProductsList";
 import { capitalize } from "../../helpers/helpers";
+import { getProductsByCategory } from "../../helpers/helpers";
 
 type Props = {
     data: ProductData[];
-};
-
-const getProductsByCategory = (data: ProductData[], category: string) => {
-    if (category === "bestsellers") return data.slice(0, 4);
-    const products = data.filter((product) => product.category === category);
-    return products;
 };
 
 const Category = ({ data }: Props) => {
@@ -17,8 +12,7 @@ const Category = ({ data }: Props) => {
     const { category } = router.query;
 
     if (!category) return;
-    const products = getProductsByCategory(data, category as string);
-
+    const products = getProductsByCategory(data, category as string, 4);
     const categoryCapitalized = capitalize(category as string);
 
     return (
