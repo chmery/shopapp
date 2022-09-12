@@ -3,6 +3,7 @@ import Image from "next/future/image";
 import { HeartIcon } from "../../components/UI/Icons/Icons";
 import { getProductsData } from "../../helpers/helpers";
 import { useRouter } from "next/router";
+import { Rating } from "@mui/material";
 
 type Props = {
     data: ProductData[];
@@ -27,7 +28,12 @@ const Product = ({ data }: Props) => {
                 <h1>{product.title}</h1>
                 <p>{product.description}</p>
                 <div className={styles.rating}>
-                    rating:
+                    <Rating
+                        name="product-rating"
+                        value={product.rating.rate}
+                        precision={0.5}
+                        readOnly
+                    />
                     <span className={styles["rating-score"]}>{product.rating.rate}/5.0</span>
                     <span className={styles["rating-count"]}>{product.rating.count} votes</span>
                 </div>
