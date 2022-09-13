@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { calcCartItemsNum } from "./helpers";
 
-type SliceState = {
+export type SliceState = {
     cartItems: {
         item: ProductData;
         quantity: number;
@@ -33,7 +34,7 @@ const cartSlice = createSlice({
                 state.cartItems.push(item);
             }
 
-            state.cartItemsNum = state.cartItems.length;
+            state.cartItemsNum = calcCartItemsNum(state);
         },
         removeFromCart(state, action: PayloadAction<number>) {
             const itemToRemoveIndex = state.cartItems.findIndex(
@@ -52,7 +53,7 @@ const cartSlice = createSlice({
                 );
             }
 
-            state.cartItemsNum = state.cartItems.length;
+            state.cartItemsNum = calcCartItemsNum(state);
         },
     },
 });

@@ -1,0 +1,15 @@
+.items-number {
+    position: absolute;
+    margin-left: 0.8rem;
+    margin-top: 0.8rem;
+    height: 1.3rem;
+    width: 1.3rem;
+    border-radius: 100vh;
+    background: var(--red);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.8rem;
+}

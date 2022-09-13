@@ -4,6 +4,8 @@ import { HeartIcon } from "../../components/UI/Icons/Icons";
 import { getProductsData } from "../../helpers/helpers";
 import { useRouter } from "next/router";
 import { Rating } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { cartActions } from "../../store/cartSlice/cartSlice";
 
 type Props = {
     data: ProductData[];
@@ -13,11 +15,15 @@ const Product = ({ data }: Props) => {
     const router = useRouter();
     const { id } = router.query;
 
+    const dispatch = useDispatch();
+
     const productIndex = data.findIndex((product) => product.id === Number(id));
     const product = data[productIndex];
 
     // temporary
     if (!product) return;
+
+    const addToCartHandler = () => dispatch(cartActions.addToCart(product));
 
     return (
         <div className={styles.product}>
@@ -39,7 +45,9 @@ const Product = ({ data }: Props) => {
                 </div>
                 <span className={styles.price}>${product.price}</span>
                 <div className={styles.buttons}>
-                    <button className={styles["cart-btn"]}>Add to Cart</button>
+                    <button className={styles["cart-btn"]} onClick={addToCartHandler}>
+                        Add to Cart
+                    </button>
                     <button className={styles["fav-btn"]}>
                         Favourites <HeartIcon />
                     </button>

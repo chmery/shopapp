@@ -1,5 +1,8 @@
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 import { HeartIcon, SearchIcon, UserIcon, CartIcon, CloseIcon } from "../Icons/Icons";
+import styles from "./Navbar.module.css";
 
 type Props = {
     onStopSearching: () => void;
@@ -9,6 +12,7 @@ type Props = {
 
 const Navbar = ({ onStartSearching, onStopSearching, isSearching }: Props) => {
     const router = useRouter();
+    const cartItemsNum = useSelector((state: RootState) => state.cart.cartItemsNum);
 
     const NavbarSearchItem = () => {
         const searchingJSX = (
@@ -38,6 +42,9 @@ const Navbar = ({ onStartSearching, onStopSearching, isSearching }: Props) => {
                 </li>
                 <li onClick={() => router.push("/cart")}>
                     <CartIcon />
+                    {cartItemsNum > 0 && (
+                        <div className={styles["items-number"]}>{cartItemsNum}</div>
+                    )}
                 </li>
             </ul>
         </nav>
