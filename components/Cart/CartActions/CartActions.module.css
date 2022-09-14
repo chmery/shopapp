@@ -1,0 +1,23 @@
+.checkout-actions {
+    margin-top: 2em;
+}
+
+.checkout-actions button {
+    background: var(--red);
+    color: #fff;
+    border-radius: 9px;
+    padding: 1em 2em;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.checkout-actions p {
+    margin-top: 1em;
+    color: var(--grey);
+}
+
+.checkout-actions a {
+    color: var(--red);
+    font-weight: 600;
+}
