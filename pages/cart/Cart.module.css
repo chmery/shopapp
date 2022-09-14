@@ -1,0 +1,131 @@
+.cart-item {
+    display: flex;
+    align-items: center;
+    column-gap: 1em;
+    margin-top: 2em;
+}
+
+.products-added {
+    text-align: center;
+}
+
+.product-image {
+    position: relative;
+    width: 5em;
+    height: 5em;
+}
+
+.product-image,
+.title-price h3,
+.category-quantity span {
+    cursor: pointer;
+}
+
+.product-image img {
+    object-fit: contain;
+}
+
+.product-info {
+    display: flex;
+    flex: 1 80;
+    flex-direction: column;
+}
+
+.title-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.category-quantity {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.category-quantity > div {
+    display: flex;
+    align-items: center;
+    column-gap: 0.6em;
+}
+
+.category-quantity button {
+    border: 1px solid var(--grey);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2em;
+    width: 2em;
+}
+
+.category-quantity svg {
+    width: 1.2em;
+    height: 1.2em;
+}
+
+.category-quantity > span {
+    color: var(--grey);
+}
+
+.summary {
+    margin-top: 2em;
+}
+
+.summary > div {
+    margin-top: 0.5em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.subtotal,
+.shipping {
+    font-size: 1.125em;
+    font-weight: 600;
+}
+
+.total {
+    border-top: 1px solid var(--light-grey);
+    font-weight: 600;
+    font-size: 1.125em;
+    padding-top: 0.5em;
+}
+
+.total-price {
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.checkout-actions {
+    margin-top: 2em;
+}
+
+.checkout-actions button {
+    background: var(--red);
+    color: #fff;
+    border-radius: 9px;
+    padding: 1em 2em;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.checkout-actions p {
+    margin-top: 1em;
+    color: var(--grey);
+}
+
+.checkout-actions a {
+    color: var(--red);
+    font-weight: 600;
+}
+
+.no-items {
+    text-align: center;
+    margin: 10rem auto;
+    margin-top: 5rem;
+}
+
+.no-items p {
+    color: var(--grey);
+}
