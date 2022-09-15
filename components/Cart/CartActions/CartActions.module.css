@@ -3,6 +3,10 @@
 }
 
 .checkout-actions button {
+    display: flex;
+    justify-content: center;
+    column-gap: 1em;
+    align-items: center;
     background: var(--red);
     color: #fff;
     border-radius: 9px;
@@ -10,6 +14,10 @@
     width: 100%;
     font-size: 1rem;
     font-weight: 600;
+}
+
+.checkout-actions button > div {
+    transform: scale(0.5);
 }
 
 .checkout-actions p {

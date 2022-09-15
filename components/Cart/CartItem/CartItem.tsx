@@ -1,4 +1,4 @@
-import styles from "./Cart.module.css";
+import styles from "./CartItem.module.css";
 import { useRouter } from "next/router";
 import Image from "next/future/image";
 import { MinusIcon, PlusIcon } from "../../UI/Icons/Icons";
