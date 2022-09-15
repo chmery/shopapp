@@ -29,3 +29,8 @@
     color: var(--red);
     font-weight: 600;
 }
+
+button.sending-btn {
+    background: var(--light-grey);
+    cursor: default;
+}

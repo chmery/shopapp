@@ -47,6 +47,7 @@ input {
     padding: 0 1em;
     margin: 0;
     outline: none;
+    border-radius: 9px;
     border: 1px solid var(--light-grey);
 }
 

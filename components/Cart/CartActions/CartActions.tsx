@@ -12,15 +12,15 @@ const CartActions = ({ onOrder, isOrdering }: Props) => {
         <div className={styles["checkout-actions"]}>
             {!isOrdering && <button onClick={onOrder}>Checkout as a guest</button>}
             {isOrdering && (
-                <button>
+                <button className={styles["sending-btn"]}>
                     Sending order <Spinner />
                 </button>
             )}
 
             {!isOrdering && (
                 <p>
-                    <Link href="/signin">Sign in</Link> for better user and checkout experience in
-                    the future or don't do it and continue as a guest.
+                    <Link href="/auth/login">Log in</Link> for better user and checkout experience
+                    in the future or don't do it and continue as a guest.
                 </p>
             )}
         </div>

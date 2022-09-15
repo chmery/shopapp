@@ -23,8 +23,6 @@
 
 .newsletter button {
     background: var(--red);
-    height: 2.8rem;
-    width: 7em;
     padding: 0 1em;
     border-radius: 0 9px 9px 0;
     color: #fff;
