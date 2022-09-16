@@ -19,8 +19,8 @@ const CartActions = ({ onOrder, isOrdering }: Props) => {
 
             {!isOrdering && (
                 <p>
-                    <Link href="/auth/login">Log in</Link> for better user and checkout experience
-                    in the future or don't do it and continue as a guest.
+                    <Link href="/auth?action=login">Log in</Link> for better user and checkout
+                    experience in the future or don't do it and continue as a guest.
                 </p>
             )}
         </div>

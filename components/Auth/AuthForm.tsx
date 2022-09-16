@@ -1,7 +1,8 @@
 import Link from "next/link";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import styles from "./AuthForm.module.css";
 import Spinner from "../UI/Spinner/Spinner";
+import { useRouter } from "next/router";
 
 type Props = {
     onAuth: (email: string, password: string) => void;
@@ -18,18 +19,20 @@ const AuthForm = ({ onAuth, action, isLoading }: Props) => {
     const enteredEmail = useRef<HTMLInputElement>(null!);
     const enteredPassword = useRef<HTMLInputElement>(null!);
 
+    const router = useRouter();
+
     const title = action === "login" ? "Log in to your account" : "Create new account";
 
     const BottomText = () => {
         const LoginPageText = (
             <p>
-                Don't have an account? <Link href="/auth/signup">Sign Up</Link>
+                Don't have an account? <Link href="/auth?action=signup">Sign Up</Link>
             </p>
         );
 
         const SignUpPageText = (
             <p>
-                Already have an account? <Link href="/auth/login">Log In</Link>
+                Already have an account? <Link href="/auth?action=login">Log In</Link>
             </p>
         );
 
@@ -38,9 +41,9 @@ const AuthForm = ({ onAuth, action, isLoading }: Props) => {
 
     const areInputsValid = (email: string, password: string) => {
         const emailRegex = new RegExp("[a-z0-9]+@[a-z]+.[a-z]{2,3}");
-        const isEmailCorrect = emailRegex.test(email);
+        const isEmailValid = emailRegex.test(email);
 
-        if (!isEmailCorrect) {
+        if (!isEmailValid) {
             setIsEmailValid(false);
             const error = "Enter correct e-mail address.";
             setEmailError(error);
@@ -52,7 +55,7 @@ const AuthForm = ({ onAuth, action, isLoading }: Props) => {
             setPasswordError(error);
         }
 
-        return password.length >= 6 && isEmailCorrect ? true : false;
+        return isEmailValid && password.length >= 6 ? true : false;
     };
 
     const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
@@ -69,6 +72,16 @@ const AuthForm = ({ onAuth, action, isLoading }: Props) => {
         const clickedInput = event.target;
         enteredEmail.current === clickedInput ? setIsEmailValid(true) : setIsPasswordValid(true);
     };
+
+    useEffect(() => {
+        const setInitialState = () => {
+            setIsPasswordValid(true);
+            setIsEmailValid(true);
+        };
+
+        router.events.on("routeChangeStart", setInitialState);
+        return () => router.events.off("routeChangeStart", setInitialState);
+    }, []);
 
     return (
         <form onSubmit={submitHandler} className={styles["auth-form"]}>

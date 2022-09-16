@@ -2,7 +2,7 @@ import { SearchIcon } from "../Icons/Icons";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import { getProductsData } from "../../../helpers/helpers";
-import { getMatchingProducts } from "./SearchBarHelpers";
+import { getMatchingProducts } from "./helpers";
 
 import styles from "./SearchBar.module.css";
 import SearchBarPrompts from "./SearchBarPrompts";
