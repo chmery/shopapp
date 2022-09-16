@@ -7,6 +7,10 @@
     margin: 0 auto;
 }
 
+.login-form > div {
+    width: 100%;
+}
+
 .login-form input {
     width: 100%;
 }
@@ -25,4 +29,13 @@
 .login-form a {
     color: var(--red);
     font-weight: 600;
+}
+
+.invalid {
+    border: 1px solid var(--red);
+    background: #ffe2e2;
+}
+
+.invalid-message {
+    color: var(--red);
 }
