@@ -16,10 +16,6 @@
     font-weight: 600;
 }
 
-.checkout-actions button > div {
-    transform: scale(0.5);
-}
-
 .checkout-actions p {
     margin-top: 1em;
     color: var(--grey);
