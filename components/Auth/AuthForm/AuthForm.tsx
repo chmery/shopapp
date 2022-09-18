@@ -1,8 +1,7 @@
-import Link from "next/link";
 import React, { useRef, useState, useEffect } from "react";
 import styles from "./AuthForm.module.css";
-import Spinner from "../UI/Spinner/Spinner";
 import { useRouter } from "next/router";
+import AuthActions from "../AuthActions/AuthActions";
 
 type Props = {
     onAuth: (email: string, password: string) => void;
@@ -22,22 +21,6 @@ const AuthForm = ({ onAuth, action, isLoading }: Props) => {
     const router = useRouter();
 
     const title = action === "login" ? "Log in to your account" : "Create new account";
-
-    const BottomText = () => {
-        const LoginPageText = (
-            <p>
-                Don't have an account? <Link href="/auth?action=signup">Sign Up</Link>
-            </p>
-        );
-
-        const SignUpPageText = (
-            <p>
-                Already have an account? <Link href="/auth?action=login">Log In</Link>
-            </p>
-        );
-
-        return action === "login" ? LoginPageText : SignUpPageText;
-    };
 
     const areInputsValid = (email: string, password: string) => {
         const emailRegex = new RegExp("[a-z0-9]+@[a-z]+.[a-z]{2,3}");
@@ -74,13 +57,13 @@ const AuthForm = ({ onAuth, action, isLoading }: Props) => {
     };
 
     useEffect(() => {
-        const setInitialState = () => {
+        const setInitialInputsState = () => {
             setIsPasswordValid(true);
             setIsEmailValid(true);
         };
 
-        router.events.on("routeChangeStart", setInitialState);
-        return () => router.events.off("routeChangeStart", setInitialState);
+        router.events.on("routeChangeStart", setInitialInputsState);
+        return () => router.events.off("routeChangeStart", setInitialInputsState);
     }, []);
 
     return (
@@ -96,7 +79,6 @@ const AuthForm = ({ onAuth, action, isLoading }: Props) => {
                 />
                 {!isEmailValid && <p className={styles["invalid-message"]}>{emailError}</p>}
             </div>
-
             <div>
                 <input
                     className={!isPasswordValid ? styles.invalid : ""}
@@ -107,16 +89,7 @@ const AuthForm = ({ onAuth, action, isLoading }: Props) => {
                 />
                 {!isPasswordValid && <p className={styles["invalid-message"]}>{passwordError}</p>}
             </div>
-            {!isLoading && (
-                <button type="submit">{action === "login" ? "Log In" : "Sign Up"}</button>
-            )}
-
-            {isLoading && (
-                <button type="submit" className={styles["loading-btn"]}>
-                    {action === "login" ? "Loging In" : "Signing Up"} <Spinner />
-                </button>
-            )}
-            {!isLoading && <BottomText />}
+            <AuthActions isLoading={isLoading} action={action} />
         </form>
     );
 };

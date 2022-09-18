@@ -1,13 +1,14 @@
-import AuthForm from "../../components/Auth/AuthForm";
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase/config";
+import AuthForm from "../../components/Auth/AuthForm/AuthForm";
 import { useRouter } from "next/router";
 import { Alert } from "@mui/material";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../../store/auth-context";
 
 const LogIn = () => {
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+
+    const authContext = useContext(AuthContext);
 
     const router = useRouter();
     const { action } = router.query;
@@ -15,14 +16,11 @@ const LogIn = () => {
     const authHandler = async (email: string, password: string) => {
         try {
             setIsLoading(true);
+            action === "login"
+                ? await authContext!.login(email, password)
+                : await authContext!.signUp(email, password);
 
-            const res =
-                action === "login"
-                    ? await signInWithEmailAndPassword(auth, email, password)
-                    : await createUserWithEmailAndPassword(auth, email, password);
-
-            const user = res.user;
-            if (user) {
+            if (authContext?.currentUser) {
                 router.push("/");
             }
             setIsLoading(false);

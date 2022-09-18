@@ -1,0 +1,8 @@
+button.loading-btn {
+    background: var(--light-grey);
+    cursor: default;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 1em;
+}
