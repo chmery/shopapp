@@ -3,21 +3,17 @@ import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
     onAuthStateChanged,
+    signOut,
 } from "firebase/auth";
 import { auth } from "../firebase/config";
 
-type AuthContextType = {
-    login: (email: string, password: string) => Promise<void>;
-    signUp: (email: string, password: string) => Promise<void>;
-    currentUser: string | null;
-};
-
-export const AuthContext = React.createContext<AuthContextType | null>(null);
+export const AuthContext = React.createContext<AuthContext | null>(null);
 
 const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
-    const [currentUser, setCurrentUser] = useState<string | null>(null);
+    const [userId, setUserId] = useState<string | null>(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const loginHandler = async (email: string, password: string) => {
+    const logInHandler = async (email: string, password: string) => {
         await signInWithEmailAndPassword(auth, email, password);
     };
 
@@ -25,15 +21,27 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
         await createUserWithEmailAndPassword(auth, email, password);
     };
 
+    const logOutHandler = async () => {
+        await signOut(auth);
+    };
+
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
-            user ? setCurrentUser(user.uid) : setCurrentUser(null);
+            if (user) {
+                setIsLoggedIn(true);
+                setUserId(user.uid);
+            } else {
+                setIsLoggedIn(false);
+                setUserId(null);
+            }
         });
     }, [auth]);
 
     const authContext = {
-        currentUser,
-        login: loginHandler,
+        isLoggedIn,
+        userId,
+        logIn: logInHandler,
+        logOut: logOutHandler,
         signUp: signUpHandler,
     };
 

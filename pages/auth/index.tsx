@@ -3,24 +3,28 @@ import { useRouter } from "next/router";
 import { Alert } from "@mui/material";
 import { useState, useContext } from "react";
 import { AuthContext } from "../../store/auth-context";
+import RedirectingLoader from "../../components/UI/RedirectingLoader/RedirectingLoader";
 
-const LogIn = () => {
+const AuthPage = () => {
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    const authContext = useContext(AuthContext);
+    const { logIn, signUp, isLoggedIn } = useContext(AuthContext) as AuthContext;
 
     const router = useRouter();
     const { action } = router.query;
 
+    if (isLoggedIn) {
+        router.push("/");
+        return <RedirectingLoader />;
+    }
+
     const authHandler = async (email: string, password: string) => {
         try {
             setIsLoading(true);
-            action === "login"
-                ? await authContext!.login(email, password)
-                : await authContext!.signUp(email, password);
+            action === "login" ? await logIn(email, password) : await signUp(email, password);
 
-            if (authContext?.currentUser) {
+            if (isLoggedIn) {
                 router.push("/");
             }
             setIsLoading(false);
@@ -39,4 +43,4 @@ const LogIn = () => {
     );
 };
 
-export default LogIn;
+export default AuthPage;

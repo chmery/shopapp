@@ -32,7 +32,7 @@ const AuthActions = ({ isLoading, action }: Props) => {
 
             {isLoading && (
                 <button type="submit" className={styles["loading-btn"]}>
-                    {action === "login" ? "Loging In" : "Signing Up"} <Spinner />
+                    {action === "login" ? "Logging In" : "Signing Up"} <Spinner />
                 </button>
             )}
             {!isLoading && <BottomText />}

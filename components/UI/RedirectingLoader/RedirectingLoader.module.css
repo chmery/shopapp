@@ -1,0 +1,10 @@
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 1em;
+}
+
+.loader div {
+    background: var(--light-grey);
+}

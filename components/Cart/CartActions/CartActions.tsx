@@ -1,6 +1,8 @@
 import styles from "./CartActions.module.css";
 import Link from "next/link";
 import Spinner from "../../UI/Spinner/Spinner";
+import { useContext } from "react";
+import { AuthContext } from "../../../store/auth-context";
 
 type Props = {
     onOrder: () => void;
@@ -8,16 +10,20 @@ type Props = {
 };
 
 const CartActions = ({ onOrder, isOrdering }: Props) => {
+    const { isLoggedIn } = useContext(AuthContext) as AuthContext;
+
     return (
         <div className={styles["checkout-actions"]}>
-            {!isOrdering && <button onClick={onOrder}>Checkout as a guest</button>}
+            {!isOrdering && (
+                <button onClick={onOrder}>{isLoggedIn ? "Checkout" : "Checkout as a guest"}</button>
+            )}
             {isOrdering && (
                 <button className={styles["sending-btn"]}>
                     Sending order <Spinner />
                 </button>
             )}
 
-            {!isOrdering && (
+            {!isOrdering && !isLoggedIn && (
                 <p>
                     <Link href="/auth?action=login">Log in</Link> for better user and checkout
                     experience in the future or don't do it and continue as a guest.

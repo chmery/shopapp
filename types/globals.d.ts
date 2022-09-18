@@ -10,3 +10,11 @@ interface ProductData {
         count: number;
     };
 }
+
+interface AuthContext {
+    logIn: (email: string, password: string) => Promise<void>;
+    signUp: (email: string, password: string) => Promise<void>;
+    logOut: () => Promise<void>;
+    userId: string | null;
+    isLoggedIn: boolean;
+}
