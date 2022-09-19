@@ -1,0 +1,34 @@
+.order {
+    margin-top: 2em;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+}
+
+.order a {
+    color: var(--red);
+    font-weight: 600;
+}
+
+.date-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+}
+
+.products-images {
+    display: flex;
+    justify-content: flex-start;
+    column-gap: 1em;
+}
+
+.product-image {
+    position: relative;
+    width: 5em;
+    height: 5em;
+}
+
+.product-image img {
+    object-fit: contain;
+}
