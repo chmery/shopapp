@@ -4,22 +4,29 @@ import styles from "./Cart.module.css";
 import CartSummary from "../../components/Cart/CartSummary/CartSummary";
 import CartItem from "../../components/Cart/CartItem/CartItem";
 import CartActions from "../../components/Cart/CartActions/CartActions";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { cartActions } from "../../store/cartSlice/cartSlice";
 import { Alert } from "@mui/material";
 import { db } from "../../firebase/config";
 import { collection, addDoc } from "firebase/firestore";
+import { AuthContext } from "../../store/auth-context";
 
 const Cart = () => {
     const [isOrdering, setIsOrdering] = useState(false);
     const [isOrdered, setIsOrdered] = useState(false);
 
     const dispatch = useDispatch();
+    const { userId } = useContext(AuthContext) as AuthContext;
 
     const orderHandler = async () => {
         setIsOrdering(true);
 
         const orderedItems: { id: number; quantity: number; totalPrice: number }[] = [];
+        const orderDate = new Date().toLocaleDateString("en-US", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+        });
 
         cartItems.forEach((cartItem) => {
             orderedItems.push({
@@ -29,8 +36,10 @@ const Cart = () => {
             });
         });
 
-        const docRef = await addDoc(collection(db, "orders"), {
+        await addDoc(collection(db, "orders"), {
             orderedItems,
+            orderDate,
+            userId,
         });
 
         dispatch(cartActions.clearCart());

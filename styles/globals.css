@@ -18,6 +18,7 @@ a {
 
 main {
     margin-top: 6rem;
+    min-height: 30vh;
 }
 
 p,
