@@ -18,3 +18,15 @@ interface AuthContext {
     userId: string | null;
     isLoggedIn: boolean;
 }
+
+interface OrderData {
+    orderDate: string;
+    totalPrice: number;
+    userId: string;
+    orderedItems: {
+        quantity: number;
+        title: string;
+        category: string;
+        image: string;
+    }[];
+}

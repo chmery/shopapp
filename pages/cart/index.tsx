@@ -14,6 +14,7 @@ import { AuthContext } from "../../store/auth-context";
 const Cart = () => {
     const [isOrdering, setIsOrdering] = useState(false);
     const [isOrdered, setIsOrdered] = useState(false);
+    const SHIPPING_COST = 10;
 
     const dispatch = useDispatch();
     const { userId } = useContext(AuthContext) as AuthContext;
@@ -21,7 +22,13 @@ const Cart = () => {
     const orderHandler = async () => {
         setIsOrdering(true);
 
-        const orderedItems: { id: number; quantity: number; totalPrice: number }[] = [];
+        const orderedItems: {
+            quantity: number;
+            title: string;
+            category: string;
+            image: string;
+        }[] = [];
+
         const orderDate = new Date().toLocaleDateString("en-US", {
             day: "numeric",
             month: "long",
@@ -30,9 +37,10 @@ const Cart = () => {
 
         cartItems.forEach((cartItem) => {
             orderedItems.push({
-                id: cartItem.item.id,
+                title: cartItem.item.title,
+                category: cartItem.item.category,
+                image: cartItem.item.image,
                 quantity: cartItem.quantity,
-                totalPrice: subTotal,
             });
         });
 
@@ -40,6 +48,7 @@ const Cart = () => {
             orderedItems,
             orderDate,
             userId,
+            totalPrice: subTotal + SHIPPING_COST,
         });
 
         dispatch(cartActions.clearCart());
