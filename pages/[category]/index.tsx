@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import ProductsList from "../../components/ProductsList/ProductsList";
+import ProductsList from "../../components/Products/ProductsList/ProductsList";
 import { capitalize } from "../../helpers/helpers";
 import { getProductsByCategory } from "../../helpers/helpers";
 

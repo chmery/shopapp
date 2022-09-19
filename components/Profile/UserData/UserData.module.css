@@ -1,0 +1,15 @@
+.user-data {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-data button {
+    color: var(--red);
+}
+
+.user-data span,
+.user-data button {
+    font-weight: 600;
+    font-size: 1rem;
+}

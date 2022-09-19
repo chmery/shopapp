@@ -1,8 +1,8 @@
-import { capitalize } from "../../helpers/helpers";
+import { capitalize } from "../../../helpers/helpers";
 import Link from "next/link";
 import ProductsList from "../ProductsList/ProductsList";
 import styles from "./CategoryShowcase.module.css";
-import { getProductsByCategory } from "../../helpers/helpers";
+import { getProductsByCategory } from "../../../helpers/helpers";
 
 type Props = {
     products: ProductData[];

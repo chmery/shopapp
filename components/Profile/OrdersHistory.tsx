@@ -17,10 +17,11 @@ const OrdersHistory = () => {
             const orders: DocumentData[] = [];
             querySnapshot.forEach((doc) => {
                 const orderData = doc.data();
+                console.log(orderData);
                 orders.push(orderData);
             });
 
-            setOrders(orders);
+            if (orders.length) setOrders(orders);
         };
         fetchOrders();
     }, []);
@@ -29,7 +30,10 @@ const OrdersHistory = () => {
 
     return (
         <>
-            <h3 className={styles["orders-history"]}>Orders history</h3>
+            <div className={styles["orders-history"]}>
+                <h3>Orders history</h3>
+                {!orders && <p>You haven't placed any orders yet.</p>}
+            </div>
             {orders && <OrdersList />}
         </>
     );
