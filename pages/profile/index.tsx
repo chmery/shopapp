@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { useRouter } from "next/router";
 import { AuthContext } from "../../store/auth-context";
-import RedirectingLoader from "../../components/UI/RedirectingLoader/RedirectingLoader";
-import OrdersHistory from "../../components/Profile/OrdersHistory";
+import Loader from "../../components/UI/Loader/Loader";
+import OrdersHistory from "../../components/Profile/OrdersHistory/OrdersHistory";
 import UserData from "../../components/Profile/UserData/UserData";
 
 const Profile = () => {
@@ -12,7 +12,7 @@ const Profile = () => {
 
     if (!isLoggedIn) {
         router.push("/auth?action=login");
-        return <RedirectingLoader />;
+        return <Loader />;
     }
 
     return (

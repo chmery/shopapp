@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { Alert } from "@mui/material";
 import { useState, useContext } from "react";
 import { AuthContext } from "../../store/auth-context";
-import RedirectingLoader from "../../components/UI/RedirectingLoader/RedirectingLoader";
+import Loader from "../../components/UI/Loader/Loader";
 
 const AuthPage = () => {
     const [error, setError] = useState("");
@@ -16,7 +16,7 @@ const AuthPage = () => {
 
     if (isLoggedIn) {
         router.push("/");
-        return <RedirectingLoader />;
+        return <Loader />;
     }
 
     const authHandler = async (email: string, password: string) => {

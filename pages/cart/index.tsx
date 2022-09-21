@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import styles from "./Cart.module.css";
-import CartSummary from "../../components/Cart/CartSummary/CartSummary";
+import CartSummary from "../../components/Cart/PriceSummary/PriceSummary";
 import CartItem from "../../components/Cart/CartItem/CartItem";
 import CartActions from "../../components/Cart/CartActions/CartActions";
 import { useContext, useState } from "react";
@@ -27,24 +27,31 @@ const Cart = () => {
             title: string;
             category: string;
             image: string;
+            price: number;
         }[] = [];
 
-        const orderDate = new Date().toLocaleDateString("en-US", {
+        const currentDate = new Date();
+        const orderDate = currentDate.toLocaleDateString("en-US", {
             day: "numeric",
             month: "long",
             year: "numeric",
         });
+
+        const randomNumber = Math.floor(Math.random() * 1000);
+        const orderId = `${currentDate.getTime()}${randomNumber}`;
 
         cartItems.forEach((cartItem) => {
             orderedItems.push({
                 title: cartItem.item.title,
                 category: cartItem.item.category,
                 image: cartItem.item.image,
+                price: cartItem.item.price,
                 quantity: cartItem.quantity,
             });
         });
 
         await addDoc(collection(db, "orders"), {
+            orderId,
             orderedItems,
             orderDate,
             userId,

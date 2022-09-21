@@ -1,10 +1,10 @@
-import styles from "./CartSummary.module.css";
+import styles from "./PriceSummary.module.css";
 
 type Props = {
     subTotal: number;
 };
 
-const CartSummary = ({ subTotal }: Props) => {
+const PriceSummary = ({ subTotal }: Props) => {
     return (
         <div className={styles.summary}>
             <div>
@@ -23,4 +23,4 @@ const CartSummary = ({ subTotal }: Props) => {
     );
 };
 
-export default CartSummary;
+export default PriceSummary;

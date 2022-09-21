@@ -2,7 +2,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    column-gap: 1em;
+    margin-top: 2em;
+    margin-right: 2em;
 }
 
 .loader div {

@@ -1,0 +1,37 @@
+.order-item {
+    display: flex;
+    column-gap: 1em;
+}
+
+.product-image {
+    width: 5em;
+    height: 5em;
+    position: relative;
+}
+
+.product-image img {
+    object-fit: contain;
+}
+
+.product-details {
+    display: flex;
+    flex-direction: column;
+    flex: 1 100%;
+}
+
+.title-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.3em;
+}
+
+.title-price span {
+    font-size: 1.125rem;
+}
+
+.category-quantity {
+    display: flex;
+    flex-direction: column;
+    color: var(--grey);
+}

@@ -1,0 +1,22 @@
+.message {
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+.message p {
+    color: var(--grey);
+}
+
+.number-data {
+    margin-bottom: 1em;
+}
+
+.number-data > div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.bold-span {
+    font-weight: 600;
+    font-size: 1.125rem;
+}

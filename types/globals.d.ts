@@ -20,6 +20,7 @@ interface AuthContext {
 }
 
 interface OrderData {
+    orderId: string;
     orderDate: string;
     totalPrice: number;
     userId: string;
@@ -28,5 +29,6 @@ interface OrderData {
         title: string;
         category: string;
         image: string;
+        price: number;
     }[];
 }

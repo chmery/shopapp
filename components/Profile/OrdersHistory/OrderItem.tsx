@@ -16,7 +16,7 @@ const OrderItem = ({ orderData }: { orderData: OrderData }) => {
                     </div>
                 ))}
             </div>
-            <Link className={styles["details-link"]} href="/order-details">
+            <Link className={styles["details-link"]} href={`/order-details/${orderData.orderId}`}>
                 See Order Details
             </Link>
         </div>
