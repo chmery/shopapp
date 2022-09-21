@@ -38,7 +38,7 @@ const Cart = () => {
         });
 
         const randomNumber = Math.floor(Math.random() * 1000);
-        const orderId = `${currentDate.getTime()}${randomNumber}`;
+        const orderId = `${currentDate.getTime().toString().slice(4)}${randomNumber}`;
 
         cartItems.forEach((cartItem) => {
             orderedItems.push({
