@@ -7,28 +7,13 @@ import { Rating } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../../store/cartSlice/cartSlice";
 import { db } from "../../firebase/config";
-import {
-    collection,
-    addDoc,
-    setDoc,
-    doc,
-    arrayUnion,
-    query,
-    getDoc,
-    arrayRemove,
-} from "firebase/firestore";
+import { setDoc, doc, arrayUnion, getDoc, arrayRemove } from "firebase/firestore";
 import { useContext } from "react";
 import { AuthContext } from "../../store/auth-context";
+import { favouritesActions } from "../../store/favouritesSlice/favouritesSlice";
 
 type Props = {
     data: ProductData[];
-};
-
-type FavouriteItem = {
-    title: string;
-    image: string;
-    id: number;
-    price: number;
 };
 
 const Product = ({ data }: Props) => {
@@ -45,9 +30,6 @@ const Product = ({ data }: Props) => {
     if (!product) return;
 
     const addToCartHandler = () => dispatch(cartActions.addToCart(product));
-
-    // wyciaganie dokumenty po userid
-    // jesli istnieje data bedzie nadpisana
 
     const isInFavourites = async () => {
         const docRef = doc(db, "favourites", `${userId}`);
@@ -74,10 +56,12 @@ const Product = ({ data }: Props) => {
             await setDoc(doc(db, "favourites", `${userId}`), {
                 favouriteItems: arrayRemove(favouriteItem),
             });
+            dispatch(favouritesActions.removeFromFavourites(favouriteItem));
         } else {
             await setDoc(doc(db, "favourites", `${userId}`), {
                 favouriteItems: arrayUnion(favouriteItem),
             });
+            dispatch(favouritesActions.addToFavourites(favouriteItem));
         }
     };
 

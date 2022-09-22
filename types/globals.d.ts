@@ -15,6 +15,8 @@ interface AuthContext {
     logIn: (email: string, password: string) => Promise<void>;
     signUp: (email: string, password: string) => Promise<void>;
     logOut: () => Promise<void>;
+    setIsLoggedIn: (boolean: boolean) => void;
+    setUserId: (userId: string | null) => void;
     userId: string | null;
     isLoggedIn: boolean;
 }
@@ -31,4 +33,11 @@ interface OrderData {
         image: string;
         price: number;
     }[];
+}
+
+interface FavouriteItem {
+    title: string;
+    image: string;
+    id: number;
+    price: number;
 }

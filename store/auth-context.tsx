@@ -25,7 +25,7 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
         await signOut(auth);
     };
 
-    useEffect(() => {
+    /*     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 setIsLoggedIn(true);
@@ -35,11 +35,13 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
                 setUserId(null);
             }
         });
-    }, [auth]);
+    }, [auth]); */
 
     const authContext = {
         isLoggedIn,
         userId,
+        setUserId,
+        setIsLoggedIn,
         logIn: logInHandler,
         logOut: logOutHandler,
         signUp: signUpHandler,
