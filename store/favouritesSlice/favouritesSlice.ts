@@ -15,7 +15,11 @@ const favouritesSlice = createSlice({
             state.favouriteItems.push(action.payload);
         },
         removeFromFavourites(state, action: PayloadAction<FavouriteItem>) {
-            state.favouriteItems.filter((item) => item.id !== action.payload.id);
+            const updatedState = state.favouriteItems.filter(
+                (item) => item.id !== action.payload.id
+            );
+
+            state.favouriteItems = updatedState;
         },
         setInitialFavouritesData(state, action: PayloadAction<FavouriteItem[]>) {
             state.favouriteItems = action.payload;

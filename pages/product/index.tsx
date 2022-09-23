@@ -4,13 +4,14 @@ import { HeartIcon } from "../../components/UI/Icons/Icons";
 import { getProductsData } from "../../helpers/helpers";
 import { useRouter } from "next/router";
 import { Rating } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../../store/cartSlice/cartSlice";
 import { db } from "../../firebase/config";
-import { setDoc, doc, arrayUnion, getDoc, arrayRemove } from "firebase/firestore";
+import { updateDoc, doc, arrayUnion, getDoc, arrayRemove } from "firebase/firestore";
 import { useContext } from "react";
 import { AuthContext } from "../../store/auth-context";
 import { favouritesActions } from "../../store/favouritesSlice/favouritesSlice";
+import { RootState } from "../../store/store";
 
 type Props = {
     data: ProductData[];
@@ -23,6 +24,8 @@ const Product = ({ data }: Props) => {
     const { userId } = useContext(AuthContext) as AuthContext;
 
     const dispatch = useDispatch();
+
+    //const favouriteItems = useSelector((state: RootState) => state.favourites.favouriteItems);
 
     const productIndex = data.findIndex((product) => product.id === Number(id));
     const product = data[productIndex];
@@ -53,12 +56,12 @@ const Product = ({ data }: Props) => {
         };
 
         if (await isInFavourites()) {
-            await setDoc(doc(db, "favourites", `${userId}`), {
+            await updateDoc(doc(db, "favourites", `${userId}`), {
                 favouriteItems: arrayRemove(favouriteItem),
             });
             dispatch(favouritesActions.removeFromFavourites(favouriteItem));
         } else {
-            await setDoc(doc(db, "favourites", `${userId}`), {
+            await updateDoc(doc(db, "favourites", `${userId}`), {
                 favouriteItems: arrayUnion(favouriteItem),
             });
             dispatch(favouritesActions.addToFavourites(favouriteItem));
