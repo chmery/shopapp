@@ -7,8 +7,8 @@ import { Rating } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../../store/cartSlice/cartSlice";
 import { db } from "../../firebase/config";
-import { updateDoc, doc, arrayUnion, getDoc, arrayRemove } from "firebase/firestore";
-import { useContext } from "react";
+import { updateDoc, doc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../store/auth-context";
 import { favouritesActions } from "../../store/favouritesSlice/favouritesSlice";
 import { RootState } from "../../store/store";
@@ -24,6 +24,7 @@ const Product = ({ data }: Props) => {
     const { id } = router.query;
     const { userId } = useContext(AuthContext) as AuthContext;
 
+    const [isInFavourites, setIsInFavourites] = useState(false);
     const favouriteItems = useSelector((state: RootState) => state.favourites.favouriteItems);
 
     const productIndex = data.findIndex((product) => product.id === Number(id));
@@ -34,9 +35,9 @@ const Product = ({ data }: Props) => {
 
     const addToCartHandler = () => dispatch(cartActions.addToCart(product));
 
-    const isInFavourites = () => {
+    const checkIfInFavourites = () => {
         const addedItem = favouriteItems.find((item) => item.id === product.id);
-        return addedItem ? true : false;
+        addedItem ? setIsInFavourites(true) : setIsInFavourites(false);
     };
 
     const addToFavouritesHandler = async () => {
@@ -47,12 +48,16 @@ const Product = ({ data }: Props) => {
             price: product.price,
         };
 
-        if (isInFavourites()) {
+        checkIfInFavourites();
+
+        if (isInFavourites) {
+            setIsInFavourites(false);
             await updateDoc(doc(db, "favourites", `${userId}`), {
                 favouriteItems: arrayRemove(favouriteItem),
             });
             dispatch(favouritesActions.removeFromFavourites(favouriteItem));
         } else {
+            setIsInFavourites(true);
             await updateDoc(doc(db, "favourites", `${userId}`), {
                 favouriteItems: arrayUnion(favouriteItem),
             });
@@ -83,8 +88,14 @@ const Product = ({ data }: Props) => {
                     <button className={styles["cart-btn"]} onClick={addToCartHandler}>
                         Add to Cart
                     </button>
-                    <button className={styles["fav-btn"]} onClick={addToFavouritesHandler}>
-                        Favourites <HeartIcon />
+                    <button
+                        className={`${styles["fav-btn"]} ${
+                            isInFavourites ? styles["fav-btn-added"] : ""
+                        }`}
+                        onClick={addToFavouritesHandler}
+                    >
+                        Favourites
+                        <HeartIcon />
                     </button>
                 </div>
             </div>

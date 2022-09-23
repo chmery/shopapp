@@ -58,6 +58,10 @@
     width: 1em;
 }
 
+.fav-btn-added svg {
+    stroke: var(--red);
+}
+
 .cart-btn {
     background: var(--red);
     padding: 1em 2em;
