@@ -19,32 +19,24 @@ type Props = {
 
 const Product = ({ data }: Props) => {
     const router = useRouter();
-    const { id } = router.query;
-
-    const { userId } = useContext(AuthContext) as AuthContext;
-
     const dispatch = useDispatch();
 
-    //const favouriteItems = useSelector((state: RootState) => state.favourites.favouriteItems);
+    const { id } = router.query;
+    const { userId } = useContext(AuthContext) as AuthContext;
+
+    const favouriteItems = useSelector((state: RootState) => state.favourites.favouriteItems);
 
     const productIndex = data.findIndex((product) => product.id === Number(id));
     const product = data[productIndex];
 
+    // Temporary
     if (!product) return;
 
     const addToCartHandler = () => dispatch(cartActions.addToCart(product));
 
-    const isInFavourites = async () => {
-        const docRef = doc(db, "favourites", `${userId}`);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-            const { favouriteItems } = docSnap.data();
-            const addedItem = favouriteItems.find((item: FavouriteItem) => item.id === product.id);
-            return addedItem ? true : false;
-        } else {
-            return false;
-        }
+    const isInFavourites = () => {
+        const addedItem = favouriteItems.find((item) => item.id === product.id);
+        return addedItem ? true : false;
     };
 
     const addToFavouritesHandler = async () => {
@@ -55,7 +47,7 @@ const Product = ({ data }: Props) => {
             price: product.price,
         };
 
-        if (await isInFavourites()) {
+        if (isInFavourites()) {
             await updateDoc(doc(db, "favourites", `${userId}`), {
                 favouriteItems: arrayRemove(favouriteItem),
             });
