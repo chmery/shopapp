@@ -29,7 +29,7 @@ const Product = ({ data }: Props) => {
 
     const { isInFavourites, setIsInFavourites, checkIfInFavourites } = useIsInFavourites();
 
-    // Temporary
+    // Temporary empty message ui here in future
     if (!product) return;
 
     const addToCartHandler = () => dispatch(cartActions.addToCart(product));

@@ -1,9 +1,9 @@
-.no-favourites {
+.no-content {
     text-align: center;
     margin: 10rem auto;
     margin-top: 5rem;
 }
 
-.no-favourites p {
+.no-content p {
     color: var(--grey);
 }

@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import ProductsList from "../../components/Products/ProductsList/ProductsList";
-import styles from "./Results.module.css";
+import NoContentMessage from "../../components/UI/NoContentMessage/NoContentMessage";
 
 type Props = {
     data: ProductData[];
@@ -17,10 +17,10 @@ const Results = ({ data }: Props) => {
 
     if (!products.length) {
         return (
-            <div className={styles["no-results"]}>
-                <h3>No results</h3>
-                <p>We could not find any products with that name.</p>
-            </div>
+            <NoContentMessage
+                title={"No Results"}
+                message={"We couldn't find any products with that name."}
+            />
         );
     }
 

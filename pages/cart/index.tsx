@@ -10,6 +10,7 @@ import { Alert } from "@mui/material";
 import { db } from "../../firebase/config";
 import { collection, addDoc } from "firebase/firestore";
 import { AuthContext } from "../../store/auth-context";
+import NoContentMessage from "../../components/UI/NoContentMessage/NoContentMessage";
 
 const Cart = () => {
     const [isOrdering, setIsOrdering] = useState(false);
@@ -83,10 +84,10 @@ const Cart = () => {
         return (
             <>
                 {isOrdered && <SuccesAlert />}
-                <div className={styles.message}>
-                    <h3>Your cart is empty</h3>
-                    <p>You haven't added any items to your cart yet.</p>
-                </div>
+                <NoContentMessage
+                    title={"Your cart is empty"}
+                    message={"You haven't added any items to your cart yet."}
+                />
             </>
         );
     }
