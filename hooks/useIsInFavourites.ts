@@ -6,7 +6,7 @@ const useIsInFavourites = () => {
     const favouriteItems = useSelector((state: RootState) => state.favourites.favouriteItems);
     const [isInFavourites, setIsInFavourites] = useState(false);
 
-    const checkIfInFavourites = (product: ProductData) => {
+    const checkIfInFavourites = (product: ProductData | FavouriteItem) => {
         const addedItem = favouriteItems.find((item) => item.id === product.id);
         addedItem ? setIsInFavourites(true) : setIsInFavourites(false);
     };
