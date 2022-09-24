@@ -1,0 +1,9 @@
+.no-favourites {
+    text-align: center;
+    margin: 10rem auto;
+    margin-top: 5rem;
+}
+
+.no-favourites p {
+    color: var(--grey);
+}

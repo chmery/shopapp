@@ -40,7 +40,7 @@ const ProductItem = ({ productData }: Props) => {
                 <Image src={productData.image} alt={productData.title} fill />
             </div>
             <h3>{title}</h3>
-            <div>
+            <div className={styles["price-x"]}>
                 <span>{price}</span>
                 {isInFavourites && pathname === "/favourites" && (
                     <button onClick={removeFromFavouritesHandler}>

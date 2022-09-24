@@ -15,7 +15,6 @@
 .product span {
     font-weight: 600;
     font-size: 1.25em;
-    margin-top: 0.5em;
 }
 
 .product-image {
@@ -27,4 +26,19 @@
 
 .product-image img {
     object-fit: contain;
+}
+
+.price-x {
+    margin-top: 0.5em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.price-x button {
+    transition: transfrom 0.2s;
+}
+
+.price-x button:hover {
+    transform: scale(1.1);
 }

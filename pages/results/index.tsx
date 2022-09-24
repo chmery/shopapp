@@ -15,7 +15,7 @@ const Results = ({ data }: Props) => {
         product.title.toLowerCase().includes(keyword.toString().toLowerCase())
     );
 
-    if (products.length === 0) {
+    if (!products.length) {
         return (
             <div className={styles["no-results"]}>
                 <h3>No results</h3>
