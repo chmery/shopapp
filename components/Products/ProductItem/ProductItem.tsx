@@ -1,5 +1,7 @@
 import Image from "next/future/image";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { favouritesActions } from "../../../store/favouritesSlice/favouritesSlice";
 import styles from "./ProductItem.module.css";
 
 type Props = {
@@ -7,6 +9,9 @@ type Props = {
 };
 
 const ProductItem = ({ productData }: Props) => {
+    //const dispatch = useDispatch();
+    //const {removeFromFavourites} = favouritesActions;
+
     const title = `${productData.title.slice(0, 40)}...`;
     const price = `$${productData.price}`;
 
