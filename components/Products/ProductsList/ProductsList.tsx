@@ -2,7 +2,7 @@ import styles from "./ProductsList.module.css";
 import ProductItem from "../ProductItem/ProductItem";
 
 type Props = {
-    products: ProductData[];
+    products: ProductData[] | FavouriteItem[];
 };
 
 const ProductsList = ({ products }: Props) => {

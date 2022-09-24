@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import styles from "./ProductItem.module.css";
 
 type Props = {
-    productData: ProductData;
+    productData: ProductData | FavouriteItem;
 };
 
 const ProductItem = ({ productData }: Props) => {

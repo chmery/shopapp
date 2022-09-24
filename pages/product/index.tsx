@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../../store/cartSlice/cartSlice";
 import { db } from "../../firebase/config";
 import { updateDoc, doc, arrayUnion, arrayRemove } from "firebase/firestore";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../store/auth-context";
 import { favouritesActions } from "../../store/favouritesSlice/favouritesSlice";
 import { RootState } from "../../store/store";
@@ -35,10 +35,14 @@ const Product = ({ data }: Props) => {
 
     const addToCartHandler = () => dispatch(cartActions.addToCart(product));
 
-    const checkIfInFavourites = () => {
-        const addedItem = favouriteItems.find((item) => item.id === product.id);
-        addedItem ? setIsInFavourites(true) : setIsInFavourites(false);
-    };
+    useEffect(() => {
+        const checkIfInFavourites = () => {
+            const addedItem = favouriteItems.find((item) => item.id === product.id);
+            addedItem ? setIsInFavourites(true) : setIsInFavourites(false);
+        };
+
+        checkIfInFavourites();
+    }, []);
 
     const addToFavouritesHandler = async () => {
         const favouriteItem = {
@@ -47,8 +51,6 @@ const Product = ({ data }: Props) => {
             id: product.id,
             price: product.price,
         };
-
-        checkIfInFavourites();
 
         if (isInFavourites) {
             setIsInFavourites(false);

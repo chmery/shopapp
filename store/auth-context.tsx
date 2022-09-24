@@ -1,24 +1,13 @@
 import React, { useState } from "react";
-import { setDoc, doc, getDoc } from "firebase/firestore";
-import {
-    signInWithEmailAndPassword,
-    createUserWithEmailAndPassword,
-    onAuthStateChanged,
-    signOut,
-} from "firebase/auth";
+import { setDoc, doc } from "firebase/firestore";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth, db } from "../firebase/config";
-import { useDispatch } from "react-redux";
-import { favouritesActions } from "../store/favouritesSlice/favouritesSlice";
 
 export const AuthContext = React.createContext<AuthContext | null>(null);
 
 const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
-    const dispatch = useDispatch();
-
     const [userId, setUserId] = useState<string | null>(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    const { setInitialFavouritesData, clearFavouritesData } = favouritesActions;
 
     const logInHandler = async (email: string, password: string) => {
         await signInWithEmailAndPassword(auth, email, password);
@@ -35,30 +24,6 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
     const logOutHandler = async () => {
         await signOut(auth);
     };
-
-    const setFavouritesData = async (userId: string) => {
-        const docRef = doc(db, "favourites", userId);
-        const docSnap = await getDoc(docRef);
-        const docData = docSnap.data();
-        const favouritesData: FavouriteItem[] = docData!.favouriteItems;
-        dispatch(setInitialFavouritesData(favouritesData));
-    };
-
-    onAuthStateChanged(auth, (user) => {
-        if (user && !isLoggedIn) {
-            setIsLoggedIn(true);
-            setUserId(user.uid);
-            setFavouritesData(user.uid);
-            return;
-        }
-
-        if (!user && isLoggedIn) {
-            setIsLoggedIn(false);
-            setUserId(null);
-            clearFavouritesData();
-            return;
-        }
-    });
 
     const authContext = {
         isLoggedIn,
