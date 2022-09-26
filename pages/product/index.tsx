@@ -12,6 +12,7 @@ import { useContext, useEffect } from "react";
 import { AuthContext } from "../../store/auth-context";
 import { favouritesActions } from "../../store/favouritesSlice/favouritesSlice";
 import useIsInFavourites from "../../hooks/useIsInFavourites";
+import NoContentMessage from "../../components/UI/NoContentMessage/NoContentMessage";
 
 type Props = {
     data: ProductData[];
@@ -29,14 +30,20 @@ const Product = ({ data }: Props) => {
 
     const { isInFavourites, setIsInFavourites, checkIfInFavourites } = useIsInFavourites();
 
-    // Temporary empty message ui here in future
-    if (!product) return;
-
-    const addToCartHandler = () => dispatch(cartActions.addToCart(product));
-
     useEffect(() => {
         checkIfInFavourites(product);
     }, []);
+
+    if (!product) {
+        return (
+            <NoContentMessage
+                title={"Such a product does not exist"}
+                message={"We could not find any product at this address."}
+            />
+        );
+    }
+
+    const addToCartHandler = () => dispatch(cartActions.addToCart(product));
 
     const addToFavouritesHandler = async () => {
         const favouriteItem = {

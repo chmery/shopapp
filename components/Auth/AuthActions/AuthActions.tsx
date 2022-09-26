@@ -11,13 +11,13 @@ const AuthActions = ({ isLoading, action }: Props) => {
     const BottomText = () => {
         const LoginPageText = (
             <p>
-                Don't have an account? <Link href="/auth?action=signup">Sign Up</Link>
+                Don't have an account? <Link href="/auth/signup">Sign Up</Link>
             </p>
         );
 
         const SignUpPageText = (
             <p>
-                Already have an account? <Link href="/auth?action=login">Log In</Link>
+                Already have an account? <Link href="/auth/login">Log In</Link>
             </p>
         );
 

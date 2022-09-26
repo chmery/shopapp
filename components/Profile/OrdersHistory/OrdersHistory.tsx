@@ -35,7 +35,7 @@ const OrdersHistory = () => {
                 {isLoading && <Loader />}
                 {!orders && !isLoading && <p>You haven't placed any orders yet.</p>}
             </div>
-            {orders && orders.map((order) => <OrderItem orderData={order} />)}
+            {orders && orders.map((order) => <OrderItem orderData={order} key={order.orderId} />)}
         </>
     );
 };

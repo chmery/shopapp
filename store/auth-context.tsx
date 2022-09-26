@@ -1,38 +1,50 @@
 import React, { useState } from "react";
-import { setDoc, doc } from "firebase/firestore";
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import { doc } from "firebase/firestore";
 import { auth, db } from "../firebase/config";
+import { useDispatch } from "react-redux";
+import { favouritesActions } from "../store/favouritesSlice/favouritesSlice";
+import { getDoc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
 export const AuthContext = React.createContext<AuthContext | null>(null);
 
 const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
+    const dispatch = useDispatch();
+    const { setInitialFavouritesData, clearFavouritesData } = favouritesActions;
     const [userId, setUserId] = useState<string | null>(null);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
 
-    const logInHandler = async (email: string, password: string) => {
-        await signInWithEmailAndPassword(auth, email, password);
+    const setFavouritesData = async (userId: string) => {
+        const docRef = doc(db, "favourites", userId);
+        const docSnap = await getDoc(docRef);
+        const docData = docSnap.data();
+        const favouritesData: FavouriteItem[] = docData!.favouriteItems;
+        dispatch(setInitialFavouritesData(favouritesData));
     };
 
-    const signUpHandler = async (email: string, password: string) => {
-        const res = await createUserWithEmailAndPassword(auth, email, password);
-        const user = res.user;
-        await setDoc(doc(db, "favourites", user.uid), {
-            favouriteItems: [],
-        });
-    };
+    onAuthStateChanged(auth, (user) => {
+        if (user && !isLoggedIn) {
+            setIsLoggedIn(true);
+            setUserId(user.uid);
+            localStorage.setItem("uid", user.uid);
+            setFavouritesData(user.uid);
+            return;
+        }
 
-    const logOutHandler = async () => {
-        await signOut(auth);
-    };
+        if (!user && isLoggedIn) {
+            setIsLoggedIn(false);
+            setUserId(null);
+            localStorage.removeItem("uid");
+            clearFavouritesData();
+            return;
+        }
+    });
 
     const authContext = {
         isLoggedIn,
         userId,
         setUserId,
         setIsLoggedIn,
-        logIn: logInHandler,
-        logOut: logOutHandler,
-        signUp: signUpHandler,
     };
 
     return <AuthContext.Provider value={authContext}>{children}</AuthContext.Provider>;

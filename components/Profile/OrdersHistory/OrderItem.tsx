@@ -11,7 +11,7 @@ const OrderItem = ({ orderData }: { orderData: OrderData }) => {
             </div>
             <div className={styles["products-images"]}>
                 {orderData.orderedItems.map((item) => (
-                    <div className={styles["product-image"]}>
+                    <div className={styles["product-image"]} key={item.title}>
                         <Image src={item.image} alt={item.title} fill />
                     </div>
                 ))}
