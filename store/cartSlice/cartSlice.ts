@@ -43,12 +43,12 @@ const cartSlice = createSlice({
 
             const itemToRemove = state.cartItems[itemToRemoveIndex];
 
-            if (itemToRemove.quantity > 1) {
+            if (itemToRemove.quantity) {
                 console.log(itemToRemove.quantity);
                 state.cartItems[itemToRemoveIndex].quantity--;
             }
 
-            if (itemToRemove.quantity <= 1) {
+            if (!itemToRemove.quantity) {
                 state.cartItems = state.cartItems.filter(
                     (cartItem) => cartItem.item.id !== action.payload
                 );

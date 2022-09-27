@@ -18,15 +18,15 @@ const Footer = () => {
                 </nav>
                 <nav>
                     <h3>Information</h3>
-                    <Link href="/about">About us</Link>
-                    <Link href="/shipping">Shipping</Link>
-                    <Link href="/contact">Contact</Link>
+                    <Link href="/">About us</Link>
+                    <Link href="/">Shipping</Link>
+                    <Link href="/">Contact</Link>
                 </nav>
             </div>
             <div className={styles.author}>
                 <p>
-                    Designed & built with <HeartIcon />
-                    <a href="https://github.com/chmery">chmery</a>
+                    Designed & built with <HeartIcon /> by
+                    <a href="https://github.com/chmery"> chmery</a>
                 </p>
                 <p>Based in Poland</p>
             </div>

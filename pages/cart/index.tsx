@@ -56,7 +56,7 @@ const Cart = () => {
             orderedItems,
             orderDate,
             userId,
-            totalPrice: subTotal + SHIPPING_COST,
+            totalPrice: ((subTotal + SHIPPING_COST) * 100) / 100,
         });
 
         dispatch(cartActions.clearCart());
