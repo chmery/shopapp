@@ -6,7 +6,6 @@ import { db } from "../../firebase/config";
 import OrderDetails from "../../components/OrderDetails/OrderDetails";
 import Loader from "../../components/UI/Loader/Loader";
 import { AuthContext } from "../../store/auth-context";
-import ErrorPage from "next/error";
 
 const OrderDetailsPage = () => {
     const router = useRouter();
@@ -41,7 +40,7 @@ const OrderDetailsPage = () => {
         }
     }, [isLoggedIn]);
 
-    if (!orderData && !isLoading) return <ErrorPage statusCode={404} />;
+    if (!orderData && !isLoading) router.push("/404");
     if (!orderData) return <Loader />;
 
     return (

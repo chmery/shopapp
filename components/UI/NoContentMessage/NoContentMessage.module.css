@@ -6,4 +6,9 @@
 
 .no-content p {
     color: var(--grey);
+    margin: 0.5em 0;
+}
+
+.no-content a {
+    text-decoration: underline;
 }
