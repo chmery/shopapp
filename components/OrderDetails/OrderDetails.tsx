@@ -23,7 +23,7 @@ const OrderDetails = ({ orderData }: Props) => {
                 </div>
             </div>
             {orderData.orderedItems.map((item) => (
-                <OrderItem item={item} />
+                <OrderItem item={item} key={item.title} />
             ))}
         </>
     );

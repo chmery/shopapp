@@ -37,4 +37,5 @@ const SearchBarPrompts = React.forwardRef<HTMLDivElement, Props>(({ prompts }, r
     );
 });
 
+SearchBarPrompts.displayName = "SearchBarPrompts";
 export default SearchBarPrompts;

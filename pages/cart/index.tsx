@@ -95,7 +95,10 @@ const Cart = () => {
     return (
         <>
             <h3 className={styles["products-added"]}>{cartItemsNum} Products added</h3>
-            {cartItemsNum && cartItems.map((cartItem) => <CartItem cartItem={cartItem} />)}
+            {cartItemsNum &&
+                cartItems.map((cartItem) => (
+                    <CartItem cartItem={cartItem} key={cartItem.item.id} />
+                ))}
             <CartSummary subTotal={subTotal} />
             <CartActions onOrder={orderHandler} isOrdering={isOrdering} />
         </>
