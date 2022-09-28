@@ -20,9 +20,12 @@ const cartSlice = createSlice({
             const cartItemIndex = state.cartItems.findIndex(
                 (cartItem) => cartItem.item.id === action.payload.id
             );
+
             const isInCart = cartItemIndex !== -1 ? true : false;
 
             if (isInCart) {
+                const { quantity } = state.cartItems[cartItemIndex];
+                if (quantity === 5) return;
                 state.cartItems[cartItemIndex].quantity++;
             }
 
