@@ -15,6 +15,8 @@ type Props = {
 const OrderItem = ({ item }: Props) => {
     const category = capitalize(item.category);
 
+    console.log(item);
+
     return (
         <>
             <div className={styles["order-item"]}>
@@ -24,7 +26,7 @@ const OrderItem = ({ item }: Props) => {
                 <div className={styles["product-details"]}>
                     <div className={styles["title-price"]}>
                         <h3>{item.title}</h3>
-                        <span>${item.price}11</span>
+                        <span>${item.price}</span>
                     </div>
                     <div className={styles["category-quantity"]}>
                         <span>{category}</span>

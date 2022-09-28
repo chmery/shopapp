@@ -17,7 +17,7 @@ const PriceSummary = ({ subTotal }: Props) => {
             </div>
             <div className={styles.total}>
                 <span>Total</span>
-                <span className={styles["total-price"]}>${((subTotal + 10) * 100) / 100}</span>
+                <span className={styles["total-price"]}>${(subTotal * 100 + 10 * 100) / 100}</span>
             </div>
         </div>
     );

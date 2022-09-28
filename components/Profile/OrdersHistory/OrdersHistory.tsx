@@ -6,6 +6,21 @@ import { db } from "../../../firebase/config";
 import OrderItem from "./OrderItem";
 import Loader from "../../UI/Loader/Loader";
 
+const sortByTimestamp = (orders: OrderData[]) => {
+    const getTimestamp = (orderId: string) => {
+        return orderId.slice(0, -4);
+    };
+
+    const sortedOrders = orders.sort((a, b) => {
+        const timestampA = Number(getTimestamp(a.orderId));
+        const timestampB = Number(getTimestamp(b.orderId));
+
+        return timestampB - timestampA;
+    });
+
+    return sortedOrders;
+};
+
 const OrdersHistory = () => {
     const { userId } = useContext(AuthContext) as AuthContext;
     const [isLoading, setIsLoading] = useState(true);
@@ -17,12 +32,17 @@ const OrdersHistory = () => {
             const querySnapshot = await getDocs(q);
 
             const orders: OrderData[] = [];
+
             querySnapshot.forEach((doc) => {
                 const orderData = doc.data();
                 orders.push(orderData as OrderData);
             });
 
-            if (orders.length) setOrders(orders);
+            if (orders.length) {
+                const sortedOrders = sortByTimestamp(orders);
+                setOrders(sortedOrders);
+            }
+
             setIsLoading(false);
         };
         fetchOrders();
