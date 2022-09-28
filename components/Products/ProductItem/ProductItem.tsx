@@ -1,11 +1,15 @@
 import Image from "next/future/image";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import useIsInFavourites from "../../../hooks/useIsInFavourites";
 import { favouritesActions } from "../../../store/favouritesSlice/favouritesSlice";
 import { XIcon } from "../../UI/Icons/Icons";
 import styles from "./ProductItem.module.css";
+import { db } from "../../../firebase/config";
+import { updateDoc, doc, arrayRemove } from "firebase/firestore";
+import { AuthContext } from "../../../store/auth-context";
+import Loader from "../../UI/Loader/Loader";
 
 type Props = {
     productData: ProductData | FavouriteItem;
@@ -13,23 +17,35 @@ type Props = {
 
 const ProductItem = ({ productData }: Props) => {
     const dispatch = useDispatch();
+    const router = useRouter();
+
+    const { userId } = useContext(AuthContext) as AuthContext;
     const { removeFromFavourites } = favouritesActions;
+
     const { checkIfInFavourites, isInFavourites } = useIsInFavourites();
+
+    const [isLoading, setIsLoading] = useState(false);
 
     const title = `${productData.title.slice(0, 40)}...`;
     const price = `$${productData.price}`;
 
-    const router = useRouter();
     const { pathname } = router;
 
-    const removeFromFavouritesHandler = (event: React.MouseEvent) => {
+    const removeFromFavouritesHandler = async (event: React.MouseEvent) => {
         event.stopPropagation();
+        setIsLoading(true);
+        await updateDoc(doc(db, "favourites", `${userId}`), {
+            favouriteItems: arrayRemove(productData),
+        });
         dispatch(removeFromFavourites(productData as FavouriteItem));
+        setIsLoading(false);
     };
 
     useEffect(() => {
         checkIfInFavourites(productData);
-    });
+    }, []);
+
+    if (isLoading) return <Loader />;
 
     return (
         <div

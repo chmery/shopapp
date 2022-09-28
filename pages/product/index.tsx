@@ -23,7 +23,7 @@ const Product = ({ data }: Props) => {
     const dispatch = useDispatch();
 
     const { id } = router.query;
-    const { userId } = useContext(AuthContext) as AuthContext;
+    const { userId, isLoggedIn } = useContext(AuthContext) as AuthContext;
 
     const productIndex = data.findIndex((product) => product.id === Number(id));
     const product = data[productIndex];
@@ -91,15 +91,17 @@ const Product = ({ data }: Props) => {
                     <button className={styles["cart-btn"]} onClick={addToCartHandler}>
                         Add to Cart
                     </button>
-                    <button
-                        className={`${styles["fav-btn"]} ${
-                            isInFavourites ? styles["fav-btn-added"] : ""
-                        }`}
-                        onClick={addToFavouritesHandler}
-                    >
-                        Favourites
-                        <HeartIcon />
-                    </button>
+                    {isLoggedIn && (
+                        <button
+                            className={`${styles["fav-btn"]} ${
+                                isInFavourites ? styles["fav-btn-added"] : ""
+                            }`}
+                            onClick={addToFavouritesHandler}
+                        >
+                            Favourites
+                            <HeartIcon />
+                        </button>
+                    )}
                 </div>
             </div>
         </div>
