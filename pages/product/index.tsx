@@ -14,9 +14,21 @@ import { favouritesActions } from "../../store/favouritesSlice/favouritesSlice";
 import useIsInFavourites from "../../hooks/useIsInFavourites";
 import NoContentMessage from "../../components/UI/NoContentMessage/NoContentMessage";
 import WriteReview from "../../components/Reviews/WriteReview/WriteReview";
+import ReviewsItem from "../../components/Reviews/ReviewItem/ReviewItem";
 
 type Props = {
     data: ProductData[];
+};
+
+const TEST_DATA = {
+    productId: 3,
+    ratingValue: 4,
+    reviewDate: "13 September, 2022",
+    reviewText:
+        "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+    userEmail: "test@test.com",
+    userId: "4DFJIEHDSAG",
+    likeCount: 44,
 };
 
 const Product = ({ data }: Props) => {
@@ -87,6 +99,7 @@ const Product = ({ data }: Props) => {
             ratingValue,
             reviewText,
             reviewDate,
+            likeCount: 0,
         });
         setIsReviewPublished(true);
         setIsReviewSending(false);
@@ -133,6 +146,7 @@ const Product = ({ data }: Props) => {
             {isLoggedIn && !isReviewPublished && (
                 <WriteReview onPublish={reviewPublishHandler} isReviewSending={isReviewSending} />
             )}
+            <ReviewsItem reviewData={TEST_DATA} />
         </>
     );
 };

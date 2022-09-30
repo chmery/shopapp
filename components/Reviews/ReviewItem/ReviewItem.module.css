@@ -1,0 +1,55 @@
+.review-item {
+    border-radius: 9px;
+    border: 1px solid var(--light-grey);
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+    padding: 1em;
+}
+
+.like {
+    color: var(--grey);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 0.5em;
+}
+
+.like svg,
+.remove svg {
+    stroke: var(--grey);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.like svg:hover,
+.remove svg:hover {
+    transform: scale(1.05);
+}
+
+.review-item > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div.avatar-email {
+    justify-content: flex-start;
+    column-gap: 1em;
+}
+
+.avatar {
+    width: 3em;
+    height: 3em;
+    background: var(--light-grey);
+    border-radius: 100vh;
+}
+
+.email,
+.date {
+    color: var(--grey);
+}
+
+.date {
+    font-size: 0.875rem;
+}

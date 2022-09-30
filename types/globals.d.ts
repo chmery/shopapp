@@ -38,3 +38,13 @@ interface FavouriteItem {
     id: number;
     price: number;
 }
+
+interface ReviewData {
+    productId: number;
+    ratingValue: number;
+    reviewDate: string;
+    reviewText: string;
+    userEmail: string;
+    userId: string;
+    likeCount: number;
+}
