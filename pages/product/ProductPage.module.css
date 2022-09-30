@@ -40,13 +40,10 @@
     align-items: center;
 }
 
-.cart-btn,
 .fav-btn {
+    margin-left: 2em;
     font-weight: 600;
     font-size: 1rem;
-}
-
-.fav-btn {
     display: flex;
     align-items: center;
     column-gap: 0.7em;
@@ -62,16 +59,6 @@
     stroke: var(--red);
 }
 
-.cart-btn {
-    background: var(--red);
-    padding: 1em 2em;
-    color: #fff;
-    border-radius: 0.5em;
-    margin-right: 2em;
-    transition: transform 0.2s;
-}
-
-.cart-btn:hover,
 .fav-btn:hover {
     transform: scale(1.05);
 }

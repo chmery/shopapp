@@ -36,11 +36,7 @@ const WriteReview = () => {
             />
             <textarea value={inputValue} onChange={inputChangeHandler} />
             <div>
-                <button
-                    className={`${"main-btn"} ${!isValid && styles["btn-inactive"]}`}
-                    type="submit"
-                    disabled={isValid ? false : true}
-                >
+                <button className="main-btn" type="submit" disabled={isValid ? false : true}>
                     Publish
                 </button>
             </div>

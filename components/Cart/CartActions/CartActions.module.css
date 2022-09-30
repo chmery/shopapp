@@ -3,17 +3,7 @@
 }
 
 .checkout-actions button {
-    display: flex;
-    justify-content: center;
-    column-gap: 1em;
-    align-items: center;
-    background: var(--red);
-    color: #fff;
-    border-radius: 9px;
-    padding: 1em 2em;
     width: 100%;
-    font-size: 1rem;
-    font-weight: 600;
 }
 
 .checkout-actions p {

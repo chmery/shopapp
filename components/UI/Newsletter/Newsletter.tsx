@@ -23,7 +23,9 @@ const Newsletter = () => {
                     onChange={changeEmailHandler}
                     value={email}
                 />
-                <button onClick={subscribeHandler}>Subscribe</button>
+                <button className={"main-btn"} onClick={subscribeHandler}>
+                    Subscribe
+                </button>
             </div>
         </div>
     );

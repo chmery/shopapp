@@ -1,0 +1,34 @@
+button {
+    padding: 0;
+    margin: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.main-btn {
+    color: #fff;
+    background: var(--red);
+    padding: 0.8em 2em;
+    border-radius: 0.5em;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: transform 0.2s;
+}
+
+.main-btn:hover {
+    transform: scale(1.05);
+}
+
+button:disabled {
+    background: var(--light-grey);
+    cursor: default;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 1em;
+}
+
+button:disabled:hover {
+    transform: none;
+}

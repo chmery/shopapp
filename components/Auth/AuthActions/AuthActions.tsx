@@ -1,5 +1,4 @@
 import Link from "next/link";
-import styles from "./AuthActions.module.css";
 import Spinner from "../../UI/Spinner/Spinner";
 
 type Props = {
@@ -27,11 +26,13 @@ const AuthActions = ({ isLoading, action }: Props) => {
     return (
         <>
             {!isLoading && (
-                <button type="submit">{action === "login" ? "Log In" : "Sign Up"}</button>
+                <button className="main-btn" type="submit">
+                    {action === "login" ? "Log In" : "Sign Up"}
+                </button>
             )}
 
             {isLoading && (
-                <button type="submit" className={styles["loading-btn"]}>
+                <button className="main-btn" type="submit" disabled>
                     {action === "login" ? "Logging In" : "Signing Up"} <Spinner />
                 </button>
             )}

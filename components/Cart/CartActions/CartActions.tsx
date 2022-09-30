@@ -15,10 +15,12 @@ const CartActions = ({ onOrder, isOrdering }: Props) => {
     return (
         <div className={styles["checkout-actions"]}>
             {!isOrdering && (
-                <button onClick={onOrder}>{isLoggedIn ? "Checkout" : "Checkout as a guest"}</button>
+                <button className="main-btn" onClick={onOrder}>
+                    {isLoggedIn ? "Checkout" : "Checkout as a guest"}
+                </button>
             )}
             {isOrdering && (
-                <button className={styles["sending-btn"]}>
+                <button className="main-btn" disabled>
                     Sending order <Spinner />
                 </button>
             )}

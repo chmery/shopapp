@@ -22,10 +22,10 @@
 }
 
 .newsletter button {
-    background: var(--red);
     padding: 0 1em;
     border-radius: 0 9px 9px 0;
-    color: #fff;
-    font-weight: 600;
-    font-size: 1rem;
+}
+
+.newsletter button:hover {
+    transform: none;
 }

@@ -90,7 +90,7 @@ const Product = ({ data }: Props) => {
                     </div>
                     <span className={styles.price}>${product.price}</span>
                     <div className={styles.buttons}>
-                        <button className={styles["cart-btn"]} onClick={addToCartHandler}>
+                        <button className="main-btn" onClick={addToCartHandler}>
                             Add to Cart
                         </button>
                         {isLoggedIn && (

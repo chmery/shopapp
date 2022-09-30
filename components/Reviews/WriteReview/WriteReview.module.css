@@ -16,15 +16,6 @@
     border: 1px solid var(--light-grey);
 }
 
-.btn-inactive {
-    background: var(--light-grey);
-    cursor: default;
-}
-
-.btn-inactive:hover {
-    transform: none;
-}
-
 @media screen and (max-width: 470px) {
     .form textarea {
         height: 10em;
