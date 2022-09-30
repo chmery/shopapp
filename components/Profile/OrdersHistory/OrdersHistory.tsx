@@ -6,7 +6,7 @@ import { db } from "../../../firebase/config";
 import OrderItem from "./OrderItem";
 import Loader from "../../UI/Loader/Loader";
 
-const sortByTimestamp = (orders: OrderData[]) => {
+const getSortedOrders = (orders: OrderData[]) => {
     const getTimestamp = (orderId: string) => {
         return orderId.slice(0, -4);
     };
@@ -39,7 +39,7 @@ const OrdersHistory = () => {
             });
 
             if (orders.length) {
-                const sortedOrders = sortByTimestamp(orders);
+                const sortedOrders = getSortedOrders(orders);
                 setOrders(sortedOrders);
             }
 

@@ -13,6 +13,7 @@ import { AuthContext } from "../../store/auth-context";
 import { favouritesActions } from "../../store/favouritesSlice/favouritesSlice";
 import useIsInFavourites from "../../hooks/useIsInFavourites";
 import NoContentMessage from "../../components/UI/NoContentMessage/NoContentMessage";
+import WriteReview from "../../components/Reviews/WriteReview/WriteReview";
 
 type Props = {
     data: ProductData[];
@@ -69,42 +70,45 @@ const Product = ({ data }: Props) => {
     };
 
     return (
-        <div className={styles.product}>
-            <div className={styles["product-image"]}>
-                <Image src={product.image} alt={product.title} fill />
-            </div>
-            <div className={styles.description}>
-                <h1>{product.title}</h1>
-                <p>{product.description}</p>
-                <div className={styles.rating}>
-                    <Rating
-                        name="product-rating"
-                        value={product.rating.rate}
-                        precision={0.5}
-                        readOnly
-                    />
-                    <span className={styles["rating-score"]}>{product.rating.rate}/5.0</span>
-                    <span className={styles["rating-count"]}>{product.rating.count} votes</span>
+        <>
+            <div className={styles.product}>
+                <div className={styles["product-image"]}>
+                    <Image src={product.image} alt={product.title} fill />
                 </div>
-                <span className={styles.price}>${product.price}</span>
-                <div className={styles.buttons}>
-                    <button className={styles["cart-btn"]} onClick={addToCartHandler}>
-                        Add to Cart
-                    </button>
-                    {isLoggedIn && (
-                        <button
-                            className={`${styles["fav-btn"]} ${
-                                isInFavourites ? styles["fav-btn-added"] : ""
-                            }`}
-                            onClick={addToFavouritesHandler}
-                        >
-                            Favourites
-                            <HeartIcon />
+                <div className={styles.description}>
+                    <h1>{product.title}</h1>
+                    <p>{product.description}</p>
+                    <div className={styles.rating}>
+                        <Rating
+                            name="product-rating"
+                            value={product.rating.rate}
+                            precision={0.5}
+                            readOnly
+                        />
+                        <span className={styles["rating-score"]}>{product.rating.rate}/5.0</span>
+                        <span className={styles["rating-count"]}>{product.rating.count} votes</span>
+                    </div>
+                    <span className={styles.price}>${product.price}</span>
+                    <div className={styles.buttons}>
+                        <button className={styles["cart-btn"]} onClick={addToCartHandler}>
+                            Add to Cart
                         </button>
-                    )}
+                        {isLoggedIn && (
+                            <button
+                                className={`${styles["fav-btn"]} ${
+                                    isInFavourites ? styles["fav-btn-added"] : ""
+                                }`}
+                                onClick={addToFavouritesHandler}
+                            >
+                                Favourites
+                                <HeartIcon />
+                            </button>
+                        )}
+                    </div>
                 </div>
             </div>
-        </div>
+            <WriteReview />
+        </>
     );
 };
 

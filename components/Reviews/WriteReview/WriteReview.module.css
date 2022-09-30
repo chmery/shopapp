@@ -1,0 +1,32 @@
+.form {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+    justify-content: flex-start;
+}
+
+.form textarea {
+    height: 6em;
+    font-size: 1rem;
+    resize: none;
+    padding: 1em;
+    outline: none;
+    border-radius: 9px;
+    border: 1px solid var(--light-grey);
+}
+
+.btn-inactive {
+    background: var(--light-grey);
+    cursor: default;
+}
+
+.btn-inactive:hover {
+    transform: none;
+}
+
+@media screen and (max-width: 470px) {
+    .form textarea {
+        height: 10em;
+    }
+}
