@@ -1,8 +1,14 @@
 import { Rating } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import Spinner from "../../UI/Spinner/Spinner";
 import styles from "./WriteReview.module.css";
 
-const WriteReview = () => {
+type Props = {
+    onPublish: (ratingValue: number, inputValue: string) => void;
+    isReviewSending: boolean;
+};
+
+const WriteReview = ({ onPublish, isReviewSending }: Props) => {
     const [ratingValue, setRatingValue] = useState<number | null>(null);
     const [inputValue, setInputValue] = useState("");
     const [isValid, setIsValid] = useState(false);
@@ -13,12 +19,10 @@ const WriteReview = () => {
         setInputValue(enteredText);
     };
 
-    const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+    const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (!isValid) return;
-
-        // database request
-        console.log(ratingValue, inputValue);
+        onPublish(ratingValue!, inputValue);
     };
 
     useEffect(() => {
@@ -36,9 +40,17 @@ const WriteReview = () => {
             />
             <textarea value={inputValue} onChange={inputChangeHandler} />
             <div>
-                <button className="main-btn" type="submit" disabled={isValid ? false : true}>
-                    Publish
-                </button>
+                {!isReviewSending && (
+                    <button className="main-btn" type="submit" disabled={isValid ? false : true}>
+                        Publish
+                    </button>
+                )}
+
+                {isReviewSending && (
+                    <button className="main-btn" disabled>
+                        Publishing <Spinner />
+                    </button>
+                )}
             </div>
         </form>
     );

@@ -6,9 +6,9 @@ import { useRouter } from "next/router";
 import { Rating } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../../store/cartSlice/cartSlice";
-import { db } from "../../firebase/config";
-import { updateDoc, doc, arrayUnion, arrayRemove } from "firebase/firestore";
-import { useContext, useEffect } from "react";
+import { db, auth } from "../../firebase/config";
+import { updateDoc, doc, addDoc, collection, arrayUnion, arrayRemove } from "firebase/firestore";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../store/auth-context";
 import { favouritesActions } from "../../store/favouritesSlice/favouritesSlice";
 import useIsInFavourites from "../../hooks/useIsInFavourites";
@@ -30,6 +30,9 @@ const Product = ({ data }: Props) => {
     const product = data[productIndex];
 
     const { isInFavourites, setIsInFavourites, checkIfInFavourites } = useIsInFavourites();
+
+    const [isReviewPublished, setIsReviewPublished] = useState(false);
+    const [isReviewSending, setIsReviewSending] = useState(false);
 
     useEffect(() => {
         checkIfInFavourites(product);
@@ -67,6 +70,26 @@ const Product = ({ data }: Props) => {
             });
             dispatch(favouritesActions.addToFavourites(favouriteItem));
         }
+    };
+
+    const reviewPublishHandler = async (ratingValue: number, reviewText: string) => {
+        setIsReviewSending(true);
+        const reviewDate = new Date().toLocaleDateString("en-US", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+        });
+
+        await addDoc(collection(db, "reviews"), {
+            productId: product.id,
+            userId,
+            userEmail: auth.currentUser!.email,
+            ratingValue,
+            reviewText,
+            reviewDate,
+        });
+        setIsReviewPublished(true);
+        setIsReviewSending(false);
     };
 
     return (
@@ -107,7 +130,9 @@ const Product = ({ data }: Props) => {
                     </div>
                 </div>
             </div>
-            <WriteReview />
+            {isLoggedIn && !isReviewPublished && (
+                <WriteReview onPublish={reviewPublishHandler} isReviewSending={isReviewSending} />
+            )}
         </>
     );
 };
