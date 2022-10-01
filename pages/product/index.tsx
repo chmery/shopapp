@@ -19,7 +19,7 @@ import {
     getPublishedReview,
     hasPublishedReview,
     removeReview,
-} from "./helpers";
+} from "../../helpers/product-page-helpers";
 import ReviewsList from "../../components/Reviews/ReviewsList/ReviewsList";
 import ReviewItem from "../../components/Reviews/ReviewItem/ReviewItem";
 

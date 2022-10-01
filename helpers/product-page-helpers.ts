@@ -1,5 +1,5 @@
 import { collection, query, where, getDocs, deleteDoc } from "firebase/firestore";
-import { db } from "../../firebase/config";
+import { db } from "../firebase/config";
 
 export const getProductsReviews = async (productId: number) => {
     const productsReviews: ReviewData[] = [];
