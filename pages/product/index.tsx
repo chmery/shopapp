@@ -14,7 +14,12 @@ import { favouritesActions } from "../../store/favouritesSlice/favouritesSlice";
 import useIsInFavourites from "../../hooks/useIsInFavourites";
 import NoContentMessage from "../../components/UI/NoContentMessage/NoContentMessage";
 import WriteReview from "../../components/Reviews/WriteReview/WriteReview";
-import { getProductsReviews, getPublishedReview, hasPublishedReview } from "./helpers";
+import {
+    getProductsReviews,
+    getPublishedReview,
+    hasPublishedReview,
+    removeReview,
+} from "./helpers";
 import ReviewsList from "../../components/Reviews/ReviewsList/ReviewsList";
 import ReviewItem from "../../components/Reviews/ReviewItem/ReviewItem";
 
@@ -96,7 +101,7 @@ const Product = ({ data }: Props) => {
         }
     };
 
-    const reviewPublishHandler = async (ratingValue: number, reviewText: string) => {
+    const publishReviewHandler = async (ratingValue: number, reviewText: string) => {
         setIsReviewSending(true);
         const reviewDate = new Date().toLocaleDateString("en-US", {
             day: "numeric",
@@ -118,6 +123,18 @@ const Product = ({ data }: Props) => {
         setReviews((prevState) => [...prevState, review]);
         setIsReviewPublished(true);
         setIsReviewSending(false);
+    };
+
+    const removeReviewHandler = () => {
+        removeReview(publishedReview!);
+        setPublishedReview(null);
+        setIsReviewPublished(false);
+        setReviews((prevState) => {
+            const updatedReviews = prevState.filter(
+                (review) => review.userId !== publishedReview!.userId
+            );
+            return updatedReviews;
+        });
     };
 
     return (
@@ -159,9 +176,15 @@ const Product = ({ data }: Props) => {
                 </div>
             </div>
             {isLoggedIn && !isReviewPublished && !areReviewsLoading && (
-                <WriteReview onPublish={reviewPublishHandler} isReviewSending={isReviewSending} />
+                <WriteReview onPublish={publishReviewHandler} isReviewSending={isReviewSending} />
             )}
-            {publishedReview && <ReviewItem reviewData={publishedReview} userReview />}
+            {publishedReview && (
+                <ReviewItem
+                    reviewData={publishedReview}
+                    onReviewRemove={removeReviewHandler}
+                    userReview
+                />
+            )}
             {reviews.length > 0 && !areReviewsLoading && <ReviewsList reviews={reviews} />}
         </>
     );

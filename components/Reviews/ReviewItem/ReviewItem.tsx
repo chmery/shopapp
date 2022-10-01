@@ -4,10 +4,11 @@ import styles from "./ReviewItem.module.css";
 
 type Props = {
     reviewData: ReviewData;
-    userReview: boolean;
+    userReview?: boolean;
+    onReviewRemove?: () => void;
 };
 
-const ReviewItem = ({ reviewData, userReview }: Props) => {
+const ReviewItem = ({ reviewData, userReview, onReviewRemove }: Props) => {
     return (
         <>
             {userReview && <h3 className={styles["your-review"]}>Your review</h3>}
@@ -26,7 +27,7 @@ const ReviewItem = ({ reviewData, userReview }: Props) => {
                         readOnly
                     />
                     {userReview && (
-                        <div className={styles.remove}>
+                        <div className={styles.remove} onClick={onReviewRemove}>
                             <ThrashIcon />
                         </div>
                     )}
