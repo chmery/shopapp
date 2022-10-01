@@ -10,3 +10,6 @@ export const getProductsReviews = async (productId: number) => {
     querySnapshot.forEach((doc) => productsReviews.push(doc.data() as ReviewData));
     return productsReviews;
 };
+
+export const hasPublishedReview = (reviews: ReviewData[], userId: string) =>
+    reviews.some((review) => review.userId === userId);

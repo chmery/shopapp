@@ -14,23 +14,11 @@ import { favouritesActions } from "../../store/favouritesSlice/favouritesSlice";
 import useIsInFavourites from "../../hooks/useIsInFavourites";
 import NoContentMessage from "../../components/UI/NoContentMessage/NoContentMessage";
 import WriteReview from "../../components/Reviews/WriteReview/WriteReview";
-import ReviewsItem from "../../components/Reviews/ReviewItem/ReviewItem";
-import { getProductsReviews } from "./helpers";
+import { getProductsReviews, hasPublishedReview } from "./helpers";
 import ReviewsList from "../../components/Reviews/ReviewsList/ReviewsList";
 
 type Props = {
     data: ProductData[];
-};
-
-const TEST_DATA = {
-    productId: 3,
-    ratingValue: 4,
-    reviewDate: "13 September, 2022",
-    reviewText:
-        "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
-    userEmail: "test@test.com",
-    userId: "4DFJIEHDSAG",
-    likeCount: 44,
 };
 
 const Product = ({ data }: Props) => {
@@ -47,17 +35,26 @@ const Product = ({ data }: Props) => {
 
     const [isReviewPublished, setIsReviewPublished] = useState(false);
     const [isReviewSending, setIsReviewSending] = useState(false);
-    const [reviews, setReviews] = useState<ReviewData[]>();
+    const [areReviewsLoading, setAreReviewsLoading] = useState(true);
+    const [reviews, setReviews] = useState<ReviewData[]>([]);
 
     useEffect(() => {
+        if (!product) return;
         checkIfInFavourites(product);
+
         const setProductsReviews = async () => {
             const productsReviews = await getProductsReviews(product.id);
             setReviews(productsReviews);
+            setAreReviewsLoading(false);
         };
 
         setProductsReviews();
-    }, []);
+    }, [product]);
+
+    useEffect(() => {
+        if (!reviews || !userId || isReviewPublished) return;
+        if (hasPublishedReview(reviews, userId)) setIsReviewPublished(true);
+    }, [reviews, userId]);
 
     if (!product) {
         return (
@@ -101,15 +98,18 @@ const Product = ({ data }: Props) => {
             year: "numeric",
         });
 
-        await addDoc(collection(db, "reviews"), {
+        const review = {
             productId: product.id,
-            userId,
-            userEmail: auth.currentUser!.email,
+            userId: userId!,
+            userEmail: auth.currentUser!.email!,
             ratingValue,
             reviewText,
             reviewDate,
             likeCount: 0,
-        });
+        };
+
+        await addDoc(collection(db, "reviews"), review);
+        setReviews((prevState) => [...prevState, review]);
         setIsReviewPublished(true);
         setIsReviewSending(false);
     };
@@ -152,10 +152,10 @@ const Product = ({ data }: Props) => {
                     </div>
                 </div>
             </div>
-            {isLoggedIn && !isReviewPublished && (
+            {isLoggedIn && !isReviewPublished && !areReviewsLoading && (
                 <WriteReview onPublish={reviewPublishHandler} isReviewSending={isReviewSending} />
             )}
-            {reviews && <ReviewsList reviews={reviews} />}
+            {reviews.length > 0 && !areReviewsLoading && <ReviewsList reviews={reviews} />}
         </>
     );
 };
