@@ -6,7 +6,7 @@ type Props = {
     reviewData: ReviewData;
 };
 
-const ReviewsItem = ({ reviewData }: Props) => {
+const ReviewItem = ({ reviewData }: Props) => {
     return (
         <div className={styles["review-item"]}>
             <div className={styles["avatar-email"]}>
@@ -31,4 +31,4 @@ const ReviewsItem = ({ reviewData }: Props) => {
     );
 };
 
-export default ReviewsItem;
+export default ReviewItem;

@@ -16,6 +16,7 @@ import NoContentMessage from "../../components/UI/NoContentMessage/NoContentMess
 import WriteReview from "../../components/Reviews/WriteReview/WriteReview";
 import ReviewsItem from "../../components/Reviews/ReviewItem/ReviewItem";
 import { getProductsReviews } from "./helpers";
+import ReviewsList from "../../components/Reviews/ReviewsList/ReviewsList";
 
 type Props = {
     data: ProductData[];
@@ -154,7 +155,7 @@ const Product = ({ data }: Props) => {
             {isLoggedIn && !isReviewPublished && (
                 <WriteReview onPublish={reviewPublishHandler} isReviewSending={isReviewSending} />
             )}
-            <ReviewsItem reviewData={TEST_DATA} />
+            {reviews && <ReviewsList reviews={reviews} />}
         </>
     );
 };
