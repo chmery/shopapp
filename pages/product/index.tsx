@@ -15,6 +15,7 @@ import useIsInFavourites from "../../hooks/useIsInFavourites";
 import NoContentMessage from "../../components/UI/NoContentMessage/NoContentMessage";
 import WriteReview from "../../components/Reviews/WriteReview/WriteReview";
 import ReviewsItem from "../../components/Reviews/ReviewItem/ReviewItem";
+import { getProductsReviews } from "./helpers";
 
 type Props = {
     data: ProductData[];
@@ -45,9 +46,16 @@ const Product = ({ data }: Props) => {
 
     const [isReviewPublished, setIsReviewPublished] = useState(false);
     const [isReviewSending, setIsReviewSending] = useState(false);
+    const [reviews, setReviews] = useState<ReviewData[]>();
 
     useEffect(() => {
         checkIfInFavourites(product);
+        const setProductsReviews = async () => {
+            const productsReviews = await getProductsReviews(product.id);
+            setReviews(productsReviews);
+        };
+
+        setProductsReviews();
     }, []);
 
     if (!product) {
