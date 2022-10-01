@@ -14,8 +14,9 @@ import { favouritesActions } from "../../store/favouritesSlice/favouritesSlice";
 import useIsInFavourites from "../../hooks/useIsInFavourites";
 import NoContentMessage from "../../components/UI/NoContentMessage/NoContentMessage";
 import WriteReview from "../../components/Reviews/WriteReview/WriteReview";
-import { getProductsReviews, hasPublishedReview } from "./helpers";
+import { getProductsReviews, getPublishedReview, hasPublishedReview } from "./helpers";
 import ReviewsList from "../../components/Reviews/ReviewsList/ReviewsList";
+import ReviewItem from "../../components/Reviews/ReviewItem/ReviewItem";
 
 type Props = {
     data: ProductData[];
@@ -36,6 +37,7 @@ const Product = ({ data }: Props) => {
     const [isReviewPublished, setIsReviewPublished] = useState(false);
     const [isReviewSending, setIsReviewSending] = useState(false);
     const [areReviewsLoading, setAreReviewsLoading] = useState(true);
+    const [publishedReview, setPublishedReview] = useState<ReviewData | null>(null);
     const [reviews, setReviews] = useState<ReviewData[]>([]);
 
     useEffect(() => {
@@ -52,8 +54,12 @@ const Product = ({ data }: Props) => {
     }, [product]);
 
     useEffect(() => {
-        if (!reviews || !userId || isReviewPublished) return;
-        if (hasPublishedReview(reviews, userId)) setIsReviewPublished(true);
+        if (!reviews || !userId) return;
+        if (hasPublishedReview(reviews, userId)) {
+            setIsReviewPublished(true);
+            const publishedReview = getPublishedReview(reviews, userId);
+            setPublishedReview(publishedReview!);
+        }
     }, [reviews, userId]);
 
     if (!product) {
@@ -155,6 +161,7 @@ const Product = ({ data }: Props) => {
             {isLoggedIn && !isReviewPublished && !areReviewsLoading && (
                 <WriteReview onPublish={reviewPublishHandler} isReviewSending={isReviewSending} />
             )}
+            {publishedReview && <ReviewItem reviewData={publishedReview} userReview />}
             {reviews.length > 0 && !areReviewsLoading && <ReviewsList reviews={reviews} />}
         </>
     );

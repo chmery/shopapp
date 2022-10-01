@@ -13,3 +13,8 @@ export const getProductsReviews = async (productId: number) => {
 
 export const hasPublishedReview = (reviews: ReviewData[], userId: string) =>
     reviews.some((review) => review.userId === userId);
+
+export const getPublishedReview = (reviews: ReviewData[], userId: string) => {
+    const publishedReview = reviews.find((review) => review.userId === userId);
+    return publishedReview;
+};
