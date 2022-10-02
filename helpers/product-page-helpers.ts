@@ -1,14 +1,14 @@
-import { collection, query, where, getDocs, deleteDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../firebase/config";
 
-export const getProductsReviews = async (productId: number) => {
-    const productsReviews: ReviewData[] = [];
+export const getProductReviews = async (productId: number) => {
+    const productReviews: ReviewData[] = [];
 
     const q = query(collection(db, "reviews"), where("productId", "==", productId));
     const querySnapshot = await getDocs(q);
 
-    querySnapshot.forEach((doc) => productsReviews.push(doc.data() as ReviewData));
-    return productsReviews;
+    querySnapshot.forEach((doc) => productReviews.push(doc.data() as ReviewData));
+    return productReviews;
 };
 
 export const hasPublishedReview = (reviews: ReviewData[], userId: string) =>
@@ -19,12 +19,5 @@ export const getPublishedReview = (reviews: ReviewData[], userId: string) => {
     return publishedReview;
 };
 
-export const removeReview = async (review: ReviewData) => {
-    const q = query(
-        collection(db, "reviews"),
-        where("userId", "==", review.userId),
-        where("productId", "==", review.productId)
-    );
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => deleteDoc(doc.ref));
-};
+export const removeReview = async (review: ReviewData) =>
+    await deleteDoc(doc(db, "reviews", review.reviewId));

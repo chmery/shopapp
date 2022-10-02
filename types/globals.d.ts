@@ -40,6 +40,7 @@ interface FavouriteItem {
 }
 
 interface ReviewData {
+    reviewId: string;
     productId: number;
     ratingValue: number;
     reviewDate: string;

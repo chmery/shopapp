@@ -6,9 +6,14 @@ type Props = {
     reviewData: ReviewData;
     userReview?: boolean;
     onReviewRemove?: () => void;
+    onReviewLike?: (review: ReviewData) => void;
 };
 
-const ReviewItem = ({ reviewData, userReview, onReviewRemove }: Props) => {
+const ReviewItem = ({ reviewData, userReview, onReviewRemove, onReviewLike }: Props) => {
+    const reviewLikeHandler = () => {
+        onReviewLike!(reviewData);
+    };
+
     return (
         <>
             {userReview && <h3 className={styles["your-review"]}>Your review</h3>}
@@ -35,7 +40,7 @@ const ReviewItem = ({ reviewData, userReview, onReviewRemove }: Props) => {
                 <p>{reviewData.reviewText}</p>
                 <div>
                     <span className={styles.date}>{reviewData.reviewDate}</span>
-                    <div className={styles.like}>
+                    <div className={styles.like} onClick={reviewLikeHandler}>
                         <HeartIcon />
                         {reviewData.likeCount}
                     </div>

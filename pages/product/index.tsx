@@ -7,7 +7,7 @@ import { Rating } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../../store/cartSlice/cartSlice";
 import { db, auth } from "../../firebase/config";
-import { updateDoc, doc, addDoc, collection, arrayUnion, arrayRemove } from "firebase/firestore";
+import { updateDoc, doc, arrayUnion, arrayRemove, setDoc } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../store/auth-context";
 import { favouritesActions } from "../../store/favouritesSlice/favouritesSlice";
@@ -15,7 +15,7 @@ import useIsInFavourites from "../../hooks/useIsInFavourites";
 import NoContentMessage from "../../components/UI/NoContentMessage/NoContentMessage";
 import WriteReview from "../../components/Reviews/WriteReview/WriteReview";
 import {
-    getProductsReviews,
+    getProductReviews,
     getPublishedReview,
     hasPublishedReview,
     removeReview,
@@ -49,13 +49,13 @@ const Product = ({ data }: Props) => {
         if (!product) return;
         checkIfInFavourites(product);
 
-        const setProductsReviews = async () => {
-            const productsReviews = await getProductsReviews(product.id);
-            setReviews(productsReviews);
+        const setProductReviews = async () => {
+            const productReviews = await getProductReviews(product.id);
+            setReviews(productReviews);
             setAreReviewsLoading(false);
         };
 
-        setProductsReviews();
+        setProductReviews();
     }, [product]);
 
     useEffect(() => {
@@ -109,7 +109,10 @@ const Product = ({ data }: Props) => {
             year: "numeric",
         });
 
+        const reviewId = `${userId}${product.id}`;
+
         const review = {
+            reviewId,
             productId: product.id,
             userId: userId!,
             userEmail: auth.currentUser!.email!,
@@ -119,10 +122,14 @@ const Product = ({ data }: Props) => {
             likeCount: 0,
         };
 
-        await addDoc(collection(db, "reviews"), review);
+        await setDoc(doc(db, "reviews", reviewId), review);
         setReviews((prevState) => [...prevState, review]);
         setIsReviewPublished(true);
         setIsReviewSending(false);
+    };
+
+    const likeReviewHandler = (review: ReviewData) => {
+        console.log(review);
     };
 
     const removeReviewHandler = () => {
@@ -131,7 +138,7 @@ const Product = ({ data }: Props) => {
         setIsReviewPublished(false);
         setReviews((prevState) => {
             const updatedReviews = prevState.filter(
-                (review) => review.userId !== publishedReview!.userId
+                (review) => review.reviewId !== publishedReview!.reviewId
             );
             return updatedReviews;
         });
@@ -185,7 +192,9 @@ const Product = ({ data }: Props) => {
                     userReview
                 />
             )}
-            {reviews.length > 0 && !areReviewsLoading && <ReviewsList reviews={reviews} />}
+            {reviews.length > 0 && !areReviewsLoading && (
+                <ReviewsList reviews={reviews} onReviewLike={likeReviewHandler} />
+            )}
         </>
     );
 };
