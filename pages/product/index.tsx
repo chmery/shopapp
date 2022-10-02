@@ -18,6 +18,7 @@ import {
     getProductReviews,
     getPublishedReview,
     hasPublishedReview,
+    likeReview,
     removeReview,
 } from "../../helpers/product-page-helpers";
 import ReviewsList from "../../components/Reviews/ReviewsList/ReviewsList";
@@ -41,7 +42,6 @@ const Product = ({ data }: Props) => {
 
     const [isReviewPublished, setIsReviewPublished] = useState(false);
     const [isReviewSending, setIsReviewSending] = useState(false);
-    const [areReviewsLoading, setAreReviewsLoading] = useState(true);
     const [publishedReview, setPublishedReview] = useState<ReviewData | null>(null);
     const [reviews, setReviews] = useState<ReviewData[]>([]);
 
@@ -49,12 +49,7 @@ const Product = ({ data }: Props) => {
         if (!product) return;
         checkIfInFavourites(product);
 
-        const setProductReviews = async () => {
-            const productReviews = await getProductReviews(product.id);
-            setReviews(productReviews);
-            setAreReviewsLoading(false);
-        };
-
+        const setProductReviews = async () => setReviews(await getProductReviews(product.id));
         setProductReviews();
     }, [product]);
 
@@ -112,6 +107,7 @@ const Product = ({ data }: Props) => {
         const reviewId = `${userId}${product.id}`;
 
         const review = {
+            likedBy: [],
             reviewId,
             productId: product.id,
             userId: userId!,
@@ -128,11 +124,12 @@ const Product = ({ data }: Props) => {
         setIsReviewSending(false);
     };
 
-    const likeReviewHandler = (review: ReviewData) => {
-        console.log(review);
+    const likeReviewHandler = async (reviewData: ReviewData) => {
+        await likeReview(reviewData, userId);
+        setReviews(await getProductReviews(product.id));
     };
 
-    const removeReviewHandler = () => {
+    const removeReviewHandler = async () => {
         removeReview(publishedReview!);
         setPublishedReview(null);
         setIsReviewPublished(false);
@@ -182,7 +179,7 @@ const Product = ({ data }: Props) => {
                     </div>
                 </div>
             </div>
-            {isLoggedIn && !isReviewPublished && !areReviewsLoading && (
+            {isLoggedIn && !isReviewPublished && (
                 <WriteReview onPublish={publishReviewHandler} isReviewSending={isReviewSending} />
             )}
             {publishedReview && (
@@ -192,7 +189,7 @@ const Product = ({ data }: Props) => {
                     userReview
                 />
             )}
-            {reviews.length > 0 && !areReviewsLoading && (
+            {reviews.length > 0 && (
                 <ReviewsList reviews={reviews} onReviewLike={likeReviewHandler} />
             )}
         </>

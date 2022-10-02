@@ -40,10 +40,12 @@ const ReviewItem = ({ reviewData, userReview, onReviewRemove, onReviewLike }: Pr
                 <p>{reviewData.reviewText}</p>
                 <div>
                     <span className={styles.date}>{reviewData.reviewDate}</span>
-                    <div className={styles.like} onClick={reviewLikeHandler}>
-                        <HeartIcon />
-                        {reviewData.likeCount}
-                    </div>
+                    {!userReview && (
+                        <div className={styles.like} onClick={reviewLikeHandler}>
+                            <HeartIcon />
+                            {reviewData.likeCount}
+                        </div>
+                    )}
                 </div>
             </div>
         </>
