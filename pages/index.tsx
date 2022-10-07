@@ -1,5 +1,5 @@
 import { getProductsData } from "../helpers/helpers";
-import CategoryShowcase from "../components/Products/CategoryShowcase/CategoryShowcase";
+import CategoryShowcase from "../components/Product/CategoryShowcase/CategoryShowcase";
 
 type Props = {
     data: ProductData[];

@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
 import { useSelector } from "react-redux";
-import ProductsList from "../../components/Products/ProductsList/ProductsList";
+import ProductsList from "../../components/Product/ProductsList/ProductsList";
 import Loader from "../../components/UI/Loader/Loader";
 import NoContentMessage from "../../components/UI/NoContentMessage/NoContentMessage";
 import { AuthContext } from "../../store/auth-context";

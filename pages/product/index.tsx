@@ -1,9 +1,5 @@
-import styles from "./ProductPage.module.css";
-import Image from "next/future/image";
-import { HeartIcon } from "../../components/UI/Icons/Icons";
 import { getProductsData } from "../../helpers/helpers";
 import { useRouter } from "next/router";
-import { Rating } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../../store/cartSlice/cartSlice";
 import { db, auth } from "../../firebase/config";
@@ -23,6 +19,7 @@ import {
 } from "../../helpers/product-page-helpers";
 import ReviewsList from "../../components/Reviews/ReviewsList/ReviewsList";
 import ReviewItem from "../../components/Reviews/ReviewItem/ReviewItem";
+import ProductPageItem from "../../components/Product/ProductPageItem/ProductPageItem";
 
 type Props = {
     data: ProductData[];
@@ -143,42 +140,13 @@ const Product = ({ data }: Props) => {
 
     return (
         <>
-            <div className={styles.product}>
-                <div className={styles["product-image"]}>
-                    <Image src={product.image} alt={product.title} fill />
-                </div>
-                <div className={styles.description}>
-                    <h1>{product.title}</h1>
-                    <p>{product.description}</p>
-                    <div className={styles.rating}>
-                        <Rating
-                            name="product-rating"
-                            value={product.rating.rate}
-                            precision={0.5}
-                            readOnly
-                        />
-                        <span className={styles["rating-score"]}>{product.rating.rate}/5.0</span>
-                        <span className={styles["rating-count"]}>{product.rating.count} votes</span>
-                    </div>
-                    <span className={styles.price}>${product.price}</span>
-                    <div className={styles.buttons}>
-                        <button className="main-btn" onClick={addToCartHandler}>
-                            Add to Cart
-                        </button>
-                        {isLoggedIn && (
-                            <button
-                                className={`${styles["fav-btn"]} ${
-                                    isInFavourites ? styles["fav-btn-added"] : ""
-                                }`}
-                                onClick={addToFavouritesHandler}
-                            >
-                                Favourites
-                                <HeartIcon />
-                            </button>
-                        )}
-                    </div>
-                </div>
-            </div>
+            <ProductPageItem
+                product={product}
+                onAddToCart={addToCartHandler}
+                onAddToFavourites={addToFavouritesHandler}
+                isLoggedIn={isLoggedIn}
+                isInFavourites={isInFavourites}
+            />
             {isLoggedIn && !isReviewPublished && (
                 <WriteReview onPublish={publishReviewHandler} isReviewSending={isReviewSending} />
             )}

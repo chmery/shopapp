@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import ProductsList from "../../components/Products/ProductsList/ProductsList";
+import ProductsList from "../../components/Product/ProductsList/ProductsList";
 import NoContentMessage from "../../components/UI/NoContentMessage/NoContentMessage";
 
 type Props = {
