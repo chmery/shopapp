@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
 import styles from "./AuthForm.module.css";
-import { useRouter } from "next/router";
 import AuthActions from "../AuthActions/AuthActions";
 
 type Props = {
@@ -17,8 +16,6 @@ const AuthForm = ({ onAuth, action, isLoading }: Props) => {
 
     const enteredEmail = useRef<HTMLInputElement>(null!);
     const enteredPassword = useRef<HTMLInputElement>(null!);
-
-    const router = useRouter();
 
     const title = action === "login" ? "Log in to your account" : "Create new account";
 
@@ -57,18 +54,13 @@ const AuthForm = ({ onAuth, action, isLoading }: Props) => {
     };
 
     useEffect(() => {
-        const setInitialInputsState = () => {
-            setIsPasswordValid(true);
-            setIsEmailValid(true);
-        };
-
-        router.events.on("routeChangeStart", setInitialInputsState);
-        return () => router.events.off("routeChangeStart", setInitialInputsState);
-    }, []);
+        setIsPasswordValid(true);
+        setIsEmailValid(true);
+    }, [action]);
 
     return (
         <form onSubmit={submitHandler} className={styles["auth-form"]}>
-            <h3>{title}</h3>
+            <h3 data-testid="auth-form-title">{title}</h3>
             <div>
                 <input
                     className={!isEmailValid ? styles.invalid : ""}
