@@ -26,13 +26,13 @@ const AuthActions = ({ isLoading, action }: Props) => {
     return (
         <>
             {!isLoading && (
-                <button className="main-btn" type="submit">
+                <button className="main-btn" type="submit" data-testid="auth-btn">
                     {action === "login" ? "Log In" : "Sign Up"}
                 </button>
             )}
 
             {isLoading && (
-                <button className="main-btn" type="submit" disabled>
+                <button className="main-btn" type="submit" data-testid="auth-btn" disabled>
                     {action === "login" ? "Logging In" : "Signing Up"} <Spinner />
                 </button>
             )}

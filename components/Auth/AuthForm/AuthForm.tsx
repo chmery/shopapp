@@ -59,7 +59,7 @@ const AuthForm = ({ onAuth, action, isLoading }: Props) => {
     }, [action]);
 
     return (
-        <form onSubmit={submitHandler} className={styles["auth-form"]}>
+        <form onSubmit={submitHandler} className={styles["auth-form"]} data-testid="auth-form">
             <h3 data-testid="auth-form-title">{title}</h3>
             <div>
                 <input
