@@ -12,20 +12,6 @@ jest.mock("./[action]", () => () => {
 });
 
 describe("Auth page", () => {
-    it("should render log in form if url is equal to /auth/login", () => {
-        render(<AuthForm action={"login"} onAuth={() => {}} isLoading={false} />);
-        const formTitle = screen.getByText("Log in to your account");
-        const actionBtn = screen.getByText("Log In");
-        expect(formTitle && actionBtn).toBeVisible();
-    });
-
-    it("should render sign in form if url is equal to /auth/signup", () => {
-        render(<AuthForm action={"signup"} onAuth={() => {}} isLoading={false} />);
-        const formTitle = screen.getByText("Create new account");
-        const actionBtn = screen.getByText("Sign Up");
-        expect(formTitle && actionBtn).toBeVisible();
-    });
-
     it("should NOT render auth form if user is logged in", () => {
         render(
             <MockAuthContext.Provider value={{ isLoggedIn: true }}>
