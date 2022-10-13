@@ -59,8 +59,8 @@ const AuthForm = ({ onAuth, action, isLoading }: Props) => {
     }, [action]);
 
     return (
-        <form onSubmit={submitHandler} className={styles["auth-form"]} data-testid="auth-form">
-            <h3 data-testid="auth-form-title">{title}</h3>
+        <form aria-label="auth-form" onSubmit={submitHandler} className={styles["auth-form"]}>
+            <h3>{title}</h3>
             <div>
                 <input
                     className={!isEmailValid ? styles.invalid : ""}
@@ -69,16 +69,19 @@ const AuthForm = ({ onAuth, action, isLoading }: Props) => {
                     placeholder="E-mail"
                     onFocus={focusHandler}
                 />
+
                 {!isEmailValid && <p className={styles["invalid-message"]}>{emailError}</p>}
             </div>
             <div>
-                <input
-                    className={!isPasswordValid ? styles.invalid : ""}
-                    ref={enteredPassword}
-                    type="password"
-                    placeholder="Password"
-                    onFocus={focusHandler}
-                />
+                <label htmlFor="password-input">
+                    <input
+                        className={!isPasswordValid ? styles.invalid : ""}
+                        ref={enteredPassword}
+                        type="password"
+                        placeholder="Password"
+                        onFocus={focusHandler}
+                    />
+                </label>
                 {!isPasswordValid && <p className={styles["invalid-message"]}>{passwordError}</p>}
             </div>
             <AuthActions isLoading={isLoading} action={action} />

@@ -12,28 +12,39 @@ jest.mock("./[action]", () => () => {
 });
 
 describe("Auth page", () => {
-    it("renders log in form if url is equal to /auth/login", () => {
+    it("should render log in form if url is equal to /auth/login", () => {
         render(<AuthForm action={"login"} onAuth={() => {}} isLoading={false} />);
-        const formTitle = screen.getByTestId("auth-form-title");
-        const actionBtn = screen.getByTestId("auth-btn");
-        expect(formTitle && actionBtn).toHaveTextContent(/log in/i);
+        const formTitle = screen.getByText("Log in to your account");
+        const actionBtn = screen.getByText("Log In");
+        expect(formTitle && actionBtn).toBeVisible();
     });
 
-    it("renders sign in form if url is equal to /auth/signup", () => {
+    it("should render sign in form if url is equal to /auth/signup", () => {
         render(<AuthForm action={"signup"} onAuth={() => {}} isLoading={false} />);
-        const formTitle = screen.getByTestId("auth-form-title");
-        const actionBtn = screen.getByTestId("auth-btn");
-        expect(formTitle && actionBtn).toHaveTextContent(/sign up/i);
+        const formTitle = screen.getByText("Create new account");
+        const actionBtn = screen.getByText("Sign Up");
+        expect(formTitle && actionBtn).toBeVisible();
     });
 
-    it("doesn't render auth form if user is logged in", async () => {
+    it("should NOT render auth form if user is logged in", () => {
         render(
             <MockAuthContext.Provider value={{ isLoggedIn: true }}>
                 <AuthPage />
             </MockAuthContext.Provider>
         );
 
-        const authForm = screen.queryByTestId("auth-form");
+        const authForm = screen.queryByLabelText("auth-form");
         expect(authForm).not.toBeInTheDocument();
+    });
+
+    it("should render auth form if user is NOT logged in", () => {
+        render(
+            <MockAuthContext.Provider value={{ isLoggedIn: false }}>
+                <AuthPage />
+            </MockAuthContext.Provider>
+        );
+
+        const authForm = screen.getByLabelText("auth-form");
+        expect(authForm).toBeVisible();
     });
 });
