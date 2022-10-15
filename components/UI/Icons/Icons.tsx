@@ -1,4 +1,4 @@
-export const SearchIcon = () => {
+const Search = () => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -18,7 +18,7 @@ export const SearchIcon = () => {
     );
 };
 
-export const CloseIcon = () => {
+const Close = () => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +38,7 @@ export const CloseIcon = () => {
     );
 };
 
-export const HeartIcon = () => {
+const Heart = () => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +57,7 @@ export const HeartIcon = () => {
     );
 };
 
-export const UserIcon = () => {
+const User = () => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +77,7 @@ export const UserIcon = () => {
     );
 };
 
-export const CartIcon = () => {
+const Cart = () => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +98,7 @@ export const CartIcon = () => {
     );
 };
 
-export const PlusIcon = () => {
+const Plus = () => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +118,7 @@ export const PlusIcon = () => {
     );
 };
 
-export const MinusIcon = () => {
+const Minus = () => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -137,7 +137,7 @@ export const MinusIcon = () => {
     );
 };
 
-export const XIcon = () => {
+const Remove = () => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -157,7 +157,7 @@ export const XIcon = () => {
     );
 };
 
-export const ThrashIcon = () => {
+const Thrash = () => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -178,3 +178,17 @@ export const ThrashIcon = () => {
         </svg>
     );
 };
+
+const Icons = {
+    Search,
+    Close,
+    Heart,
+    User,
+    Cart,
+    Plus,
+    Minus,
+    Remove,
+    Thrash,
+};
+
+export default Icons;

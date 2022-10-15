@@ -1,7 +1,7 @@
 import styles from "./CartItem.module.css";
 import { useRouter } from "next/router";
 import Image from "next/future/image";
-import { MinusIcon, PlusIcon } from "../../UI/Icons/Icons";
+import Icons from "../../UI/Icons/Icons";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../../../store/cartSlice/cartSlice";
 
@@ -40,11 +40,11 @@ const CartItem = ({ cartItem }: Props) => {
                     <span onClick={goToCategoryHandler}>{item.category}</span>
                     <div>
                         <button onClick={removeItemHandler.bind(null, item.id)}>
-                            <MinusIcon />
+                            <Icons.Minus />
                         </button>
                         <span>{cartItem.quantity}</span>
                         <button onClick={addItemHandler.bind(null, item)}>
-                            <PlusIcon />
+                            <Icons.Plus />
                         </button>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-import { SearchIcon } from "../Icons/Icons";
+import Icons from "../Icons/Icons";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import { getProductsData } from "../../../helpers/helpers";
@@ -66,7 +66,7 @@ const SearchBar = React.forwardRef<HTMLDivElement>((_, ref) => {
                     className={arePromptsVisible ? styles["prompts-btn"] : ""}
                     onClick={searchHandler}
                 >
-                    <SearchIcon />
+                    <Icons.Search />
                 </button>
             </div>
             {arePromptsVisible && <SearchBarPrompts prompts={prompts} ref={ref} />}

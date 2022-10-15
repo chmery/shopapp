@@ -1,5 +1,5 @@
 import { Rating } from "@mui/material";
-import { HeartIcon, ThrashIcon } from "../../UI/Icons/Icons";
+import Icons from "../../UI/Icons/Icons";
 import styles from "./ReviewItem.module.css";
 
 type Props = {
@@ -33,7 +33,7 @@ const ReviewItem = ({ reviewData, userReview, onReviewRemove, onReviewLike }: Pr
                     />
                     {userReview && (
                         <div className={styles.remove} onClick={onReviewRemove}>
-                            <ThrashIcon />
+                            <Icons.Thrash />
                         </div>
                     )}
                 </div>
@@ -42,7 +42,7 @@ const ReviewItem = ({ reviewData, userReview, onReviewRemove, onReviewLike }: Pr
                     <span className={styles.date}>{reviewData.reviewDate}</span>
                     {!userReview && (
                         <div className={styles.like} onClick={reviewLikeHandler}>
-                            <HeartIcon />
+                            <Icons.Heart />
                             {reviewData.likeCount}
                         </div>
                     )}

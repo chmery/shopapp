@@ -1,7 +1,7 @@
 import Newsletter from "../Newsletter/Newsletter";
 import Link from "next/link";
 import styles from "./Footer.module.css";
-import { HeartIcon } from "../Icons/Icons";
+import Icons from "../Icons/Icons";
 
 const Footer = () => {
     return (
@@ -25,7 +25,7 @@ const Footer = () => {
             </div>
             <div className={styles.author}>
                 <p>
-                    Designed & built with <HeartIcon /> by
+                    Designed & built with <Icons.Heart /> by
                     <a href="https://github.com/chmery"> chmery</a>
                 </p>
                 <p>Based in Poland</p>

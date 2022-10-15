@@ -8,12 +8,12 @@ describe("Auth actions", () => {
         expect(screen.getByRole("button")).toBeDisabled();
     });
 
-    it("should render sign up message when url is equal to /auth/signup", () => {
+    it("should render sign up message when action is equal to login", () => {
         render(<AuthActions isLoading={false} action={"login"} />);
         expect(screen.getByText("Don't have an account?")).toBeVisible();
     });
 
-    it("should render log in message when url is equal to /auth/login", () => {
+    it("should render log in message when action is equal to signup", () => {
         render(<AuthActions isLoading={false} action={"signup"} />);
         expect(screen.getByText("Already have an account?")).toBeVisible();
     });

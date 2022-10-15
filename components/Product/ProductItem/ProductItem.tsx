@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import useIsInFavourites from "../../../hooks/useIsInFavourites";
 import { favouritesActions } from "../../../store/favouritesSlice/favouritesSlice";
-import { XIcon } from "../../UI/Icons/Icons";
+import Icons from "../../UI/Icons/Icons";
 import styles from "./ProductItem.module.css";
 import { db } from "../../../firebase/config";
 import { updateDoc, doc, arrayRemove } from "firebase/firestore";
@@ -60,7 +60,7 @@ const ProductItem = ({ productData }: Props) => {
                 <span>{price}</span>
                 {isInFavourites && pathname === "/favourites" && (
                     <button onClick={removeFromFavouritesHandler}>
-                        <XIcon />
+                        <Icons.Remove />
                     </button>
                 )}
             </div>

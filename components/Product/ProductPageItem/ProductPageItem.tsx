@@ -1,4 +1,4 @@
-import { HeartIcon } from "../../UI/Icons/Icons";
+import Icons from "../../UI/Icons/Icons";
 import styles from "./ProductPageItem.module.css";
 import Image from "next/future/image";
 import { Rating } from "@mui/material";
@@ -49,7 +49,7 @@ const ProductPageItem = ({
                             onClick={onAddToFavourites}
                         >
                             Favourites
-                            <HeartIcon />
+                            <Icons.Heart />
                         </button>
                     )}
                 </div>

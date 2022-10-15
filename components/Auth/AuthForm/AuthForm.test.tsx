@@ -3,14 +3,14 @@ import "@testing-library/jest-dom";
 import AuthForm from "./AuthForm";
 
 describe("Auth form", () => {
-    it("should render log in form if url is equal to /auth/login", () => {
+    it("should render log in form if action equal to login", () => {
         render(<AuthForm action={"login"} onAuth={() => {}} isLoading={false} />);
         const formTitle = screen.getByText("Log in to your account");
         const actionBtn = screen.getByText("Log In");
         expect(formTitle && actionBtn).toBeVisible();
     });
 
-    it("should render sign in form if url is equal to /auth/signup", () => {
+    it("should render sign in form if url is action equal signup", () => {
         render(<AuthForm action={"signup"} onAuth={() => {}} isLoading={false} />);
         const formTitle = screen.getByText("Create new account");
         const actionBtn = screen.getByText("Sign Up");

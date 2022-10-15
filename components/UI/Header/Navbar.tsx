@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { useSelector } from "react-redux";
 import { AuthContext } from "../../../store/auth-context";
 import { RootState } from "../../../store/store";
-import { HeartIcon, SearchIcon, UserIcon, CartIcon, CloseIcon } from "../Icons/Icons";
+import Icons from "../Icons/Icons";
 import styles from "./Navbar.module.css";
 
 type Props = {
@@ -20,13 +20,13 @@ const Navbar = ({ onStartSearching, onStopSearching, isSearching }: Props) => {
     const NavbarSearchItem = () => {
         const searchingJSX = (
             <li onClick={onStopSearching}>
-                <CloseIcon />
+                <Icons.Close />
             </li>
         );
 
         const notSearchingJSX = (
             <li onClick={onStartSearching}>
-                <SearchIcon />
+                <Icons.Search />
             </li>
         );
 
@@ -36,7 +36,7 @@ const Navbar = ({ onStartSearching, onStopSearching, isSearching }: Props) => {
     const NavbarFavouritesItem = () => {
         return (
             <li onClick={() => router.push("/favourites")}>
-                <HeartIcon />
+                <Icons.Heart />
             </li>
         );
     };
@@ -47,10 +47,10 @@ const Navbar = ({ onStartSearching, onStopSearching, isSearching }: Props) => {
                 {<NavbarSearchItem />}
                 {isLoggedIn && <NavbarFavouritesItem />}
                 <li onClick={() => router.push("/profile")}>
-                    <UserIcon />
+                    <Icons.User />
                 </li>
                 <li onClick={() => router.push("/cart")}>
-                    <CartIcon />
+                    <Icons.Cart />
                     {cartItemsNum > 0 && (
                         <div className={styles["items-number"]}>{cartItemsNum}</div>
                     )}
