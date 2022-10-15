@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import ProductsList from "../../components/Product/ProductsList/ProductsList";
 import NoContentMessage from "../../components/UI/NoContentMessage/NoContentMessage";
+import { getProductsData } from "../../helpers/helpers";
 
 type Props = {
     data: ProductData[];
@@ -33,8 +34,7 @@ const Results = ({ data }: Props) => {
 };
 
 export const getStaticProps = async () => {
-    const res = await fetch(`https://fakestoreapi.com/products`);
-    const data = await res.json();
+    const data = await getProductsData();
 
     return {
         props: {

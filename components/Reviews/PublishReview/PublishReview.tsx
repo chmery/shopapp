@@ -1,14 +1,14 @@
 import { Rating } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Spinner from "../../UI/Spinner/Spinner";
-import styles from "./WriteReview.module.css";
+import styles from "./PublishReview.module.css";
 
 type Props = {
     onPublish: (ratingValue: number, inputValue: string) => void;
-    isReviewSending: boolean;
+    isLoading: boolean;
 };
 
-const WriteReview = ({ onPublish, isReviewSending }: Props) => {
+const PublishReview = ({ onPublish, isLoading }: Props) => {
     const [ratingValue, setRatingValue] = useState<number | null>(null);
     const [inputValue, setInputValue] = useState("");
     const [isValid, setIsValid] = useState(false);
@@ -40,13 +40,13 @@ const WriteReview = ({ onPublish, isReviewSending }: Props) => {
             />
             <textarea value={inputValue} onChange={inputChangeHandler} />
             <div>
-                {!isReviewSending && (
+                {!isLoading && (
                     <button className="main-btn" type="submit" disabled={isValid ? false : true}>
                         Publish
                     </button>
                 )}
 
-                {isReviewSending && (
+                {isLoading && (
                     <button className="main-btn" disabled>
                         Publishing <Spinner />
                     </button>
@@ -56,4 +56,4 @@ const WriteReview = ({ onPublish, isReviewSending }: Props) => {
     );
 };
 
-export default WriteReview;
+export default PublishReview;

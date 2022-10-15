@@ -10,8 +10,12 @@ import {
     getDoc,
     arrayUnion,
     arrayRemove,
+    setDoc,
 } from "firebase/firestore";
+import { useContext } from "react";
 import { db } from "../../firebase/config";
+import { AuthContext } from "../../store/auth-context";
+import { auth } from "../../firebase/config";
 
 export const getProductReviews = async (productId: number) => {
     const productReviews: ReviewData[] = [];
@@ -47,4 +51,31 @@ export const likeReview = async (review: ReviewData, userId: string | null) => {
         likeCount: increment(isAlreadyLiked ? -1 : 1),
         likedBy: isAlreadyLiked ? arrayRemove(userId) : arrayUnion(userId),
     });
+};
+
+export const publishReview = async (productId: number, ratingValue: number, reviewText: string) => {
+    const { userId } = useContext(AuthContext) as AuthContext;
+
+    const reviewDate = new Date().toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+    });
+
+    const reviewId = `${userId}${productId}`;
+
+    const review = {
+        likedBy: [],
+        reviewId,
+        productId,
+        userId: userId!,
+        userEmail: auth.currentUser!.email!,
+        ratingValue,
+        reviewText,
+        reviewDate,
+        likeCount: 0,
+    };
+
+    await setDoc(doc(db, "reviews", reviewId), review);
+    return review;
 };

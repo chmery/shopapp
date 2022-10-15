@@ -2,16 +2,15 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../store/auth-context";
 import ReviewItem from "./ReviewItem/ReviewItem";
 import ReviewsList from "./ReviewsList/ReviewsList";
-import WriteReview from "./WriteReview/WriteReview";
-import { db, auth } from "../../firebase/config";
-import { doc, setDoc } from "firebase/firestore";
 import {
     getProductReviews,
     getPublishedReview,
     hasPublishedReview,
     likeReview,
+    publishReview,
     removeReview,
 } from "./helpers";
+import PublishReview from "./PublishReview/PublishReview";
 
 type Props = {
     product: ProductData;
@@ -19,12 +18,11 @@ type Props = {
 
 const ProductReviews = ({ product }: Props) => {
     const [reviews, setReviews] = useState<ReviewData[]>([]);
-    const [isReviewSending, setIsReviewSending] = useState(false);
-    const [isReviewPublished, setIsReviewPublished] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [publishedReview, setPublishedReview] = useState<ReviewData | null>(null);
 
     const { userId, isLoggedIn } = useContext(AuthContext) as AuthContext;
-    const canPublishReview = isLoggedIn && !isReviewPublished ? true : false;
+    const canPublishReview = isLoggedIn && !publishedReview ? true : false;
 
     useEffect(() => {
         if (!product) return;
@@ -35,38 +33,17 @@ const ProductReviews = ({ product }: Props) => {
     useEffect(() => {
         if (!reviews || !userId) return;
         if (hasPublishedReview(reviews, userId)) {
-            setIsReviewPublished(true);
             const publishedReview = getPublishedReview(reviews, userId);
             setPublishedReview(publishedReview!);
         }
     }, [reviews, userId]);
 
     const publishReviewHandler = async (ratingValue: number, reviewText: string) => {
-        setIsReviewSending(true);
-        const reviewDate = new Date().toLocaleDateString("en-US", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-        });
-
-        const reviewId = `${userId}${product.id}`;
-
-        const review = {
-            likedBy: [],
-            reviewId,
-            productId: product.id,
-            userId: userId!,
-            userEmail: auth.currentUser!.email!,
-            ratingValue,
-            reviewText,
-            reviewDate,
-            likeCount: 0,
-        };
-
-        await setDoc(doc(db, "reviews", reviewId), review);
-        setReviews((prevState) => [...prevState, review]);
-        setIsReviewPublished(true);
-        setIsReviewSending(false);
+        setIsLoading(true);
+        const publishedReview = await publishReview(product.id, ratingValue, reviewText);
+        setReviews((prevState) => [...prevState, publishedReview]);
+        setPublishedReview(publishedReview);
+        setIsLoading(false);
     };
 
     const likeReviewHandler = async (reviewData: ReviewData) => {
@@ -75,12 +52,12 @@ const ProductReviews = ({ product }: Props) => {
     };
 
     const removeReviewHandler = async () => {
-        removeReview(publishedReview!);
+        if (!publishedReview) return;
+        removeReview(publishedReview);
         setPublishedReview(null);
-        setIsReviewPublished(false);
         setReviews((prevState) => {
             const updatedReviews = prevState.filter(
-                (review) => review.reviewId !== publishedReview!.reviewId
+                (review) => review.reviewId !== publishedReview.reviewId
             );
             return updatedReviews;
         });
@@ -89,7 +66,7 @@ const ProductReviews = ({ product }: Props) => {
     return (
         <>
             {canPublishReview && (
-                <WriteReview onPublish={publishReviewHandler} isReviewSending={isReviewSending} />
+                <PublishReview onPublish={publishReviewHandler} isLoading={isLoading} />
             )}
             {publishedReview && (
                 <ReviewItem
