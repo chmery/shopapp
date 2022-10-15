@@ -11,7 +11,7 @@ import {
     arrayUnion,
     arrayRemove,
 } from "firebase/firestore";
-import { db } from "../firebase/config";
+import { db } from "../../firebase/config";
 
 export const getProductReviews = async (productId: number) => {
     const productReviews: ReviewData[] = [];
