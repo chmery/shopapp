@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import ProductsList from "../../components/Product/ProductsList/ProductsList";
-import { capitalize } from "../../helpers/helpers";
+import { capitalize, getProductsData } from "../../helpers/helpers";
 import { getProductsByCategory } from "../../helpers/helpers";
 
 type Props = {
@@ -11,9 +11,9 @@ const Category = ({ data }: Props) => {
     const router = useRouter();
     const { category } = router.query;
 
-    if (!category) return;
-    const products = getProductsByCategory(data, category as string, 4);
-    const categoryCapitalized = capitalize(category as string);
+    if (!category || typeof category !== "string") return;
+    const products = getProductsByCategory(data, category, 4);
+    const categoryCapitalized = capitalize(category);
 
     return (
         <>
@@ -37,8 +37,7 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async () => {
-    const res = await fetch(`https://fakestoreapi.com/products`);
-    const data = await res.json();
+    const data = await getProductsData();
 
     return {
         props: {
