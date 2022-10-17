@@ -21,7 +21,7 @@ const Product = ({ data }: Props) => {
     const dispatch = useDispatch();
 
     const { id } = router.query;
-    const { userId, isLoggedIn } = useContext(AuthContext) as AuthContext;
+    const { authorizedUserId } = useContext(AuthContext);
 
     const product = data.find((product) => product.id === Number(id));
 
@@ -53,13 +53,13 @@ const Product = ({ data }: Props) => {
 
         if (isInFavourites) {
             setIsInFavourites(false);
-            await updateDoc(doc(db, "favourites", `${userId}`), {
+            await updateDoc(doc(db, "favourites", `${authorizedUserId}`), {
                 favouriteItems: arrayRemove(favouriteItem),
             });
             dispatch(favouritesActions.removeFromFavourites(favouriteItem));
         } else {
             setIsInFavourites(true);
-            await updateDoc(doc(db, "favourites", `${userId}`), {
+            await updateDoc(doc(db, "favourites", `${authorizedUserId}`), {
                 favouriteItems: arrayUnion(favouriteItem),
             });
             dispatch(favouritesActions.addToFavourites(favouriteItem));
@@ -72,7 +72,7 @@ const Product = ({ data }: Props) => {
                 product={product}
                 onAddToCart={addToCartHandler}
                 onAddToFavourites={addToFavouritesHandler}
-                isLoggedIn={isLoggedIn}
+                authorizedUserId={authorizedUserId}
                 isInFavourites={isInFavourites}
             />
             <ProductReviews product={product} />

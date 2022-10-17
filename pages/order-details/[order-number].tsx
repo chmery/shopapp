@@ -9,7 +9,7 @@ import { AuthContext } from "../../store/auth-context";
 
 const OrderDetailsPage = () => {
     const router = useRouter();
-    const { isLoggedIn, userId } = useContext(AuthContext) as AuthContext;
+    const { authorizedUserId } = useContext(AuthContext);
 
     const [isLoading, setIsLoading] = useState(true);
     const [orderData, setOrderData] = useState<OrderData>();
@@ -26,7 +26,7 @@ const OrderDetailsPage = () => {
                 const q = query(
                     collection(db, "orders"),
                     where("orderId", "==", orderNumber),
-                    where("userId", "==", userId)
+                    where("userId", "==", authorizedUserId)
                 );
                 const querySnapshot = await getDocs(q);
 
@@ -38,7 +38,7 @@ const OrderDetailsPage = () => {
             };
             fetchOrder();
         }
-    }, [isLoggedIn]);
+    }, [authorizedUserId]);
 
     if (!orderData && !isLoading) router.push("/404");
     if (!orderData) return <Loader />;

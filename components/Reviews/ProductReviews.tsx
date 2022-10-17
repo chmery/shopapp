@@ -18,11 +18,11 @@ type Props = {
 
 const ProductReviews = ({ product }: Props) => {
     const [reviews, setReviews] = useState<ReviewData[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
     const [publishedReview, setPublishedReview] = useState<ReviewData | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const { userId, isLoggedIn } = useContext(AuthContext) as AuthContext;
-    const canPublishReview = isLoggedIn && !publishedReview ? true : false;
+    const { authorizedUserId } = useContext(AuthContext);
+    const canPublishReview = authorizedUserId && !publishedReview ? true : false;
 
     useEffect(() => {
         if (!product) return;
@@ -31,12 +31,12 @@ const ProductReviews = ({ product }: Props) => {
     }, [product]);
 
     useEffect(() => {
-        if (!reviews || !userId) return;
-        if (hasPublishedReview(reviews, userId)) {
-            const publishedReview = getPublishedReview(reviews, userId);
+        if (!reviews || !authorizedUserId) return;
+        if (hasPublishedReview(reviews, authorizedUserId)) {
+            const publishedReview = getPublishedReview(reviews, authorizedUserId);
             setPublishedReview(publishedReview!);
         }
-    }, [reviews, userId]);
+    }, [reviews, authorizedUserId]);
 
     const publishReviewHandler = async (ratingValue: number, reviewText: string) => {
         setIsLoading(true);
@@ -47,7 +47,7 @@ const ProductReviews = ({ product }: Props) => {
     };
 
     const likeReviewHandler = async (reviewData: ReviewData) => {
-        await likeReview(reviewData, userId);
+        await likeReview(reviewData, authorizedUserId);
         setReviews(await getProductReviews(product.id));
     };
 

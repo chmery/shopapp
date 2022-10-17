@@ -18,7 +18,7 @@ const Cart = () => {
     const SHIPPING_COST = 10;
 
     const dispatch = useDispatch();
-    const { userId } = useContext(AuthContext) as AuthContext;
+    const { authorizedUserId } = useContext(AuthContext);
 
     const orderHandler = async () => {
         setIsOrdering(true);
@@ -55,7 +55,7 @@ const Cart = () => {
             orderId,
             orderedItems,
             orderDate,
-            userId,
+            authorizedUserId,
             totalPrice: ((subTotal + SHIPPING_COST) * 100) / 100,
         });
 

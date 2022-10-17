@@ -22,13 +22,13 @@ const getSortedOrders = (orders: OrderData[]) => {
 };
 
 const OrdersHistory = () => {
-    const { userId } = useContext(AuthContext) as AuthContext;
+    const { authorizedUserId } = useContext(AuthContext);
     const [isLoading, setIsLoading] = useState(true);
     const [orders, setOrders] = useState<OrderData[]>();
 
     useEffect(() => {
         const fetchOrders = async () => {
-            const q = query(collection(db, "orders"), where("userId", "==", userId));
+            const q = query(collection(db, "orders"), where("userId", "==", authorizedUserId));
             const querySnapshot = await getDocs(q);
 
             const orders: OrderData[] = [];

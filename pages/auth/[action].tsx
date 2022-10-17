@@ -10,23 +10,23 @@ const AuthPage = () => {
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    const { isLoggedIn } = useContext(AuthContext) as AuthContext;
+    const { authorizedUserId } = useContext(AuthContext);
 
     const router = useRouter();
     const { action } = router.query;
 
     useEffect(() => {
-        if (isLoggedIn) router.push("/");
-    }, [isLoggedIn]);
+        if (authorizedUserId) router.push("/");
+    }, [authorizedUserId]);
 
-    if (isLoggedIn) return <Loader />;
+    if (authorizedUserId) return <Loader />;
 
     const authHandler = async (email: string, password: string) => {
         try {
             setIsLoading(true);
             action === "login" ? await logIn(email, password) : await signUp(email, password);
 
-            if (isLoggedIn) router.push("/");
+            if (authorizedUserId) router.push("/");
 
             setIsLoading(false);
         } catch (error) {

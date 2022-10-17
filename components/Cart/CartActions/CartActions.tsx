@@ -10,13 +10,13 @@ type Props = {
 };
 
 const CartActions = ({ onOrder, isOrdering }: Props) => {
-    const { isLoggedIn } = useContext(AuthContext) as AuthContext;
+    const { authorizedUserId } = useContext(AuthContext);
 
     return (
         <div className={styles["checkout-actions"]}>
             {!isOrdering && (
                 <button className="main-btn" onClick={onOrder}>
-                    {isLoggedIn ? "Checkout" : "Checkout as a guest"}
+                    {authorizedUserId ? "Checkout" : "Checkout as a guest"}
                 </button>
             )}
             {isOrdering && (
@@ -25,7 +25,7 @@ const CartActions = ({ onOrder, isOrdering }: Props) => {
                 </button>
             )}
 
-            {!isOrdering && !isLoggedIn && (
+            {!isOrdering && !authorizedUserId && (
                 <p>
                     <Link href="/auth?action=login">Log in</Link> for better user and checkout
                     experience in the future or don't do it and continue as a guest.

@@ -6,34 +6,36 @@ import { favouritesActions } from "../store/favouritesSlice/favouritesSlice";
 import { getDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
-export const AuthContext = React.createContext<AuthContext | null>(null);
+export const AuthContext = React.createContext<AuthContext>({
+    authorizedUserId: "",
+    setAuthorizedUserId: (id) => {},
+});
 
 const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
     const dispatch = useDispatch();
+
     const { setInitialFavouritesData, clearFavouritesData } = favouritesActions;
-    const [userId, setUserId] = useState<string | null>(null);
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+    const [authorizedUserId, setAuthorizedUserId] = useState<string>("");
 
     const setFavouritesData = async (userId: string) => {
         const docRef = doc(db, "favourites", userId);
         const docSnap = await getDoc(docRef);
         const docData = docSnap.data();
-        const favouritesData: FavouriteItem[] = docData!.favouriteItems;
+        if (!docData) return;
+        const favouritesData: FavouriteItem[] = docData.favouriteItems;
         dispatch(setInitialFavouritesData(favouritesData));
     };
 
     onAuthStateChanged(auth, (user) => {
-        if (user && !isLoggedIn) {
-            setIsLoggedIn(true);
-            setUserId(user.uid);
+        if (user && !authorizedUserId) {
+            setAuthorizedUserId(user.uid);
             localStorage.setItem("uid", user.uid);
             setFavouritesData(user.uid);
             return;
         }
 
-        if (!user && isLoggedIn) {
-            setIsLoggedIn(false);
-            setUserId(null);
+        if (!user && authorizedUserId) {
+            setAuthorizedUserId("");
             localStorage.removeItem("uid");
             clearFavouritesData();
             return;
@@ -41,10 +43,8 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
     });
 
     const authContext = {
-        isLoggedIn,
-        userId,
-        setUserId,
-        setIsLoggedIn,
+        authorizedUserId,
+        setAuthorizedUserId,
     };
 
     return <AuthContext.Provider value={authContext}>{children}</AuthContext.Provider>;

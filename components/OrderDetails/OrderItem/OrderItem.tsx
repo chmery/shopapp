@@ -15,8 +15,6 @@ type Props = {
 const OrderItem = ({ item }: Props) => {
     const category = capitalize(item.category);
 
-    console.log(item);
-
     return (
         <>
             <div className={styles["order-item"]}>

@@ -9,7 +9,7 @@ import { RootState } from "../../store/store";
 
 const Favourites = () => {
     const router = useRouter();
-    const { isLoggedIn } = useContext(AuthContext) as AuthContext;
+    const { authorizedUserId } = useContext(AuthContext);
     const favouriteItems = useSelector((state: RootState) => state.favourites.favouriteItems);
 
     useEffect(() => {
@@ -18,7 +18,7 @@ const Favourites = () => {
         return;
     }, []);
 
-    if (!isLoggedIn) return <Loader />;
+    if (!authorizedUserId) return <Loader />;
 
     if (!favouriteItems.length) {
         return (

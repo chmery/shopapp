@@ -12,10 +12,8 @@ interface ProductData {
 }
 
 interface AuthContext {
-    setIsLoggedIn: (boolean: boolean) => void;
-    setUserId: (userId: string | null) => void;
-    userId: string | null;
-    isLoggedIn: boolean | null;
+    authorizedUserId: string;
+    setAuthorizedUserId: (id: string) => void;
 }
 
 interface OrderData {

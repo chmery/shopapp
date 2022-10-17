@@ -15,7 +15,7 @@ type Props = {
 const Navbar = ({ onStartSearching, onStopSearching, isSearching }: Props) => {
     const router = useRouter();
     const cartItemsNum = useSelector((state: RootState) => state.cart.cartItemsNum);
-    const { isLoggedIn } = useContext(AuthContext) as AuthContext;
+    const { authorizedUserId } = useContext(AuthContext);
 
     const NavbarSearchItem = () => {
         const searchingJSX = (
@@ -45,7 +45,7 @@ const Navbar = ({ onStartSearching, onStopSearching, isSearching }: Props) => {
         <nav>
             <ul>
                 {<NavbarSearchItem />}
-                {isLoggedIn && <NavbarFavouritesItem />}
+                {authorizedUserId && <NavbarFavouritesItem />}
                 <li onClick={() => router.push("/profile")}>
                     <Icons.User />
                 </li>

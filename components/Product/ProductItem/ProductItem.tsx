@@ -19,7 +19,7 @@ const ProductItem = ({ productData }: Props) => {
     const dispatch = useDispatch();
     const router = useRouter();
 
-    const { userId } = useContext(AuthContext) as AuthContext;
+    const { authorizedUserId } = useContext(AuthContext);
     const { removeFromFavourites } = favouritesActions;
 
     const { checkIfInFavourites, isInFavourites } = useIsInFavourites();
@@ -34,7 +34,7 @@ const ProductItem = ({ productData }: Props) => {
     const removeFromFavouritesHandler = async (event: React.MouseEvent) => {
         event.stopPropagation();
         setIsLoading(true);
-        await updateDoc(doc(db, "favourites", `${userId}`), {
+        await updateDoc(doc(db, "favourites", `${authorizedUserId}`), {
             favouriteItems: arrayRemove(productData),
         });
         dispatch(removeFromFavourites(productData as FavouriteItem));

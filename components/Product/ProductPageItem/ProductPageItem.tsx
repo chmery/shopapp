@@ -5,7 +5,7 @@ import { Rating } from "@mui/material";
 
 type Props = {
     product: ProductData;
-    isLoggedIn: boolean | null;
+    authorizedUserId: string;
     isInFavourites: boolean;
     onAddToFavourites: () => void;
     onAddToCart: () => void;
@@ -13,7 +13,7 @@ type Props = {
 
 const ProductPageItem = ({
     product,
-    isLoggedIn,
+    authorizedUserId,
     isInFavourites,
     onAddToCart,
     onAddToFavourites,
@@ -41,7 +41,7 @@ const ProductPageItem = ({
                     <button className="main-btn" onClick={onAddToCart}>
                         Add to Cart
                     </button>
-                    {isLoggedIn && (
+                    {authorizedUserId && (
                         <button
                             className={`${styles["fav-btn"]} ${
                                 isInFavourites ? styles["fav-btn-added"] : ""

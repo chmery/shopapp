@@ -7,15 +7,15 @@ import UserData from "../../components/Profile/UserData/UserData";
 
 const Profile = () => {
     const router = useRouter();
-    const { isLoggedIn } = useContext(AuthContext) as AuthContext;
+    const { authorizedUserId } = useContext(AuthContext);
 
     useEffect(() => {
         const storedUserId = localStorage.getItem("uid");
         if (!storedUserId) router.push("/auth/login");
         return;
-    }, [isLoggedIn]);
+    }, [authorizedUserId]);
 
-    if (!isLoggedIn) return <Loader />;
+    if (!authorizedUserId) return <Loader />;
 
     return (
         <>
