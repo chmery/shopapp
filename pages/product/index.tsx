@@ -2,15 +2,13 @@ import { getProductsData } from "../../helpers/helpers";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../../store/cartSlice/cartSlice";
-import { db } from "../../firebase/config";
-import { updateDoc, doc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../../store/auth-context";
-import { favouritesActions } from "../../store/favouritesSlice/favouritesSlice";
 import useIsInFavourites from "../../hooks/useIsInFavourites";
 import NoContentMessage from "../../components/UI/NoContentMessage/NoContentMessage";
 import ProductPageItem from "../../components/Product/ProductPageItem/ProductPageItem";
 import ProductReviews from "../../components/Reviews/ProductReviews";
+import { addToFavourites, removeFromFavourites } from "./helpers";
 
 type Props = {
     data: ProductData[];
@@ -53,16 +51,10 @@ const Product = ({ data }: Props) => {
 
         if (isInFavourites) {
             setIsInFavourites(false);
-            await updateDoc(doc(db, "favourites", `${authorizedUserId}`), {
-                favouriteItems: arrayRemove(favouriteItem),
-            });
-            dispatch(favouritesActions.removeFromFavourites(favouriteItem));
+            removeFromFavourites(favouriteItem, authorizedUserId);
         } else {
             setIsInFavourites(true);
-            await updateDoc(doc(db, "favourites", `${authorizedUserId}`), {
-                favouriteItems: arrayUnion(favouriteItem),
-            });
-            dispatch(favouritesActions.addToFavourites(favouriteItem));
+            addToFavourites(favouriteItem, authorizedUserId);
         }
     };
 

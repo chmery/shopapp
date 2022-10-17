@@ -28,17 +28,17 @@
     object-fit: contain;
 }
 
-.price-x {
+.price-remove {
     margin-top: 0.5em;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.price-x button {
+.price-remove button {
     transition: transfrom 0.2s;
 }
 
-.price-x button:hover {
+.price-remove button:hover {
     transform: scale(1.1);
 }
