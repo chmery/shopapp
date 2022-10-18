@@ -23,12 +23,13 @@ const OrderDetailsPage = () => {
 
         if (orderNumber && storedUserId) {
             const fetchOrder = async () => {
-                const q = query(
-                    collection(db, "orders"),
-                    where("orderId", "==", orderNumber),
-                    where("userId", "==", authorizedUserId)
+                const querySnapshot = await getDocs(
+                    query(
+                        collection(db, "orders"),
+                        where("orderId", "==", orderNumber),
+                        where("userId", "==", authorizedUserId)
+                    )
                 );
-                const querySnapshot = await getDocs(q);
 
                 querySnapshot.forEach((doc) => {
                     const orderData = doc.data();
@@ -45,8 +46,8 @@ const OrderDetailsPage = () => {
 
     return (
         <>
-            <OrderDetails orderData={orderData!} />
-            <PriceSummary subTotal={orderData!.totalPrice - SHIPPING_COST} />
+            <OrderDetails orderData={orderData} />
+            <PriceSummary subTotal={orderData.totalPrice - SHIPPING_COST} />
         </>
     );
 };

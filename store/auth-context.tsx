@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { favouritesActions } from "../store/favouritesSlice/favouritesSlice";
 import { getDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
+import { removeCookie, setCookie } from "./helpers";
 
 export const AuthContext = React.createContext<AuthContext>({
     authorizedUserId: "",
@@ -29,14 +30,16 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
     onAuthStateChanged(auth, (user) => {
         if (user && !authorizedUserId) {
             setAuthorizedUserId(user.uid);
-            localStorage.setItem("uid", user.uid);
+            setCookie("uid", user.uid, 1);
+            //localStorage.setItem("uid", user.uid);
             setFavouritesData(user.uid);
             return;
         }
 
         if (!user && authorizedUserId) {
             setAuthorizedUserId("");
-            localStorage.removeItem("uid");
+            removeCookie("uid");
+            //localStorage.removeItem("uid");
             clearFavouritesData();
             return;
         }
