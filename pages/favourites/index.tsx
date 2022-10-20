@@ -1,5 +1,4 @@
-import { useRouter } from "next/router";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useSelector } from "react-redux";
 import ProductsList from "../../components/Product/ProductsList/ProductsList";
 import Loader from "../../components/UI/Loader/Loader";
@@ -8,15 +7,8 @@ import { AuthContext } from "../../store/auth-context";
 import { RootState } from "../../store/store";
 
 const Favourites = () => {
-    const router = useRouter();
     const { authorizedUserId } = useContext(AuthContext);
     const favouriteItems = useSelector((state: RootState) => state.favourites.favouriteItems);
-
-    useEffect(() => {
-        const storedUserId = localStorage.getItem("uid");
-        if (!storedUserId) router.push("/auth/login");
-        return;
-    }, []);
 
     if (!authorizedUserId) return <Loader />;
 

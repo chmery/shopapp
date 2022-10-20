@@ -3,12 +3,11 @@ import { useDispatch } from "react-redux";
 import { db } from "../../firebase/config";
 import { favouritesActions } from "../../store/favouritesSlice/favouritesSlice";
 
-const dispatch = useDispatch();
-
 export const removeFromFavourites = async (
     favouriteItem: FavouriteItem,
     authorizedUserId: string
 ) => {
+    const dispatch = useDispatch();
     await updateDoc(doc(db, "favourites", `${authorizedUserId}`), {
         favouriteItems: arrayRemove(favouriteItem),
     });
@@ -16,6 +15,7 @@ export const removeFromFavourites = async (
 };
 
 export const addToFavourites = async (favouriteItem: FavouriteItem, authorizedUserId: string) => {
+    const dispatch = useDispatch();
     await updateDoc(doc(db, "favourites", `${authorizedUserId}`), {
         favouriteItems: arrayUnion(favouriteItem),
     });

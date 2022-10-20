@@ -18,10 +18,7 @@ const OrderDetailsPage = () => {
     const SHIPPING_COST = 10;
 
     useEffect(() => {
-        const storedUserId = localStorage.getItem("uid");
-        if (!storedUserId) router.push("/auth/login");
-
-        if (orderNumber && storedUserId) {
+        if (orderNumber) {
             const fetchOrder = async () => {
                 const querySnapshot = await getDocs(
                     query(

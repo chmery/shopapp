@@ -7,12 +7,12 @@ import Loader from "../../components/UI/Loader/Loader";
 import { logIn, signUp } from "../../firebase/helpers";
 
 const AuthPage = () => {
+    const router = useRouter();
+
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
     const { authorizedUserId } = useContext(AuthContext);
-
-    const router = useRouter();
     const { action } = router.query;
 
     useEffect(() => {
@@ -25,9 +25,6 @@ const AuthPage = () => {
         try {
             setIsLoading(true);
             action === "login" ? await logIn(email, password) : await signUp(email, password);
-
-            if (authorizedUserId) router.push("/");
-
             setIsLoading(false);
         } catch (error) {
             const errorMessage = (error as Error).message;
