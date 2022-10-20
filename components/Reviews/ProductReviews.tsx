@@ -40,7 +40,12 @@ const ProductReviews = ({ product }: Props) => {
 
     const publishReviewHandler = async (ratingValue: number, reviewText: string) => {
         setIsLoading(true);
-        const publishedReview = await publishReview(product.id, ratingValue, reviewText);
+        const publishedReview = await publishReview(
+            authorizedUserId,
+            product.id,
+            ratingValue,
+            reviewText
+        );
         setReviews((prevState) => [...prevState, publishedReview]);
         setPublishedReview(publishedReview);
         setIsLoading(false);

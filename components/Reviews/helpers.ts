@@ -12,9 +12,7 @@ import {
     arrayRemove,
     setDoc,
 } from "firebase/firestore";
-import { useContext } from "react";
 import { db } from "../../firebase/config";
-import { AuthContext } from "../../store/auth-context";
 import { auth } from "../../firebase/config";
 
 export const getProductReviews = async (productId: number) => {
@@ -53,9 +51,12 @@ export const likeReview = async (review: ReviewData, userId: string | null) => {
     });
 };
 
-export const publishReview = async (productId: number, ratingValue: number, reviewText: string) => {
-    const { userId } = useContext(AuthContext) as AuthContext;
-
+export const publishReview = async (
+    userId: string,
+    productId: number,
+    ratingValue: number,
+    reviewText: string
+) => {
     const reviewDate = new Date().toLocaleDateString("en-US", {
         day: "numeric",
         month: "long",
@@ -68,7 +69,7 @@ export const publishReview = async (productId: number, ratingValue: number, revi
         likedBy: [],
         reviewId,
         productId,
-        userId: userId!,
+        userId,
         userEmail: auth.currentUser!.email!,
         ratingValue,
         reviewText,

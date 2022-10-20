@@ -9,25 +9,25 @@ import NoContentMessage from "../../components/UI/NoContentMessage/NoContentMess
 import ProductPageItem from "../../components/Product/ProductPageItem/ProductPageItem";
 import ProductReviews from "../../components/Reviews/ProductReviews";
 import { addToFavourites, removeFromFavourites } from "./helpers";
+import { favouritesActions } from "../../store/favouritesSlice/favouritesSlice";
 
 type Props = {
-    data: ProductData[];
+    products: ProductData[];
 };
 
-const Product = ({ data }: Props) => {
+const Product = ({ products }: Props) => {
     const router = useRouter();
     const dispatch = useDispatch();
 
     const { id } = router.query;
     const { authorizedUserId } = useContext(AuthContext);
 
-    const product = data.find((product) => product.id === Number(id));
+    const product = products.find((product) => product.id === Number(id));
 
     const { isInFavourites, setIsInFavourites, checkIfInFavourites } = useIsInFavourites();
 
     useEffect(() => {
-        if (!product) return;
-        checkIfInFavourites(product);
+        if (product) checkIfInFavourites(product);
     }, [product]);
 
     if (!product) {
@@ -52,9 +52,11 @@ const Product = ({ data }: Props) => {
         if (isInFavourites) {
             setIsInFavourites(false);
             removeFromFavourites(favouriteItem, authorizedUserId);
+            dispatch(favouritesActions.removeFromFavourites(favouriteItem));
         } else {
             setIsInFavourites(true);
             addToFavourites(favouriteItem, authorizedUserId);
+            dispatch(favouritesActions.addToFavourites(favouriteItem));
         }
     };
 
@@ -73,11 +75,11 @@ const Product = ({ data }: Props) => {
 };
 
 export const getStaticProps = async () => {
-    const data = await getProductsData();
+    const products = await getProductsData();
 
     return {
         props: {
-            data,
+            products,
         },
     };
 };

@@ -11,10 +11,13 @@ const Results = ({ data }: Props) => {
     const router = useRouter();
     const { keyword } = router.query;
 
-    if (!keyword) return;
-    const products = data.filter((product) =>
-        product.title.toLowerCase().includes(keyword.toString().toLowerCase())
-    );
+    let products: ProductData[] = [];
+
+    if (keyword) {
+        products = data.filter((product) =>
+            product.title.toLowerCase().includes(keyword.toString().toLowerCase())
+        );
+    }
 
     if (!products.length) {
         return (

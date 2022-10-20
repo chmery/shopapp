@@ -6,7 +6,6 @@ import { AuthContext } from "../../store/auth-context";
 
 const Profile = () => {
     const { authorizedUserId } = useContext(AuthContext);
-
     if (!authorizedUserId) return <Loader />;
 
     return (
