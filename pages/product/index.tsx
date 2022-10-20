@@ -8,7 +8,7 @@ import useIsInFavourites from "../../hooks/useIsInFavourites";
 import NoContentMessage from "../../components/UI/NoContentMessage/NoContentMessage";
 import ProductPageItem from "../../components/Product/ProductPageItem/ProductPageItem";
 import ProductReviews from "../../components/Reviews/ProductReviews";
-import { addToFavourites, removeFromFavourites } from "./helpers";
+import { addToFavourites, removeFromFavourites } from "../../helpers/helpers";
 import { favouritesActions } from "../../store/favouritesSlice/favouritesSlice";
 
 type Props = {

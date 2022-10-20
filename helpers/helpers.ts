@@ -1,3 +1,8 @@
+import { doc, arrayRemove, updateDoc, arrayUnion } from "firebase/firestore";
+import { db } from "../firebase/config";
+
+// general
+
 export const getProductsData = async () => {
     const res = await fetch("https://fakestoreapi.com/products");
     const data = await res.json();
@@ -15,6 +20,8 @@ export const capitalize = (word: string) => {
     return capitalized;
 };
 
+// cookies
+
 export const setCookie = (name: string, value: string, hoursToExpire: number) => {
     if (doesCookieExists(name)) return;
     const currentDate = new Date();
@@ -29,4 +36,21 @@ export const doesCookieExists = (name: string) => {
     const cookies = document.cookie.split("; ");
     const cookie = cookies.find((cookie) => cookie.startsWith(`${name}=`));
     return cookie ? true : false;
+};
+
+// favourites
+
+export const removeFromFavourites = async (
+    favouriteItem: FavouriteItem,
+    authorizedUserId: string
+) => {
+    await updateDoc(doc(db, "favourites", `${authorizedUserId}`), {
+        favouriteItems: arrayRemove(favouriteItem),
+    });
+};
+
+export const addToFavourites = async (favouriteItem: FavouriteItem, authorizedUserId: string) => {
+    await updateDoc(doc(db, "favourites", `${authorizedUserId}`), {
+        favouriteItems: arrayUnion(favouriteItem),
+    });
 };
