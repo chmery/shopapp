@@ -10,6 +10,7 @@ import { removeCookie, setCookie } from "../helpers/helpers";
 export const AuthContext = React.createContext<AuthContext>({
     authorizedUserId: "",
     setAuthorizedUserId: (id) => {},
+    areFavouritesFetching: false,
 });
 
 const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
@@ -17,6 +18,7 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
 
     const { setInitialFavouritesData, clearFavouritesData } = favouritesActions;
     const [authorizedUserId, setAuthorizedUserId] = useState<string>("");
+    const [areFavouritesFetching, setAreFavouritesFetching] = useState(true);
 
     const setFavouritesData = async (userId: string) => {
         const docRef = doc(db, "favourites", userId);
@@ -25,6 +27,7 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
         if (!docData) return;
         const favouritesData: FavouriteItem[] = docData.favouriteItems;
         dispatch(setInitialFavouritesData(favouritesData));
+        setAreFavouritesFetching(false);
     };
 
     onAuthStateChanged(auth, (user) => {
@@ -46,6 +49,7 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
     const authContext = {
         authorizedUserId,
         setAuthorizedUserId,
+        areFavouritesFetching,
     };
 
     return <AuthContext.Provider value={authContext}>{children}</AuthContext.Provider>;

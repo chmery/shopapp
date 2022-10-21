@@ -7,12 +7,15 @@ import { AuthContext } from "../../store/auth-context";
 import { RootState } from "../../store/store";
 
 const Favourites = () => {
-    const { authorizedUserId } = useContext(AuthContext);
+    const { authorizedUserId, areFavouritesFetching } = useContext(AuthContext);
     const favouriteItems = useSelector((state: RootState) => state.favourites.favouriteItems);
 
-    if (!authorizedUserId) return <Loader />;
+    const isLoading = areFavouritesFetching || !authorizedUserId;
+    const hasNoFavourites = !areFavouritesFetching && !favouriteItems.length;
 
-    if (!favouriteItems.length) {
+    if (isLoading) return <Loader />;
+
+    if (hasNoFavourites) {
         return (
             <NoContentMessage
                 title={"No Favourites"}
