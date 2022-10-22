@@ -2,31 +2,31 @@ import { getProductsData } from "../helpers/helpers";
 import CategoryShowcase from "../components/Product/CategoryShowcase/CategoryShowcase";
 
 type Props = {
-    data: ProductData[];
+    products: ProductData[];
 };
 
-const Homepage = ({ data }: Props) => {
+const Homepage = ({ products }: Props) => {
     const categories = ["bestsellers"];
 
-    data.forEach((product) => {
+    products.forEach((product) => {
         if (!categories.includes(product.category)) categories.push(product.category);
     });
 
     return (
         <div>
             {categories.map((category) => (
-                <CategoryShowcase products={data} category={category} key={category} />
+                <CategoryShowcase products={products} category={category} key={category} />
             ))}
         </div>
     );
 };
 
 export const getStaticProps = async () => {
-    const data = await getProductsData();
+    const products = await getProductsData();
 
     return {
         props: {
-            data,
+            products,
         },
     };
 };

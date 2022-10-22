@@ -2,7 +2,7 @@ import Image from "next/future/image";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import useIsInFavourites from "../../../hooks/useIsInFavourites";
+import useIsInFavourites from "../../../hooks/useFavourites";
 import { favouritesActions } from "../../../store/favouritesSlice/favouritesSlice";
 import Icons from "../../UI/Icons/Icons";
 import styles from "./ProductItem.module.css";

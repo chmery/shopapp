@@ -4,18 +4,12 @@ import { useDispatch } from "react-redux";
 import { cartActions } from "../../store/cartSlice/cartSlice";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../../store/auth-context";
-import useIsInFavourites from "../../hooks/useIsInFavourites";
+import useFavourites from "../../hooks/useFavourites";
 import NoContentMessage from "../../components/UI/NoContentMessage/NoContentMessage";
 import ProductPageItem from "../../components/Product/ProductPageItem/ProductPageItem";
 import ProductReviews from "../../components/Reviews/ProductReviews";
-import { addToFavourites, removeFromFavourites } from "../../helpers/helpers";
-import { favouritesActions } from "../../store/favouritesSlice/favouritesSlice";
 
-type Props = {
-    products: ProductData[];
-};
-
-const Product = ({ products }: Props) => {
+const Product = ({ products }: { products: ProductData[] }) => {
     const router = useRouter();
     const dispatch = useDispatch();
 
@@ -24,7 +18,8 @@ const Product = ({ products }: Props) => {
 
     const product = products.find((product) => product.id === Number(id));
 
-    const { isInFavourites, setIsInFavourites, checkIfInFavourites } = useIsInFavourites();
+    const { isInFavourites, checkIfInFavourites, addToFavourites, removeFromFavourites } =
+        useFavourites();
 
     useEffect(() => {
         if (product) checkIfInFavourites(product);
@@ -41,24 +36,10 @@ const Product = ({ products }: Props) => {
 
     const addToCartHandler = () => dispatch(cartActions.addToCart(product));
 
-    const addToFavouritesHandler = async () => {
-        const favouriteItem = {
-            title: product.title,
-            image: product.image,
-            id: product.id,
-            price: product.price,
-        };
-
-        if (isInFavourites) {
-            setIsInFavourites(false);
-            removeFromFavourites(favouriteItem, authorizedUserId);
-            dispatch(favouritesActions.removeFromFavourites(favouriteItem));
-        } else {
-            setIsInFavourites(true);
-            addToFavourites(favouriteItem, authorizedUserId);
-            dispatch(favouritesActions.addToFavourites(favouriteItem));
-        }
-    };
+    const addToFavouritesHandler = () =>
+        isInFavourites
+            ? removeFromFavourites(product, authorizedUserId)
+            : addToFavourites(product, authorizedUserId);
 
     return (
         <>

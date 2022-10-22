@@ -40,7 +40,7 @@ export const doesCookieExists = (name: string) => {
 
 // favourites
 
-export const removeFromFavourites = async (
+export const removeFavouriteItemFromDatabase = async (
     favouriteItem: FavouriteItem,
     authorizedUserId: string
 ) => {
@@ -49,7 +49,10 @@ export const removeFromFavourites = async (
     });
 };
 
-export const addToFavourites = async (favouriteItem: FavouriteItem, authorizedUserId: string) => {
+export const addFavouriteItemToDatabase = async (
+    favouriteItem: FavouriteItem,
+    authorizedUserId: string
+) => {
     await updateDoc(doc(db, "favourites", `${authorizedUserId}`), {
         favouriteItems: arrayUnion(favouriteItem),
     });
