@@ -47,7 +47,6 @@ const cartSlice = createSlice({
             const itemToRemove = state.cartItems[itemToRemoveIndex];
 
             if (itemToRemove.quantity) {
-                console.log(itemToRemove.quantity);
                 state.cartItems[itemToRemoveIndex].quantity--;
             }
 

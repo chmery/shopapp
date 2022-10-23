@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import styles from "./Cart.module.css";
-import CartSummary from "../../components/Cart/PriceSummary/PriceSummary";
+import PriceSummary from "../../components/Cart/PriceSummary/PriceSummary";
 import CartItem from "../../components/Cart/CartItem/CartItem";
 import CartActions from "../../components/Cart/CartActions/CartActions";
 import { useContext, useState } from "react";
@@ -56,7 +56,7 @@ const Cart = () => {
             orderedItems,
             orderDate,
             authorizedUserId,
-            totalPrice: ((subTotal + SHIPPING_COST) * 100) / 100,
+            totalPrice,
         });
 
         dispatch(cartActions.clearCart());
@@ -68,9 +68,12 @@ const Cart = () => {
     const cartItems = useSelector((state: RootState) => state.cart.cartItems);
 
     const subTotal = cartItems.reduce(
-        (total, cartItem) => (total += cartItem.item.price * cartItem.quantity),
+        (total, cartItem) =>
+            (total = (total * 100 + cartItem.item.price * 100 * cartItem.quantity) / 100),
         0
     );
+
+    const totalPrice = (subTotal * 100 + SHIPPING_COST * 100) / 100;
 
     const SuccesAlert = () => {
         return (
@@ -99,7 +102,7 @@ const Cart = () => {
                 cartItems.map((cartItem) => (
                     <CartItem cartItem={cartItem} key={cartItem.item.id} />
                 ))}
-            <CartSummary subTotal={subTotal} />
+            <PriceSummary totalPrice={totalPrice} />
             <CartActions onOrder={orderHandler} isOrdering={isOrdering} />
         </>
     );

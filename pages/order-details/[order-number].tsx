@@ -15,7 +15,6 @@ const OrderDetailsPage = () => {
     const [orderData, setOrderData] = useState<OrderData>();
 
     const orderNumber = router.query["order-number"];
-    const SHIPPING_COST = 10;
 
     useEffect(() => {
         if (orderNumber) {
@@ -44,7 +43,7 @@ const OrderDetailsPage = () => {
     return (
         <>
             <OrderDetails orderData={orderData} />
-            <PriceSummary subTotal={orderData.totalPrice - SHIPPING_COST} />
+            <PriceSummary totalPrice={orderData.totalPrice} />
         </>
     );
 };
