@@ -67,11 +67,11 @@ const Cart = () => {
     const cartItemsNum = useSelector((state: RootState) => state.cart.cartItemsNum);
     const cartItems = useSelector((state: RootState) => state.cart.cartItems);
 
-    const subTotal = cartItems.reduce(
-        (total, cartItem) =>
-            (total = (total * 100 + cartItem.item.price * 100 * cartItem.quantity) / 100),
-        0
-    );
+    const subTotal =
+        cartItems.reduce(
+            (total, cartItem) => (total += cartItem.item.price * 100 * cartItem.quantity),
+            0
+        ) / 100;
 
     const totalPrice = (subTotal * 100 + SHIPPING_COST * 100) / 100;
 

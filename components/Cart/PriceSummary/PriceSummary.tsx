@@ -6,7 +6,7 @@ type Props = {
 
 const PriceSummary = ({ totalPrice }: Props) => {
     const SHIPPING_COST = 10;
-    const subTotal = (totalPrice * 1000 - SHIPPING_COST * 1000) / 1000;
+    const subTotal = (totalPrice * 100 - SHIPPING_COST * 100) / 100;
 
     return (
         <div className={styles.summary}>

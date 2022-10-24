@@ -3,7 +3,7 @@ import { useContext, useEffect } from "react";
 import PriceSummary from "../../components/Cart/PriceSummary/PriceSummary";
 import OrderDetails from "../../components/OrderDetails/OrderDetails";
 import Loader from "../../components/UI/Loader/Loader";
-import useOrderData from "../../hooks/useOrderDetails";
+import useOrderData from "../../hooks/useOrderData";
 import { AuthContext } from "../../store/auth-context";
 
 const OrderDetailsPage = () => {
@@ -19,9 +19,7 @@ const OrderDetailsPage = () => {
         }
     }, [authorizedUserId]);
 
-    if (noOrderData) {
-        router.push("/404");
-    }
+    if (noOrderData) router.push("/404");
 
     return (
         <>
