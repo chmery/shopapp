@@ -14,7 +14,7 @@ interface ProductData {
 interface AuthContext {
     authorizedUserId: string;
     setAuthorizedUserId: (id: string) => void;
-    areFavouritesFetching: boolean;
+    areFavouritesLoading: boolean;
 }
 
 interface OrderData {

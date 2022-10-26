@@ -3,15 +3,19 @@ import ProductItem from "../ProductItem/ProductItem";
 
 type Props = {
     products: ProductData[] | FavouriteItem[];
+    title?: string;
 };
 
-const ProductsList = ({ products }: Props) => {
+const ProductsList = ({ products, title }: Props) => {
     return (
-        <div className={styles.products}>
-            {products.map((product) => (
-                <ProductItem productData={product} key={product.id} />
-            ))}
-        </div>
+        <>
+            {title && <h3>{title}</h3>}
+            <div className={styles.products}>
+                {products.map((product) => (
+                    <ProductItem productData={product} key={product.id} />
+                ))}
+            </div>
+        </>
     );
 };
 
