@@ -12,6 +12,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { AuthContext } from "../../store/auth-context";
 import NoContentMessage from "../../components/UI/NoContentMessage/NoContentMessage";
 import { getFormattedDate } from "../../helpers/helpers";
+import SuccesAlert from "../../components/UI/SuccesAlert/SuccesAlert";
 
 const Cart = () => {
     const [isOrdering, setIsOrdering] = useState(false);
@@ -70,18 +71,12 @@ const Cart = () => {
 
     const totalPrice = (subTotal * 100 + SHIPPING_COST * 100) / 100;
 
-    const SuccesAlert = () => {
-        return (
-            <Alert severity="success" onClose={() => setIsOrdered(false)}>
-                Your order has been successfully placed!
-            </Alert>
-        );
-    };
+    const closeSuccesAlertHandler = () => setIsOrdered(false);
 
     if (!cartItemsNum) {
         return (
             <>
-                {isOrdered && <SuccesAlert />}
+                {isOrdered && <SuccesAlert onClose={closeSuccesAlertHandler} />}
                 <NoContentMessage
                     title={"Your cart is empty"}
                     message={"You haven't added any items to your cart yet."}
