@@ -19,7 +19,7 @@ const Results = ({ data }: Props) => {
         );
     }
 
-    if (!products.length) {
+    if (!products.length || !keyword) {
         return (
             <NoContentMessage
                 title={"No Results"}

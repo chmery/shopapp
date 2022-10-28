@@ -20,6 +20,13 @@ export const capitalize = (word: string) => {
     return capitalized;
 };
 
+export const getFormattedDate = () =>
+    new Date().toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+    });
+
 // cookies
 
 export const setCookie = (name: string, value: string, hoursToExpire: number) => {

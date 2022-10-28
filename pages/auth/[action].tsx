@@ -22,15 +22,14 @@ const AuthPage = () => {
     if (authorizedUserId) return <Loader />;
 
     const authHandler = async (email: string, password: string) => {
+        setIsLoading(true);
         try {
-            setIsLoading(true);
             action === "login" ? await logIn(email, password) : await signUp(email, password);
-            setIsLoading(false);
         } catch (error) {
             const errorMessage = (error as Error).message;
             setError(errorMessage);
-            setIsLoading(false);
         }
+        setIsLoading(false);
     };
 
     return (

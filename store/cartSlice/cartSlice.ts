@@ -1,13 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { calcCartItemsNum } from "./helpers";
 
-export type SliceState = {
+type SliceState = {
     cartItems: {
         item: ProductData;
         quantity: number;
     }[];
     cartItemsNum: number;
+};
+
+const calcCartItemsNum = (state: SliceState) => {
+    const cartItemsNum = state.cartItems.reduce(
+        (total, cartItem) => (total += cartItem.quantity),
+        0
+    );
+
+    return cartItemsNum;
 };
 
 const initialState: SliceState = { cartItems: [], cartItemsNum: 0 };

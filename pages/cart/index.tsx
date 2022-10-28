@@ -11,6 +11,7 @@ import { db } from "../../firebase/config";
 import { collection, addDoc } from "firebase/firestore";
 import { AuthContext } from "../../store/auth-context";
 import NoContentMessage from "../../components/UI/NoContentMessage/NoContentMessage";
+import { getFormattedDate } from "../../helpers/helpers";
 
 const Cart = () => {
     const [isOrdering, setIsOrdering] = useState(false);
@@ -31,15 +32,9 @@ const Cart = () => {
             price: number;
         }[] = [];
 
-        const currentDate = new Date();
-        const orderDate = currentDate.toLocaleDateString("en-US", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-        });
-
+        const orderDate = getFormattedDate();
         const randomNumber = Math.floor(Math.random() * 1000);
-        const orderId = `${currentDate.getTime().toString().slice(4)}${randomNumber}`;
+        const orderId = `${new Date().getTime().toString().slice(4)}${randomNumber}`;
 
         cartItems.forEach((cartItem) => {
             orderedItems.push({

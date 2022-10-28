@@ -12,15 +12,11 @@ const Category = ({ data }: Props) => {
     const { category } = router.query;
 
     if (!category || typeof category !== "string") return;
+
     const products = getProductsByCategory(data, category, 4);
     const categoryCapitalized = capitalize(category);
 
-    return (
-        <>
-            <h3>{categoryCapitalized}</h3>
-            <ProductsList products={products} />
-        </>
-    );
+    return <ProductsList products={products} title={categoryCapitalized} />;
 };
 
 export const getStaticPaths = async () => {
