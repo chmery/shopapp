@@ -1,5 +1,5 @@
 import Image from "next/future/image";
-import { capitalize } from "../../../helpers/helpers";
+import { capitalize } from "../../../helpers/general";
 import styles from "./OrderItem.module.css";
 
 type Props = {

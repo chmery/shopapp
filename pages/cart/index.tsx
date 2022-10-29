@@ -10,8 +10,9 @@ import { db } from "../../firebase/config";
 import { collection, addDoc } from "firebase/firestore";
 import { AuthContext } from "../../store/auth-context";
 import NoContentMessage from "../../components/UI/NoContentMessage/NoContentMessage";
-import { calcSubTotal, calcTotal, getFormattedDate } from "../../helpers/helpers";
+import { calcSubTotal, calcTotal } from "../../helpers/cart";
 import SuccesAlert from "../../components/UI/SuccesAlert/SuccesAlert";
+import { getFormattedDate } from "../../helpers/general";
 
 const Cart = () => {
     const [isOrdering, setIsOrdering] = useState(false);

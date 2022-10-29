@@ -1,5 +1,5 @@
 import styles from "./SearchBarPrompts.module.css";
-import { capitalize } from "../../../helpers/helpers";
+import { capitalize } from "../../../helpers/general";
 import { useRouter } from "next/router";
 import React from "react";
 

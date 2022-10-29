@@ -1,4 +1,4 @@
-import { getProductsData } from "../helpers/helpers";
+import { getProductsData } from "../helpers/general";
 import CategoryShowcase from "../components/Product/CategoryShowcase/CategoryShowcase";
 
 type Props = {

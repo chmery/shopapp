@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import ProductsList from "../../components/Product/ProductsList/ProductsList";
-import { capitalize, getProductsData } from "../../helpers/helpers";
-import { getProductsByCategory } from "../../helpers/helpers";
+import { capitalize, getProductsData } from "../../helpers/general";
+import { getProductsByCategory } from "../../helpers/general";
 
 type Props = {
     data: ProductData[];

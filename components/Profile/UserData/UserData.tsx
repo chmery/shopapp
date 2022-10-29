@@ -1,6 +1,6 @@
 import { auth } from "../../../firebase/config";
 import { User } from "firebase/auth";
-import { logOut } from "../../../firebase/helpers";
+import { logOut } from "../../../helpers/firebase";
 import styles from "./UserData.module.css";
 import { useRouter } from "next/router";
 

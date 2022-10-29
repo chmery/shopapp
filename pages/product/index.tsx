@@ -1,4 +1,4 @@
-import { getProductsData } from "../../helpers/helpers";
+import { getProductsData } from "../../helpers/general";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../../store/cartSlice/cartSlice";

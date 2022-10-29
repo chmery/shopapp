@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import ProductsList from "../../components/Product/ProductsList/ProductsList";
 import NoContentMessage from "../../components/UI/NoContentMessage/NoContentMessage";
-import { getProductsData } from "../../helpers/helpers";
+import { getProductsData } from "../../helpers/general";
 
 type Props = {
     data: ProductData[];

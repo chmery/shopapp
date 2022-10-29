@@ -4,7 +4,7 @@ import { Alert } from "@mui/material";
 import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../../store/auth-context";
 import Loader from "../../components/UI/Loader/Loader";
-import { logIn, signUp } from "../../firebase/helpers";
+import { logIn, signUp } from "../../helpers/firebase";
 
 const AuthPage = () => {
     const router = useRouter();

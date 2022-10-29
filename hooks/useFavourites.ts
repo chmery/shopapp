@@ -1,8 +1,27 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addFavouriteItemToDatabase, removeFavouriteItemFromDatabase } from "../helpers/helpers";
 import { favouritesActions } from "../store/favouritesSlice/favouritesSlice";
 import { RootState } from "../store/store";
+import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { db } from "../firebase/config";
+
+const removeFavouriteItemFromDatabase = async (
+    favouriteItem: FavouriteItem,
+    authorizedUserId: string
+) => {
+    await updateDoc(doc(db, "favourites", `${authorizedUserId}`), {
+        favouriteItems: arrayRemove(favouriteItem),
+    });
+};
+
+const addFavouriteItemToDatabase = async (
+    favouriteItem: FavouriteItem,
+    authorizedUserId: string
+) => {
+    await updateDoc(doc(db, "favourites", `${authorizedUserId}`), {
+        favouriteItems: arrayUnion(favouriteItem),
+    });
+};
 
 const formatToFavouriteItem = (product: ProductData) => {
     return {

@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { favouritesActions } from "../store/favouritesSlice/favouritesSlice";
 import { getDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-import { removeCookie, setCookie } from "../helpers/helpers";
+import { removeCookie, setCookie } from "../helpers/cookies";
 
 export const AuthContext = React.createContext<AuthContext>({
     authorizedUserId: "",

@@ -1,7 +1,7 @@
 import Icons from "../Icons/Icons";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
-import { getProductsData } from "../../../helpers/helpers";
+import { getProductsData } from "../../../helpers/general";
 import { getMatchingProducts } from "./helpers";
 
 import styles from "./SearchBar.module.css";
