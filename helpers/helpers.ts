@@ -1,5 +1,6 @@
 import { doc, arrayRemove, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../firebase/config";
+import { RootState } from "../store/store";
 
 // general
 
@@ -64,3 +65,13 @@ export const addFavouriteItemToDatabase = async (
         favouriteItems: arrayUnion(favouriteItem),
     });
 };
+
+// cart
+
+export const calcSubTotal = (cartItems: { item: ProductData; quantity: number }[]) =>
+    cartItems.reduce(
+        (total, cartItem) => (total += cartItem.item.price * 100 * cartItem.quantity),
+        0
+    ) / 100;
+
+export const calcTotal = (subTotal: number) => (subTotal * 100 + 10 * 100) / 100;

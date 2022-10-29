@@ -6,18 +6,16 @@ import CartItem from "../../components/Cart/CartItem/CartItem";
 import CartActions from "../../components/Cart/CartActions/CartActions";
 import { useContext, useState } from "react";
 import { cartActions } from "../../store/cartSlice/cartSlice";
-import { Alert } from "@mui/material";
 import { db } from "../../firebase/config";
 import { collection, addDoc } from "firebase/firestore";
 import { AuthContext } from "../../store/auth-context";
 import NoContentMessage from "../../components/UI/NoContentMessage/NoContentMessage";
-import { getFormattedDate } from "../../helpers/helpers";
+import { calcSubTotal, calcTotal, getFormattedDate } from "../../helpers/helpers";
 import SuccesAlert from "../../components/UI/SuccesAlert/SuccesAlert";
 
 const Cart = () => {
     const [isOrdering, setIsOrdering] = useState(false);
     const [isOrdered, setIsOrdered] = useState(false);
-    const SHIPPING_COST = 10;
 
     const dispatch = useDispatch();
     const { authorizedUserId } = useContext(AuthContext);
@@ -60,18 +58,17 @@ const Cart = () => {
         setIsOrdered(true);
     };
 
+    const closeSuccesAlertHandler = () => setIsOrdered(false);
+
     const cartItemsNum = useSelector((state: RootState) => state.cart.cartItemsNum);
     const cartItems = useSelector((state: RootState) => state.cart.cartItems);
 
-    const subTotal =
-        cartItems.reduce(
-            (total, cartItem) => (total += cartItem.item.price * 100 * cartItem.quantity),
-            0
-        ) / 100;
+    const subTotal = calcSubTotal(cartItems);
+    const totalPrice = calcTotal(subTotal);
 
-    const totalPrice = (subTotal * 100 + SHIPPING_COST * 100) / 100;
-
-    const closeSuccesAlertHandler = () => setIsOrdered(false);
+    const CartItemsList = cartItems.map((cartItem) => (
+        <CartItem cartItem={cartItem} key={cartItem.item.id} />
+    ));
 
     if (!cartItemsNum) {
         return (
@@ -88,10 +85,7 @@ const Cart = () => {
     return (
         <>
             <h3 className={styles["products-added"]}>{cartItemsNum} Products added</h3>
-            {cartItemsNum &&
-                cartItems.map((cartItem) => (
-                    <CartItem cartItem={cartItem} key={cartItem.item.id} />
-                ))}
+            {cartItemsNum && CartItemsList}
             <PriceSummary totalPrice={totalPrice} />
             <CartActions onOrder={orderHandler} isOrdering={isOrdering} />
         </>
