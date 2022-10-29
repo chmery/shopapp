@@ -1,6 +1,6 @@
+import currency from "currency.js";
 import { doc, arrayRemove, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../firebase/config";
-import { RootState } from "../store/store";
 
 // general
 
@@ -70,8 +70,9 @@ export const addFavouriteItemToDatabase = async (
 
 export const calcSubTotal = (cartItems: { item: ProductData; quantity: number }[]) =>
     cartItems.reduce(
-        (total, cartItem) => (total += cartItem.item.price * 100 * cartItem.quantity),
+        (total, cartItem) =>
+            (total += currency(cartItem.item.price).multiply(cartItem.quantity).value),
         0
-    ) / 100;
+    );
 
-export const calcTotal = (subTotal: number) => (subTotal * 100 + 10 * 100) / 100;
+export const calcTotal = (subTotal: number) => currency(subTotal).add(10).value;

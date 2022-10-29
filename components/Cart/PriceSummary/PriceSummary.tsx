@@ -1,3 +1,4 @@
+import currency from "currency.js";
 import styles from "./PriceSummary.module.css";
 
 type Props = {
@@ -6,7 +7,7 @@ type Props = {
 
 const PriceSummary = ({ totalPrice }: Props) => {
     const SHIPPING_COST = 10;
-    const subTotal = (totalPrice * 100 - SHIPPING_COST * 100) / 100;
+    const subTotal = currency(totalPrice).subtract(SHIPPING_COST).value;
 
     return (
         <div className={styles.summary}>
