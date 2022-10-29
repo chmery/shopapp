@@ -1,5 +1,7 @@
 import currency from "currency.js";
 
+const SHIPPING_COST = 10;
+
 export const calcSubTotal = (cartItems: { item: ProductData; quantity: number }[]) =>
     cartItems.reduce(
         (total, cartItem) =>
@@ -7,4 +9,4 @@ export const calcSubTotal = (cartItems: { item: ProductData; quantity: number }[
         0
     );
 
-export const calcTotal = (subTotal: number) => currency(subTotal).add(10).value;
+export const calcTotal = (subTotal: number) => currency(subTotal).add(SHIPPING_COST).value;
